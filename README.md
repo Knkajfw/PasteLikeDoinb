@@ -22,7 +22,8 @@ Record your opponents' Flash CD and automatically type the Doinb-style-string (e
 
 # 下载 Download
 应用已上架Windows应用商店，[点此](https://www.microsoft.com/store/apps/9NTFQT7XWQW7)前往安装。
-The app has been submitted to Windows Store. Install it [here](https://www.microsoft.com/store/apps/9NTFQT7XWQW7).s
+
+The app has been submitted to Windows Store. Install it [here](https://www.microsoft.com/store/apps/9NTFQT7XWQW7).
 
 
 # 声明 Disclaim
