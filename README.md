@@ -14,7 +14,7 @@ PC端截图，在运行英雄联盟游戏的PC上驻留后台，负责接收指�
 ![游戏内截图](ExampleScreenshots/InGame.png)
 
 # 下载 Download
-应用已上架微软应用商店，[点此](https://www.microsoft.com/store/apps/9NTFQT7XWQW7)前往安装。
+应用已上架微软应用商店，[点此](ms-windows-store://pdp/?productid=9NTFQT7XWQW7)前往安装。
 
 # 声明 Disclaim
 使用本程序不会危及账号安全：
