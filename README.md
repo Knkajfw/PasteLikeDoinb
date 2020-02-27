@@ -6,11 +6,15 @@ Record your opponents' Flash CD and automatically type the Doinb-style-string (e
 PC端截图，在运行英雄联盟游戏的PC上驻留后台，负责接收指令，将记录语句发送到游戏聊天里。
 ![PC端截图1](ExampleScreenshots/pc1.png)
 ![PC端截图2](ExampleScreenshots/pc2.png)
+
 移动端截图，用手机或别的设备扫码访问指定的页面，在此处记录对手何时使用了闪现，查看cd情况，指示发送记录语句。
 ![移动端截图](ExampleScreenshots/NoChrome.png)
 
+游戏内截图
+![游戏内截图](ExampleScreenshots/InGame.png)
+
 # 下载 Download
-应用已上架微软应用商店，[点此](ms-windows-store://pdp/?productid=9NTFQT7XWQW7)前往安装。
+应用已上架微软应用商店，[点此](https://www.microsoft.com/store/apps/9NTFQT7XWQW7)前往安装。
 
 # 声明 Disclaim
 使用本程序不会危及账号安全：
