@@ -39,4 +39,4 @@ The app has been submitted to Windows Store. Install it [here](https://www.micro
 
 管理员权限仅供实现上述功能，本程序无任何恶意行为，并已通过微软应用商店审核。详见商店详情页的隐私政策。
 
-[点此直接查看](https://paste-like-doinb.herokuapp.com/privacypolicy.html)
+[点此直接查看](Docs/PrivacyPolicy.html)
