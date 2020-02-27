@@ -1,5 +1,6 @@
 # PasteLikeDoinb
 记录对手的闪现时间，并一键发送Doinb风格的记录到游戏聊天（类似“mid1230 sup1504”）。
+
 Record your opponents' Flash CD and automatically type the Doinb-style-string (e.g. "mid1230 sup1504") into game chat. 
 
 # 截图 Screenshots
@@ -34,4 +35,6 @@ Record your opponents' Flash CD and automatically type the Doinb-style-string (e
 #### 使用本程序需要授权管理员权限
 请知悉，程序需要以管理员权限来运行以向《英雄联盟》的游戏内聊天自动输入内容。如果你没有所使用设备的管理员权限，则很可能无法正常使用本程序。
 
-管理员权限仅供实现上述功能，本程序无任何恶意行为，并已通过微软应用商店审核。详见商店详情页的隐私政策，或[点此](https://paste-like-doinb.herokuapp.com/privacypolicy.html)直接查看。s
+管理员权限仅供实现上述功能，本程序无任何恶意行为，并已通过微软应用商店审核。详见商店详情页的隐私政策。
+
+[点此直接查看](https://paste-like-doinb.herokuapp.com/privacypolicy.html)
