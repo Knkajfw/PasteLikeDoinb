@@ -5,10 +5,12 @@ Record your opponents' Flash CD and automatically type the Doinb-style-string (e
 
 # 下载 Download
 Windows客户端请移步[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)下载zip包。
+百度网盘: 链接: https://pan.baidu.com/s/1q5NzmNvkuHeYoTNdGDBgyA 提取码: cvxx
 应用已上架Windows应用商店，也可[点此](https://www.microsoft.com/store/apps/9NTFQT7XWQW7)前往安装。
 
 Head over to [Release Page](https://github.com/Knkajfw/PasteLikeDoinb/releases) to download the Windows client.  
 The app has also been submitted to Windows Store. Install it [here](https://www.microsoft.com/store/apps/9NTFQT7XWQW7).
+
 
 # 截图 Screenshots
 #### PC端截图
