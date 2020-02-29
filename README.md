@@ -26,6 +26,19 @@ The app has been submitted to Windows Store. Install it [here](https://www.micro
 ![游戏内截图](ExampleScreenshots/InGame.png)
 
 
+# FAQ
+#### Windows商店下载慢？
+1.商店抽风，过会再试试吧。
+2.在下载页面能看到一个“了解更多有关快速下载”的链接，点击之后，打开“允许从Internet上的其他计算机下载”开关。
+
+#### 打出来的消息是乱码？
+记得把输入法调整到英文模式或者使用ENG键盘哦。
+
+#### 安装包体积怎么有60多M？
+图省事，JS写完用electron框架适配Windows，安装包体积大是通病了..
+
+#### 
+
 # 声明 Disclaim
 #### 使用本程序不会危及账号安全
 首先，使用本程序时，玩家们对于对手闪现时间的记录完全是手动的，不涉及任何如自动探测，自动记录等影响游戏平衡的功能，不属于外挂或脚本；
