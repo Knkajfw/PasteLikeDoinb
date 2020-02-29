@@ -40,6 +40,9 @@ The app has been submitted to Windows Store. Install it [here](https://www.micro
 #### 安装完了但是找不到打开的方式？
 Win键+S打开全局搜索，搜索“记闪现”。
 
+#### 源码在哪？
+源码仓库pastelikedoinb-client，为了优化搜索结果，暂时设置了private。需要查看的话请联系我。
+
 # 声明 Disclaim
 #### 使用本程序不会危及账号安全
 首先，使用本程序时，玩家们对于对手闪现时间的记录完全是手动的，不涉及任何如自动探测，自动记录等影响游戏平衡的功能，不属于外挂或脚本；
