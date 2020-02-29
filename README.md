@@ -37,7 +37,8 @@ The app has been submitted to Windows Store. Install it [here](https://www.micro
 #### 安装包体积怎么有60多M？
 图省事，JS写完用electron框架适配Windows，安装包体积大是通病了..
 
-#### 
+#### 安装完了但是找不到打开的方式？
+Win键+S打开全局搜索，搜索“记闪现”。
 
 # 声明 Disclaim
 #### 使用本程序不会危及账号安全
