@@ -1,7 +1,12 @@
-# PasteLikeDoinb
+# 概述
 记录对手的闪现时间，并一键发送Doinb风格的记录到游戏聊天（类似“mid1230 sup1504”）。
 
 Record your opponents' Flash CD and automatically type the Doinb-style-string (e.g. "mid1230 sup1504") into game chat. 
+
+# 下载 Download
+应用已上架Windows应用商店，[点此](https://www.microsoft.com/store/apps/9NTFQT7XWQW7)前往安装。
+
+The app has been submitted to Windows Store. Install it [here](https://www.microsoft.com/store/apps/9NTFQT7XWQW7).
 
 # 截图 Screenshots
 #### PC端截图
@@ -19,11 +24,6 @@ Record your opponents' Flash CD and automatically type the Doinb-style-string (e
 游戏内效果
 
 ![游戏内截图](ExampleScreenshots/InGame.png)
-
-# 下载 Download
-应用已上架Windows应用商店，[点此](https://www.microsoft.com/store/apps/9NTFQT7XWQW7)前往安装。
-
-The app has been submitted to Windows Store. Install it [here](https://www.microsoft.com/store/apps/9NTFQT7XWQW7).
 
 
 # 声明 Disclaim
