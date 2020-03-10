@@ -13,21 +13,21 @@ The app has also been submitted to Windows Store. Install it [here](https://www.
 
 
 # 截图 Screenshots
+#### 游戏内截图
+
+![游戏内截图](https://i.loli.net/2020/03/10/MOwG4At2k5PFTDH.png)
+
 #### PC端截图
 在运行英雄联盟游戏的PC上驻留后台，负责接收指令，将记录语句发送到游戏聊天里。
 
-![PC端截图1](ExampleScreenshots/pc1.png) 
-![PC端截图2](ExampleScreenshots/pc2.png)
+![PC端截图1](https://i.loli.net/2020/02/29/xVmj4k3LuD1bcJy.png) 
+![PC端截图2](https://i.loli.net/2020/02/29/hiHfx1w47eNLP3j.png)
 
 #### 移动端截图
 用手机或别的设备扫码访问指定的页面，在此处记录对手何时使用了闪现，查看cd情况，指示发送记录语句。
 
-![移动端截图](ExampleScreenshots/NoChrome.png)
+![移动端截图](https://i.loli.net/2020/02/29/gzVyFjThswEfacP.png)
 
-#### 游戏内截图
-游戏内效果
-
-![游戏内截图](ExampleScreenshots/InGame.png)
 
 
 # FAQ
