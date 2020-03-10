@@ -35,7 +35,6 @@ The app has also been submitted to Windows Store. Install it [here](https://www.
 #### 1.Windows商店下载慢？
 国内商店连接不稳定，过会再试试或者用代理吧。
 
-
 #### 2.打出来的消息是乱码？
 记得把输入法调整到英文模式哦。
 
@@ -47,6 +46,12 @@ The app has also been submitted to Windows Store. Install it [here](https://www.
 
 #### 5.源码在哪？
 源码仓库pastelikedoinb-client，为了方便通过搜索引擎找到本仓库，暂时设置了private。需要查看的话请[联系我](mailto:oncewecanown@prontonmail.com)。
+
+#### 6.访问web控制台让手机电量消耗得很快？
+为了方便快速记录，使用了[NoSleep.js](https://github.com/richtr/NoSleep.js/)模块来实现计时期间手机不休眠，屏幕一直点亮，的确会对电池续航造成影响。建议插电使用。web控制台被关闭，或不在前台一段时间后，网页加载的各种js应当会停止工作。不会再消耗额外电量。
+
+#### 7.时间和游戏内时间不同步了？
+如果web控制台不在前台的时间较长，页面加载的js可能会停止工作，计时也就会跟不上。
 
 # 声明 Disclaim
 #### 使用本程序理论安全，但无法保证一定安全
