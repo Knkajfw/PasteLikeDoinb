@@ -1,0 +1,22 @@
+{
+  "name": "pastelikedoinb",
+  "version": "0.6.0",
+  "description": "An app that generates and auto-type LOL flash tracking messages.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "McMongo",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^7.1.8",
+    "electron-rebuild": "^1.8.8"
+  },
+  "dependencies": {
+    "nanoid": "^2.1.9",
+    "qrcode": "^1.4.4",
+    "robotjs": "^0.6.0",
+    "socket.io-client": "^2.3.0"
+  }
+}

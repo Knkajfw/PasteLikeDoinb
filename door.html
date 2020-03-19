@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="view-port" content="width=400px, initial-scale=1, shrink-to-fit:no">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <title>记闪现</title>
+</head>
+<body style="font-family: 微软雅黑;">
+  <div class="mt-5 mb-3 mx-0 row justify-content-center">
+    <img src="signal.svg" style="max-width: 30%; max-height: 30%;">
+  </div>
+  <div class="text-center mx-0 mb-4 text-muted">正在接收来自移动端的指令
+    <img src="question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="用手机打开下方网址，在页面中记录闪现时间，点击发送便可以指示本程序发送到游戏聊天中。打开后就可以最小化本程序啦。" style="transform: translate(-2px, -2px);">
+  </div>
+
+  <div class="row mx-0 justify-content-center">
+    <span class="text-muted" style="font-size: small; padding-right: 185px;">移动端地址</span>
+    <div id="copy-link-div" style="margin: 0px; padding: 0px;">
+      <a id="copy-link" href="#" style="font-size: small;">复制链接</a>
+    </div>
+  </div>
+
+  <div class="row mx-0 justify-content-center">
+    <div class="mb-2 col-auto">
+      <span id="link-span" class="font-weight-light bg-dark text-white rounded px-1 py-1" style="font-size: small;"></span>
+    </div>  
+  </div>
+
+  <div class="row mx-0 justify-content-center">
+    <canvas id="canvas" style="max-width: 140px; max-height: 140px;"></canvas>
+  </div>
+
+  <div class="row mx-0 mb-0 justify-content-center">
+    <p style="font-size: 10px;" class="text-muted">二维码即为上方链接，微信扫无效</p>
+    <img src="question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="微信无故屏蔽，可用支付宝/相机/浏览器等扫码，建议使用chrome打开链接。" style="transform: translate(2px, -8px);">
+  </div>
+
+
+  <div class="mx-5">
+    <div id="qrerror"></div>
+  </div>
+
+</body >
+<script src="renderer.js"></script>
+</html>
