@@ -1,3 +1,5 @@
+![PLD Logo](https://i.loli.net/2020/03/19/GUgCO4ruyMl9pT6.png)
+
 # 概述 Summary
 记录对手的闪现时间，并一键发送Doinb风格的信息到游戏聊天（类似“mid1230 sup1504”）。  
 Record your opponents' Flash CD and share it via generated game chat msg(e.g. "mid1230 sup1504" with one click.
