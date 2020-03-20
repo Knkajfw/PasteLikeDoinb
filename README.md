@@ -2,13 +2,13 @@
 
 # 概述 Summary
 记录对手的闪现时间，并一键发送Doinb风格的信息到游戏聊天（类似“mid1230 sup1504”）。  
-Record your opponents' Flash CD and share it with a generated game chat msg(e.g. "mid1230 sup1504") in one click.
+Record your opponents' Flash CD and share it with a auto-generated game chat msg("mid1230 sup1504") in one click.
 
 # 下载 Download
 请移步[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)下载zip压缩包。  
 应用已上架Windows应用商店，[点此](https://www.microsoft.com/store/apps/9NTFQT7XWQW7)前往安装。  
 百度网盘下载：
-链接: https://pan.baidu.com/s/1wFCobhuU64Ocwz6lvcSsjw 提取码: 67ax  
+链接: https://pan.baidu.com/s/1LZfq6PZnRp4Y1JVXFHE82Q 提取码: c6dh
 
 Head over to [Release Page](https://github.com/Knkajfw/PasteLikeDoinb/releases) to download the Windows client.  
 The app has also been submitted to Windows Store. Install it [here](https://www.microsoft.com/store/apps/9NTFQT7XWQW7). (Some markets only.)
@@ -57,7 +57,7 @@ This product has been registered on Riot Dev Portal and has been approved. Riot#
 ### Windows客户端需要提权 Please accept the Windows client to be run as admin
 请知悉，Windows客户端需要以管理员权限来运行以实现向《英雄联盟》的游戏内聊天输入内容。如果你没有所用设备的管理员权限，程序可能无法正常工作。管理员权限仅供完成上述功能，无任何恶意行为，已通过微软应用商店审核。源代码已公开，可以通过[electron-packager](https://github.com/electron/electron-packager)等工具自行打包&编译。
 
-Please note that the Windows client needs to be run as admin in order to type the generated msg into the game. Please allow the elevation when you are prompted by Windows. The program has no malicious feature and has been certificated by Microsoft Store. You can also choose to build from the source code with the help of something like [electron-packager](https://github.com/electron/electron-packager).
+Please note that the Windows client needs to be run as admin in order to type the generated msg into the game. Please allow the elevation when you are prompted by Windows. The program has no malicious feature and has been certificated by Microsoft Store. You can also choose to build from the source using something like [electron-packager](https://github.com/electron/electron-packager).
 
 # FAQ
 #### 1.Windows商店下载慢？
