@@ -34,15 +34,21 @@ You can also scan the QR Code to access your web console. Here you can record it
 
 # 声明 Disclaim
 ### 关于账号安全 Account Safety
-> 如果你是英雄联盟国服玩家
+##### 如果你是中国的英雄联盟玩家
+
 腾讯客服对于第三方插件咨询的回复是："我们会对任何恶意第三方插件进行监控，出现修改游戏代码、破坏游戏平衡，造成他人恶劣游戏体验以及其他非法行为绝不手软，都将进行相应的处罚。"  
 
-使用本程序时，对闪现记录由玩家手动进行，不涉及自动探测、自动记录等影响游戏平衡的功能。程序不读取/修改任何游戏收发数据/游戏目录文件/内存内容，不与游戏程序进行直接交互。游戏内聊天的自动键入是通过系统层面的键盘事件一个字母一个字母打出来的，与用户的正常键盘输入无异。与此原理类似的是游戏鼠标/游戏键盘的自定义宏，腾讯对此并不禁止。但是，由于腾讯官方尺度变化的不可预知，无法向您保证100%账号安全。作者在此声明不承担此类后果。
+使用本程序时，玩家手动记录闪现时间，不涉及自动探测、自动记录等影响游戏平衡的功能。  
+程序不读取/修改任何游戏收发数据/游戏目录文件/内存内容，不与游戏程序进行直接交互。  
+游戏内聊天的自动键入是通过系统层面的键盘事件一个字母一个字母打出来的，与用户的正常键盘输入无异。
+与此原理类似的是游戏鼠标/游戏键盘的自定义宏，腾讯对此并不禁止。  
+但是，由于腾讯官方尺度变化的不可预知，无法向您保证100%账号安全。作者在此声明不承担此类后果。
 
 以下为腾讯官方[列举](https://kf.qq.com/faq/161223EN7j2i161223neURbE.html)的会导致账号受到封禁处罚的情况。使用本程序不符合其中任何一项:
 ![哪些情况会被封号惩罚？](https://i.loli.net/2020/03/11/C3uphM69K8LqWNr.png)
 
-> If you play LOL in a region that Riot has direct control
+##### If you play LOL in a region that Riot has direct control
+
 This product has been registered on Riot Dev Portal and has been approved. Riot#Gene has confirmed non-violence of their ToS. It is unlikely that using this tool will get you banned.
 ![Approved on Dev Portal](https://i.loli.net/2020/03/20/eLIJXuT3sBoPhwV.png)
 ![Confirmation from Gene](https://i.loli.net/2020/03/20/Jlf2OQedC8v9TxA.png)
