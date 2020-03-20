@@ -32,7 +32,7 @@ You can also scan the QR Code to access your web console. Here you can record it
 
 ![移动端截图](https://i.loli.net/2020/02/29/gzVyFjThswEfacP.png)
 
-# 声明 Disclaim
+# 声明 Declaration
 ### 关于账号安全 Account Safety
 #### 如果你是中国的英雄联盟玩家
 
