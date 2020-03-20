@@ -34,7 +34,7 @@ You can also scan the QR Code to access your web console. Here you can record it
 
 # 声明 Disclaim
 ### 关于账号安全 Account Safety
-##### 如果你是中国的英雄联盟玩家
+#### 如果你是中国的英雄联盟玩家
 
 腾讯客服对于第三方插件咨询的回复是："我们会对任何恶意第三方插件进行监控，出现修改游戏代码、破坏游戏平衡，造成他人恶劣游戏体验以及其他非法行为绝不手软，都将进行相应的处罚。"  
 
@@ -47,7 +47,7 @@ You can also scan the QR Code to access your web console. Here you can record it
 以下为腾讯官方[列举](https://kf.qq.com/faq/161223EN7j2i161223neURbE.html)的会导致账号受到封禁处罚的情况。使用本程序不符合其中任何一项:
 ![哪些情况会被封号惩罚？](https://i.loli.net/2020/03/11/C3uphM69K8LqWNr.png)
 
-##### If you play LOL in a region that Riot has direct control
+#### If you play LOL in a region that Riot has direct control
 
 This product has been registered on Riot Dev Portal and has been approved. Riot#Gene has confirmed non-violence of their ToS. It is unlikely that using this tool will get you banned.
 ![Approved on Dev Portal](https://i.loli.net/2020/03/20/eLIJXuT3sBoPhwV.png)
