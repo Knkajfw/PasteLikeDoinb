@@ -67,10 +67,10 @@ Please note that the Windows client needs to be run as admin in order to type th
 记得把输入法调整到英文模式哦。
 
 #### 3.安装包体积怎么有60多M？
-图省事，JS写完用electron框架适配Windows，安装包体积大是通病了..
+程序在Electron框架下运行，而大多数用户的电脑上并没有，因此安装包中包含了这个框架。如果你之前已在使用Electron，可以clone本仓库 -> npm install -> npm start 来启动。
 
 #### 4.安装完了但是找不到打开的方式？
-如果是通过windows商店安装的话，可以通过Win键+S打开全局搜索，搜索“记闪现”，或者在"开始"菜单中浏览。
+如果是通过Windows商店安装的话，可以通过Win键+S打开全局搜索，搜索“记闪现”，或者在"开始"菜单中浏览。
 
 #### 5.访问web控制台让手机电量消耗得很快？
 为了方便快速记录，使用了[NoSleep.js](https://github.com/richtr/NoSleep.js/)模块来实现计时期间手机不休眠和屏幕一直点亮。上述特性确实会对电池续航造成影响，建议手机插电使用。当web控制台被关闭，或不在前台一段时间后，网页加载的各种js会停止工作，不会再消耗额外电量。
