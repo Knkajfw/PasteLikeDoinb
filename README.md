@@ -77,3 +77,7 @@ Please note that the Windows client needs to be run as admin in order to type th
 
 #### 6.时间和游戏内时间不同步了？
 如果web控制台不在前台的时间较长，页面加载的js可能会停止工作，计时也就会跟不上。
+
+## 赞助
+有了你们的赞助我会更有动力去好好完善这个工具!感谢你们~:D  
+支付宝 ![二维码](https://i.loli.net/2020/03/21/9vq5wsBTU6lNXZr.jpg)
