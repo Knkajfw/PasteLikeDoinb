@@ -60,6 +60,9 @@ This product has been registered on Riot Dev Portal and has been approved. Riot#
 Please note that the Windows client needs to be run as admin in order to type the generated msg into the game. Please allow the elevation when you are prompted by Windows. The program has no malicious feature and has been certificated by Microsoft Store. You can also choose to build from the source using something like [electron-packager](https://github.com/electron/electron-packager).
 
 # FAQ
+#### 0.交流群？
+加入QQ群699702899和作者/其他用户一起讨论这个软件吧！
+
 #### 1.Windows商店下载慢？
 国内商店连接不稳定，可以过会再试试，注意不用代理很可能会更快。
 
@@ -79,7 +82,7 @@ Please note that the Windows client needs to be run as admin in order to type th
 如果web控制台不在前台的时间较长，页面加载的js可能会停止工作，计时也就会跟不上。
 
 ## 赞助
-有了你们的赞助我会更有动力去好好完善这个工具！感谢你们~ :D
+帮到你了的话给我晚饭加个鸡腿吧:D
 
 ![二维码](https://i.loli.net/2020/03/21/9vq5wsBTU6lNXZr.jpg)
 
