@@ -33,28 +33,30 @@ You can also scan the QR Code to access your web console. Here you can record it
 ![移动端截图](https://i.loli.net/2020/02/29/gzVyFjThswEfacP.png)
 
 # 声明 Declaration
-### 关于账号安全 Account Safety
-#### 如果你是中国的英雄联盟玩家
+### 1.关于账号安全 Account Safety
+#### *如果你是中国的英雄联盟玩家*
+本程序在拳头的Dev Portal已完成注册，并已获得Riot官方人员确认并不违规。
+当然，英雄联盟国服是由腾讯代理的，我们还需要参考腾讯的态度。
 
 腾讯客服对于第三方插件咨询的回复是："我们会对任何恶意第三方插件进行监控，出现修改游戏代码、破坏游戏平衡，造成他人恶劣游戏体验以及其他非法行为绝不手软，都将进行相应的处罚。"  
 
 使用本程序时，玩家手动记录闪现时间，不涉及自动探测、自动记录等影响游戏平衡的功能。  
 程序不读取/修改任何游戏收发数据/游戏目录文件/内存内容，不与游戏程序进行直接交互。  
 游戏内聊天的自动键入是通过系统层面的键盘事件一个字母一个字母打出来的，与用户的正常键盘输入无异。
-与此原理类似的是游戏鼠标/游戏键盘的自定义宏，腾讯对此并不禁止。  
-但是，由于腾讯官方尺度变化的不可预知，无法向您保证100%账号安全。作者在此声明不承担此类后果。
+与此原理类似的是游戏鼠标/游戏键盘上常见的宏指令功能，腾讯对此并不禁止，不认为是外挂行为。  
+但是，由于腾讯官方尺度变化的不可预知，无法向您保证100%账号安全，作者在此声明不承担有关后果。
 
 以下为腾讯官方[列举](https://kf.qq.com/faq/161223EN7j2i161223neURbE.html)的会导致账号受到封禁处罚的情况。使用本程序不符合其中任何一项:
 ![哪些情况会被封号惩罚？](https://i.loli.net/2020/03/11/C3uphM69K8LqWNr.png)
 
-#### If you play LOL in a region that Riot has direct control
+#### *If you play LOL in a region where Riot has direct control*
 
 This product has been registered on Riot Dev Portal and has been approved. Riot#Gene has confirmed non-violence of their ToS. It is unlikely that using this tool will get you banned.  
 
 ![Approved on Dev Portal](https://i.loli.net/2020/03/20/eLIJXuT3sBoPhwV.png)
 ![Confirmation from Gene](https://i.loli.net/2020/03/20/Jlf2OQedC8v9TxA.png)
 
-### Windows客户端需要提权 Please accept the Windows client to be run as admin
+### 2.Windows客户端需要提权 Please accept the Windows client to be run as admin
 请知悉，Windows客户端需要以管理员权限来运行以实现向《英雄联盟》的游戏内聊天输入内容。如果你没有所用设备的管理员权限，程序可能无法正常工作。管理员权限仅供完成上述功能，无任何恶意行为，已通过微软应用商店审核。源代码已公开，可以通过[electron-packager](https://github.com/electron/electron-packager)等工具自行打包&编译。
 
 Please note that the Windows client needs to be run as admin in order to type the generated msg into the game. Please allow the elevation when you are prompted by Windows. The program has no malicious feature and has been certificated by Microsoft Store. You can also choose to build from the source using something like [electron-packager](https://github.com/electron/electron-packager).
@@ -82,7 +84,7 @@ Please note that the Windows client needs to be run as admin in order to type th
 加入QQ群699702899和作者/其他用户一起讨论这个软件吧！
 
 ## 赞助
-帮到你了的话给我晚饭加个鸡腿吧:D
+有帮到你的话，给我的晚饭加个鸡腿吧~！
 
 ![二维码](https://i.loli.net/2020/03/21/9vq5wsBTU6lNXZr.jpg)
 
