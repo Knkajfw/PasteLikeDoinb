@@ -57,9 +57,9 @@ This product has been registered on Riot Dev Portal and has been approved. Riot#
 ![Confirmation from Gene](https://i.loli.net/2020/03/20/Jlf2OQedC8v9TxA.png)
 
 ### 2.Windows客户端需要提权 Please accept the Windows client to be run as admin
-请知悉，Windows客户端需要以管理员权限来运行以实现向《英雄联盟》的游戏内聊天输入内容。如果你没有所用设备的管理员权限，程序可能无法正常工作。管理员权限仅供完成上述功能，无任何恶意行为，已通过微软应用商店审核。源代码已公开，可以通过[electron-packager](https://github.com/electron/electron-packager)等工具自行打包&编译。
+请知悉，Windows客户端需要以管理员权限来运行以实现向《英雄联盟》的游戏内聊天输入内容。如果你没有所用设备的管理员权限，程序可能无法正常工作。管理员权限仅供完成上述功能，无任何恶意行为，已通过微软应用商店审核。源代码已公开，可以参考Electron的[文档](https://www.electronjs.org/docs/tutorial/application-packaging)自行Build。
 
-Please note that the Windows client needs to be run as admin in order to type the generated msg into the game. Please allow the elevation when you are prompted by Windows. The program has no malicious feature and has been certificated by Microsoft Store. You can also choose to build from the source using something like [electron-packager](https://github.com/electron/electron-packager).
+Please note that the Windows client needs to be run as admin in order to type the generated msg into the game. Please allow the elevation when you are prompted by Windows. The program has no malicious feature and has been certificated by Microsoft Store. You can also choose to build from source. See Electron's [document](https://www.electronjs.org/docs/tutorial/application-packaging) for help.
 
 # FAQ
 #### 1.Windows商店下载慢？
@@ -90,4 +90,4 @@ Please note that the Windows client needs to be run as admin in order to type th
 
 感谢以下同学的赞助支持：
 
-<a href='https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727'><img src='https://i.loli.net/2020/03/23/aqSrbfQL9sJVYkz.png' alt='UserIcon'></a>
+<a href='https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727'><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'>NGA论坛@我跟你描述一个灵魂</a>
