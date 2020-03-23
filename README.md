@@ -88,5 +88,6 @@ Please note that the Windows client needs to be run as admin in order to type th
 - [微信支付](https://i.loli.net/2020/03/23/FrDkPLMWT6GEQcm.png)
 - [支付宝](https://i.loli.net/2020/03/21/9vq5wsBTU6lNXZr.jpg)
 
-感谢以下同学的赞助支持：  
-<a href='https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727'><img src='https://i.loli.net/2020/03/23/rK6AWJcvNymTeof.png' alt='UserIcon'></a>
+感谢以下同学的赞助支持：
+
+<a href='https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727'><img src='https://i.loli.net/2020/03/23/aqSrbfQL9sJVYkz.png' alt='UserIcon'></a>
