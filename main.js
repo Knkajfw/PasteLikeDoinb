@@ -50,7 +50,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
 function createLoadingPageWindow() {
     Menu.setApplicationMenu(null);
     win = new BrowserWindow({
-        width: 360,
+        width: 371,
         height: 600,
         webPreferences: { nodeIntegration: true }
     })
@@ -65,7 +65,9 @@ function loadDoor() {
 }
 
 function typeit() {
+    robot.keyTap('capslock');
     robot.keyTap('enter');
-    robot.typeStringDelayed(clip.toLowerCase(),99999);
+    robot.typeStringDelayed(clip.toLowerCase(), 99999);
     robot.keyTap('enter');
+    robot.keyTap('capslock');
 }
