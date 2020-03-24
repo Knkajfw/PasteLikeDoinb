@@ -32,6 +32,8 @@ You can also scan the QR Code to access your web console. Here you can record it
 
 ![移动端截图](https://i.loli.net/2020/02/29/gzVyFjThswEfacP.png)
 
+详细的使用说明[在这](https://jingyan.baidu.com/article/f79b7cb3b90f6cd044023ef9.html)
+
 # 声明 Declaration
 ### 1.关于账号安全 Account Safety
 #### *如果你是中国的英雄联盟玩家*
