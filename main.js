@@ -1,14 +1,30 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const robot = require('robotjs'); robot.setKeyboardDelay(20);
-var io = require('socket.io-client');
+const HttpsProxyAgent = require('https-proxy-agent');
+const url = require('url');
+const getSystemProxyForUrl = require('get-system-proxy-for-url');
+const https = require('https');
+const io = require('socket.io-client');
+const nanoid = require('nanoid');
+
 var socket;
 var socketServerAddress = '';
 var info = '';
 var infoLink = '';
 var clip = '';
-var nanoid = require('nanoid');
-var pcClientId = nanoid(4);
 var win = null;
+var pcClientId = nanoid(4);
+
+function prepareHttpsAgent() {
+    getSystemProxyForUrl('https://www.google.com')
+    .then((proxy) => {
+        if (proxy !== 'DIRECT') {
+            let proxyServer = url.parse(proxy);
+            https.globalAgent = new HttpsProxyAgent(proxyServer.href);
+        }
+        createLoadingPageWindow();
+    })
+}
 
 function createLoadingPageWindow() {
     Menu.setApplicationMenu(null);
@@ -17,10 +33,10 @@ function createLoadingPageWindow() {
         height: 600,
         webPreferences: { nodeIntegration: true }
     })
-    win.loadFile('loading-page.html');
     win.on('closed', () => {
         win = null;
     })
+    win.webContents.loadFile('loading-page.html');    
 }
 
 function loadDoor() {
@@ -35,14 +51,20 @@ function typeit() {
     robot.keyTap('capslock');
 }
 
-app.on('ready', createLoadingPageWindow);
+app.on('ready', prepareHttpsAgent);
 app.on('window-all-closed', () => {
     app.quit();
 })
 
 ipcMain.on('socketServerInfo', (event, arg) => {
     socketServerAddress = arg;
-    socket = io(socketServerAddress);
+    let opts = {
+        rejectUnauthorized: false,
+        reconnection: true,
+        agent: https.globalAgent
+    };
+    console.log(opts.agent);
+    socket = io(socketServerAddress, opts);
     app.on('will-quit', () => {
         socket.close();
     })
