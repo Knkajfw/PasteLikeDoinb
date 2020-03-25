@@ -63,7 +63,6 @@ ipcMain.on('socketServerInfo', (event, arg) => {
         reconnection: true,
         agent: https.globalAgent
     };
-    console.log(opts.agent);
     socket = io(socketServerAddress, opts);
     app.on('will-quit', () => {
         socket.close();
