@@ -1,8 +1,8 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const robot = require('robotjs'); robot.setKeyboardDelay(20);
 const HttpsProxyAgent = require('https-proxy-agent');
+const PowerShell = require('node-powershell');
 const url = require('url');
-const getSystemProxyForUrl = require('get-system-proxy-for-url');
 const https = require('https');
 const io = require('socket.io-client');
 const nanoid = require('nanoid');
@@ -14,13 +14,24 @@ var win = null;
 var pcClientId = nanoid(4);
 
 function prepareHttpsAgent() {
-    getSystemProxyForUrl('https://www.google.com')
-    .then((proxy) => {
-        if (proxy !== 'DIRECT') {
-            let proxyServer = url.parse(proxy);
-            https.globalAgent = new HttpsProxyAgent(proxyServer.href);
+    let ps = new PowerShell({
+        executionPolicy: 'Bypass',
+        noProfile: true
+    });
+    ps.addCommand('./getSystemProxy.ps1')
+    ps.addArgument("https://www.google.com");
+    ps.invoke()
+    .then(output => {
+        if (output !== 'DIRECT') {
+            let proxyServerObj = url.parse(output);
+            https.globalAgent = new HttpsProxyAgent(proxyServerObj.href);
+            console.log(proxyServerObj.href);
         }
         createLoadingPageWindow();
+    })
+    .catch(err => {
+        console.log(err);
+        ps.dispose();
     })
 }
 
