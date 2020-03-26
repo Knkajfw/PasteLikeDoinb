@@ -9,8 +9,6 @@ const nanoid = require('nanoid');
 
 var socket;
 var socketServerAddress = '';
-var info = '';
-var infoLink = '';
 var clip = '';
 var win = null;
 var pcClientId = nanoid(4);
