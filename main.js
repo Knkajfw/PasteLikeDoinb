@@ -1,38 +1,44 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const robot = require('robotjs'); robot.setKeyboardDelay(20);
 const HttpsProxyAgent = require('https-proxy-agent');
-const PowerShell = require('node-powershell');
-const url = require('url');
 const https = require('https');
+const url = require('url');
 const io = require('socket.io-client');
 const nanoid = require('nanoid');
+const getWindowsRelease = require('windows-release');
 
 var socket;
 var socketServerAddress = '';
 var clip = '';
 var win = null;
 var pcClientId = nanoid(4);
+var gotProxy = false;
 
-function prepareHttpsAgent() {
-    let ps = new PowerShell({
-        executionPolicy: 'Bypass',
-        noProfile: true
-    });
-    ps.addCommand('./getSystemProxy.ps1')
-    ps.addArgument("https://www.google.com");
-    ps.invoke()
-    .then(output => {
-        if (output !== 'DIRECT') {
-            let proxyServerObj = url.parse(output);
-            https.globalAgent = new HttpsProxyAgent(proxyServerObj.href);
-            console.log(proxyServerObj.href);
-        }
+function prepareHttpsAgentAndCreateWindow() {
+    let windowsRelease = getWindowsRelease();
+    if (['10','8.1','8'].indexOf(windowsRelease) >= 0) {
+        const getSystemProxyForUrl = require('get-system-proxy-for-url');
+        getSystemProxyForUrl("https://www.google.com")
+        .then(proxy => {
+            if (proxy === 'DIRECT') {
+                gotProxy = true;
+                createLoadingPageWindow();
+            }
+            else if ((proxy !== undefined) && (proxy !== null)) {
+                gotProxy = true;
+                let proxyServerObj = url.parse(proxy);
+                let href = proxyServerObj.href;
+                https.globalAgent = new HttpsProxyAgent(href);
+                createLoadingPageWindow();
+            }
+            else {
+                createLoadingPageWindow();
+            }
+        })
+    }
+    else {
         createLoadingPageWindow();
-    })
-    .catch(err => {
-        console.log(err);
-        ps.dispose();
-    })
+    }
 }
 
 function createLoadingPageWindow() {
@@ -45,7 +51,24 @@ function createLoadingPageWindow() {
     win.on('closed', () => {
         win = null;
     })
-    win.webContents.loadFile('loading-page.html');    
+    if (!gotProxy) {
+        win.webContents.session.resolveProxy('https://www.google.com')
+        .then(str => {
+            let parts = str.split(' ');
+            if (parts[0] === 'PROXY') {
+                let resolvedProxyAddress = parts[1];
+                let resolvedProxyhref = 'http://' + resolvedProxyAddress;
+                https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
+                win.webContents.loadFile('loading-page.html');
+            }
+            else {
+                win.webContents.loadFile('loading-page.html');
+            }
+        })    
+    }
+    else {
+        win.webContents.loadFile('loading-page.html');    
+    }
 }
 
 function loadDoor() {
@@ -60,7 +83,7 @@ function typeit() {
     robot.keyTap('capslock');
 }
 
-app.on('ready', prepareHttpsAgent);
+app.on('ready', prepareHttpsAgentAndCreateWindow);
 app.on('window-all-closed', () => {
     app.quit();
 })
