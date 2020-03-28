@@ -5,41 +5,12 @@ const https = require('https');
 const url = require('url');
 const io = require('socket.io-client');
 const nanoid = require('nanoid');
-const getWindowsRelease = require('windows-release');
 
 var socket;
 var socketServerAddress = '';
 var clip = '';
 var win = null;
 var pcClientId = nanoid(4);
-var gotProxy = false;
-
-function prepareHttpsAgentAndCreateWindow() {
-    let windowsRelease = getWindowsRelease();
-    if (['10','8.1','8'].indexOf(windowsRelease) >= 0) {
-        const getSystemProxyForUrl = require('get-system-proxy-for-url');
-        getSystemProxyForUrl("https://www.google.com")
-        .then(proxy => {
-            if (proxy === 'DIRECT') {
-                gotProxy = true;
-                createLoadingPageWindow();
-            }
-            else if ((proxy !== undefined) && (proxy !== null)) {
-                gotProxy = true;
-                let proxyServerObj = url.parse(proxy);
-                let href = proxyServerObj.href;
-                https.globalAgent = new HttpsProxyAgent(href);
-                createLoadingPageWindow();
-            }
-            else {
-                createLoadingPageWindow();
-            }
-        })
-    }
-    else {
-        createLoadingPageWindow();
-    }
-}
 
 function createLoadingPageWindow() {
     Menu.setApplicationMenu(null);
@@ -51,24 +22,19 @@ function createLoadingPageWindow() {
     win.on('closed', () => {
         win = null;
     })
-    if (!gotProxy) {
-        win.webContents.session.resolveProxy('https://www.google.com')
-        .then(str => {
-            let parts = str.split(' ');
-            if (parts[0] === 'PROXY') {
-                let resolvedProxyAddress = parts[1];
-                let resolvedProxyhref = 'http://' + resolvedProxyAddress;
-                https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
-                win.webContents.loadFile('loading-page.html');
-            }
-            else {
-                win.webContents.loadFile('loading-page.html');
-            }
-        })    
-    }
-    else {
-        win.webContents.loadFile('loading-page.html');    
-    }
+    win.webContents.session.resolveProxy('https://www.google.com')
+    .then(str => {
+        let parts = str.split(' ');
+        if (parts[0] === 'PROXY') {
+            let resolvedProxyAddress = parts[1];
+            let resolvedProxyhref = 'http://' + resolvedProxyAddress;
+            https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
+            win.webContents.loadFile('loading-page.html');
+        }
+        else {
+            win.webContents.loadFile('loading-page.html');
+        }
+    })    
 }
 
 function loadDoor() {
@@ -83,7 +49,7 @@ function typeit() {
     robot.keyTap('capslock');
 }
 
-app.on('ready', prepareHttpsAgentAndCreateWindow);
+app.on('ready', createLoadingPageWindow);
 app.on('window-all-closed', () => {
     app.quit();
 })
