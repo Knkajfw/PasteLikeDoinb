@@ -1,6 +1,6 @@
 {
   "name": "pastelikedoinb",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "An app that generates and auto-type LOL flash tracking messages",
   "main": "main.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "nanoid": "^2.1.9",
     "qrcode": "^1.4.4",
     "robotjs": "^0.6.0",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^2.3.0",
+    "windows-release": "^3.2.0"
   }
 }
