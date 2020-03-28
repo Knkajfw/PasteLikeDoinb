@@ -42,11 +42,11 @@ function loadDoor() {
 }
 
 function typeit() {
-    robot.keyTap('capslock');
     robot.keyTap('enter');
+    robot.keyTap('capslock');
     robot.typeStringDelayed(clip.toLowerCase(), 99999);
-    robot.keyTap('enter');
     robot.keyTap('capslock');
+    robot.keyTap('enter');
 }
 
 app.on('ready', createLoadingPageWindow);
