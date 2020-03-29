@@ -85,6 +85,30 @@ Please note that the Windows client needs to be run as admin in order to type th
 #### 7.其他问题？
 加入QQ群699702899和作者/其他用户一起讨论这个软件吧！
 
+## Build
+1.Install Node  
+[Official Site](https://nodejs.org/en/)  
+This project was developed under node v12.13.0
+
+2.Clone this repo  
+Under the directory that you want to clone this to:  
+`git clone https://github.com/Knkajfw/PasteLikeDoinb.git`
+
+3.Install the dependencies  
+```
+cd PasteLikeDoinb
+npm install
+```
+
+4.Modify the source code of RobotJs(one of the dependencies)  
+See this [issue](https://github.com/octalmage/robotjs/issues/530#issuecomment-570795846).
+
+5.Rebuild RobotJs for Electron  
+See this [page](https://github.com/electron/electron-rebuild)
+
+6.Start the program  
+`npm start`
+
 ## 赞助
 有帮到你的话，给我的晚饭加个鸡腿吧~！
 - [微信支付](https://i.loli.net/2020/03/23/FrDkPLMWT6GEQcm.png)
@@ -93,3 +117,4 @@ Please note that the Windows client needs to be run as admin in order to type th
 感谢以下同学的赞助支持：
 
 <a href='https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727'><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'>NGA论坛@我跟你描述一个灵魂</a>
+<p><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'>h*y</p>
