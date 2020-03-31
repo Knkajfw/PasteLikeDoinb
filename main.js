@@ -2,7 +2,6 @@ const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const robot = require('robotjs'); robot.setKeyboardDelay(20);
 const HttpsProxyAgent = require('https-proxy-agent');
 const https = require('https');
-const url = require('url');
 const io = require('socket.io-client');
 const nanoid = require('nanoid');
 
