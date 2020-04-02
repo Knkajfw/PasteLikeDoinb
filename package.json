@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "IndieNoSt",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "electron": "^7.1.8",
     "electron-rebuild": "^1.8.8"
