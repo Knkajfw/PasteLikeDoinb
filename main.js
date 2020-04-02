@@ -28,16 +28,16 @@ function createLoadingPageWindow() {
             let resolvedProxyAddress = parts[1];
             let resolvedProxyhref = 'http://' + resolvedProxyAddress;
             https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
-            win.webContents.loadFile('loading-page.html');
+            win.webContents.loadFile('assets/html/loading-page.html');
         }
         else {
-            win.webContents.loadFile('loading-page.html');
+            win.webContents.loadFile('assets/html/loading-page.html');
         }
     })    
 }
 
 function loadDoor() {
-    win.loadFile('door.html');
+    win.loadFile('assets/html/door.html');
 }
 
 function typeit() {
