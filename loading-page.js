@@ -20,6 +20,10 @@ function replaceIconLinkWithCannotConnectHelp() {
   iconLink.addEventListener('click', openCannotConnectHelpExternally);
 }
 
+function reload(){
+  ipcRenderer.send('reload');
+}
+
 ipcRenderer.on('loadStatus_SocketLinked', () => {
   statusBlock.innerText = "已建立连接，等待Check-in";
 })

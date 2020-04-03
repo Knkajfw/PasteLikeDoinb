@@ -18,6 +18,10 @@ ipcRenderer.on('refer', (e, msg) => {
     })
 })
 
+function doorReload() {
+    ipcRenderer.send('reload');
+}
+
 var copylinkdiv = document.getElementById('copy-link-div');
 copylinkdiv.addEventListener('click', () => {
     navigator.clipboard.writeText(correspMobileClientLink);

@@ -33,7 +33,7 @@ function createLoadingPageWindow() {
         else {
             win.webContents.loadFile('assets/html/loading-page.html');
         }
-    })    
+    })
 }
 
 function loadDoor() {
@@ -46,6 +46,24 @@ function typeit() {
     robot.typeStringDelayed(clip.toLowerCase(), 99999);
     robot.keyTap('capslock');
     robot.keyTap('enter');
+}
+
+function winReload() {
+  win.webContents.session.resolveProxy('https://www.google.com')
+  .then(str => {
+      let parts = str.split(' ');
+      if (parts[0] === 'PROXY') {
+          let resolvedProxyAddress = parts[1];
+          let resolvedProxyhref = 'http://' + resolvedProxyAddress;
+          https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
+          socket.close();
+          win.webContents.loadFile('assets/html/loading-page.html');
+      }
+      else {
+        socket.close();
+        win.webContents.loadFile('assets/html/loading-page.html');
+      }
+  })
 }
 
 app.on('ready', createLoadingPageWindow);
@@ -87,4 +105,8 @@ ipcMain.on('socketServerInfo', (event, arg) => {
         clip = msg;
         typeit();
     })
+})
+
+ipcMain.on('reload', () => {
+  winReload();
 })
