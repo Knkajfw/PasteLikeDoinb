@@ -15,7 +15,7 @@ function openCannotConnectHelpExternally(event) {
   shell.openExternal('https://knkajfw.github.io/paste-like-doinb/cannot-connect.html');
 }
 function replaceIconLinkWithCannotConnectHelp() {
-  iconLink.innerHTML = '<small>不能连接请点我</small>';
+  iconLink.innerHTML = "<small>Can't get connected? See help</small>";
   iconLink.removeEventListener('click', openIconLinkExternally);
   iconLink.addEventListener('click', openCannotConnectHelpExternally);
 }
