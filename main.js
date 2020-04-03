@@ -10,6 +10,7 @@ var socketServerAddress = '';
 var clip = '';
 var win = null;
 var pcClientId = nanoid(4);
+var willquitListenerExistence = false;
 
 function createLoadingPageWindow() {
     Menu.setApplicationMenu(null);
@@ -79,9 +80,12 @@ ipcMain.on('socketServerInfo', (event, arg) => {
         agent: https.globalAgent
     };
     socket = io(socketServerAddress, opts);
-    app.on('will-quit', () => {
+    if (!willquitListenerExistence) {
+      app.on('will-quit', () => {
         socket.close();
-    })
+      })
+      willquitListenerExistence = true;
+    }
     socket.on('connect', () => {
         win.webContents.send('loadStatus_SocketLinked');
     })
