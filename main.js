@@ -13,103 +13,103 @@ var pcClientId = nanoid(4);
 var willquitListenerExistence = false;
 
 function createLoadingPageWindow() {
-    Menu.setApplicationMenu(null);
-    win = new BrowserWindow({
-        width: 371,
-        height: 600,
-        webPreferences: { nodeIntegration: true }
-    })
-    win.on('closed', () => {
-        win = null;
-    })
-    win.webContents.session.resolveProxy('https://www.google.com')
-    .then(str => {
-        let parts = str.split(' ');
-        if (parts[0] === 'PROXY') {
-            let resolvedProxyAddress = parts[1];
-            let resolvedProxyhref = 'http://' + resolvedProxyAddress;
-            https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
-            win.webContents.loadFile('assets/html/loading-page.html');
-        }
-        else {
-            win.webContents.loadFile('assets/html/loading-page.html');
-        }
-    })
+  Menu.setApplicationMenu(null);
+  win = new BrowserWindow({
+    width: 371,
+    height: 600,
+    webPreferences: { nodeIntegration: true }
+  })
+  win.on('closed', () => {
+    win = null;
+  })
+  win.webContents.session.resolveProxy('https://www.google.com')
+  .then(str => {
+    let parts = str.split(' ');
+    if (parts[0] === 'PROXY') {
+      let resolvedProxyAddress = parts[1];
+      let resolvedProxyhref = 'http://' + resolvedProxyAddress;
+      https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
+      win.webContents.loadFile('assets/html/loading-page.html');
+    }
+    else {
+      win.webContents.loadFile('assets/html/loading-page.html');
+    }
+  })
 }
 
 function loadDoor() {
-    win.loadFile('assets/html/door.html');
+  win.loadFile('assets/html/door.html');
 }
 
 function typeit() {
-    robot.keyTap('enter');
-    robot.keyTap('capslock');
-    robot.typeStringDelayed(clip.toLowerCase(), 99999);
-    robot.keyTap('capslock');
-    robot.keyTap('enter');
+  robot.keyTap('enter');
+  robot.keyTap('capslock');
+  robot.typeStringDelayed(clip.toLowerCase(), 99999);
+  robot.keyTap('capslock');
+  robot.keyTap('enter');
 }
 
 function winReload() {
   win.webContents.session.resolveProxy('https://www.google.com')
   .then(str => {
-      let parts = str.split(' ');
-      if (parts[0] === 'PROXY') {
-          let resolvedProxyAddress = parts[1];
-          let resolvedProxyhref = 'http://' + resolvedProxyAddress;
-          https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
-          socket.close();
-          win.webContents.loadFile('assets/html/loading-page.html');
-      }
-      else {
-        https.globalAgent = new https.Agent({});
-        socket.close();
-        win.webContents.loadFile('assets/html/loading-page.html');
-      }
+    let parts = str.split(' ');
+    if (parts[0] === 'PROXY') {
+      let resolvedProxyAddress = parts[1];
+      let resolvedProxyhref = 'http://' + resolvedProxyAddress;
+      https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
+      socket.close();
+      win.webContents.loadFile('assets/html/loading-page.html');
+    }
+    else {
+      https.globalAgent = new https.Agent({});
+      socket.close();
+      win.webContents.loadFile('assets/html/loading-page.html');
+    }
   })
 }
 
 app.on('ready', createLoadingPageWindow);
 app.on('window-all-closed', () => {
-    app.quit();
+  app.quit();
 })
 
 ipcMain.on('socketServerInfo', (event, arg) => {
-    socketServerAddress = arg;
-    let opts = {
-        rejectUnauthorized: false,
-        reconnection: true,
-        agent: https.globalAgent
-    };
-    socket = io(socketServerAddress, opts);
-    if (!willquitListenerExistence) {
-      app.on('will-quit', () => {
-        socket.close();
-      })
-      willquitListenerExistence = true;
-    }
-    socket.on('connect', () => {
-        win.webContents.send('loadStatus_SocketLinked');
+  socketServerAddress = arg;
+  let opts = {
+    rejectUnauthorized: false,
+    reconnection: true,
+    agent: https.globalAgent
+  }
+  socket = io(socketServerAddress, opts);
+  if (!willquitListenerExistence) {
+    app.on('will-quit', () => {
+      socket.close();
     })
-    socket.on('check', () => {
-        socket.emit('ispc', pcClientId);
-        win.webContents.send('loadStatus_PCIdEmitted')
+    willquitListenerExistence = true;
+  }
+  socket.on('connect', () => {
+    win.webContents.send('loadStatus_SocketLinked');
+  })
+  socket.on('check', () => {
+    socket.emit('ispc', pcClientId);
+    win.webContents.send('loadStatus_PCIdEmitted')
+  })
+  socket.on('pcoc', () => {
+    pcClientId = nanoid(4);
+    socket.emit('ispc', pcClientId);
+  })
+  socket.on('pcintro', (msg) => {
+    win.webContents.send('loadStatus_MobileLinkReceived')
+    var correspMobileClientLink = socketServerAddress + '/m/' + msg;
+    loadDoor();
+    win.webContents.on('did-finish-load', () => {
+      win.webContents.send('refer', correspMobileClientLink);
     })
-    socket.on('pcoc', () => {
-        pcClientId = nanoid(4);
-        socket.emit('ispc', pcClientId);
-    })
-    socket.on('pcintro', (msg) => {
-        win.webContents.send('loadStatus_MobileLinkReceived')
-        var correspMobileClientLink = socketServerAddress + '/m/' + msg;
-        loadDoor();
-        win.webContents.on('did-finish-load', () => {
-            win.webContents.send('refer', correspMobileClientLink);
-        })
-    })
-    socket.on('clips2p', (msg) => {
-        clip = msg;
-        typeit();
-    })
+  })
+  socket.on('clips2p', (msg) => {
+    clip = msg;
+    typeit();
+  })
 })
 
 ipcMain.on('reload', () => {
