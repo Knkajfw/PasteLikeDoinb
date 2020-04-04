@@ -61,6 +61,7 @@ function winReload() {
           win.webContents.loadFile('assets/html/loading-page.html');
       }
       else {
+        https.globalAgent = new https.Agent({});
         socket.close();
         win.webContents.loadFile('assets/html/loading-page.html');
       }
