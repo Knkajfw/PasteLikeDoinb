@@ -18,6 +18,18 @@ ipcRenderer.on('refer', (e, msg) => {
     })
 })
 
+ipcRenderer.on('noGame', (e, msg) => {
+    var noGame = document.getElementById('game-time-str')
+    noGame.innerText = msg
+    var gameTime = document.getElementById('game-time')
+    gameTime.innerText = ''
+})
+
+ipcRenderer.on('gameTime', (e, msg) => {
+    var gameTime = document.getElementById('game-time')
+    gameTime.innerText = msg
+})
+
 function doorReload() {
     ipcRenderer.send('reload');
 }
