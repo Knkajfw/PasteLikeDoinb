@@ -1,9 +1,11 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, net } = require('electron');
 const robot = require('robotjs'); robot.setKeyboardDelay(20);
 const HttpsProxyAgent = require('https-proxy-agent');
 const https = require('https');
 const io = require('socket.io-client');
 const nanoid = require('nanoid');
+
+app.commandLine.appendSwitch('ignore-certificate-errors')
 
 var socket;
 var socketServerAddress = '';
@@ -15,8 +17,8 @@ var willquitListenerExistence = false;
 function createLoadingPageWindow() {
   Menu.setApplicationMenu(null);
   win = new BrowserWindow({
-    width: 371,
-    height: 600,
+    width: 375,
+    height: 635,
     webPreferences: { nodeIntegration: true }
   })
   win.on('closed', () => {
@@ -49,6 +51,38 @@ function typeit() {
   robot.keyTap('enter');
 }
 
+function getGameTime() {
+  const request = net.request('https://127.0.0.1:2999/liveclientdata/gamestats')
+  request.on('error', (error) => {
+    //var noGame = document.getElementById('game-time-str')
+    var noGame = '游戏尚未运行'
+    win.webContents.send('noGame', noGame)
+  })
+  request.on('response', (response) => {
+    response.on('data', (chunk) => {
+      var obj = JSON.parse(chunk)
+      var time = obj.gameTime
+      var min = Math.floor(time / 60)
+      var sec = Math.floor(time % 60)
+      if (min < 10) {
+        var minStr = `0${min}`
+      } else {
+        var minStr = `${min}`
+      }
+      if (sec < 10) {
+        var secStr = `0${sec}`
+      } else {
+        var secStr = `${sec}`
+      }
+      var timeStr = minStr + ':' + secStr
+      var isGame = '游戏时间'
+      win.webContents.send('noGame', isGame)
+      win.webContents.send('gameTime', timeStr)
+    })
+  })
+  request.end()
+}
+
 function winReload() {
   win.webContents.session.resolveProxy('https://www.google.com')
   .then(str => {
@@ -68,7 +102,11 @@ function winReload() {
   })
 }
 
-app.on('ready', createLoadingPageWindow);
+app.on('ready', () => {
+  createLoadingPageWindow()
+  setInterval(getGameTime, 1000)
+})
+
 app.on('window-all-closed', () => {
   app.quit();
 })
