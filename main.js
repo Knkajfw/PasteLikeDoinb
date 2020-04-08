@@ -40,10 +40,6 @@ function createLoadingPageWindow() {
   })
 }
 
-function loadDoor() {
-  win.loadFile('assets/html/door.html');
-}
-
 function typeit() {
   if (!isTyping) {
     isTyping = true;
@@ -144,7 +140,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
   socket.on('pcintro', (msg) => {
     win.webContents.send('loadStatus_MobileLinkReceived')
     var correspMobileClientLink = socketServerAddress + '/m/' + msg;
-    loadDoor();
+    win.loadFile('assets/html/door.html');
     win.webContents.on('did-finish-load', () => {
       win.webContents.send('refer', correspMobileClientLink);
     })
