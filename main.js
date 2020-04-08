@@ -1,5 +1,5 @@
 const { app, BrowserWindow, Menu, ipcMain, net } = require('electron');
-const robot = require('robotjs'); robot.setKeyboardDelay(20);
+const robot = require('robotjs'); robot.setKeyboardDelay(15);
 const HttpsProxyAgent = require('https-proxy-agent');
 const https = require('https');
 const io = require('socket.io-client');
@@ -13,6 +13,7 @@ var clip = '';
 var win = null;
 var pcClientId = nanoid(4);
 var willquitListenerExistence = false;
+var isTyping = false;
 
 function createLoadingPageWindow() {
   Menu.setApplicationMenu(null);
@@ -44,11 +45,15 @@ function loadDoor() {
 }
 
 function typeit() {
-  robot.keyTap('enter');
-  robot.keyTap('capslock');
-  robot.typeStringDelayed(clip.toLowerCase(), 99999);
-  robot.keyTap('capslock');
-  robot.keyTap('enter');
+  if (!isTyping) {
+    isTyping = true;
+    robot.keyTap('enter');
+    robot.keyTap('capslock');
+    robot.typeStringDelayed(clip.toLowerCase(), 99999);
+    robot.keyTap('capslock');
+    robot.keyTap('enter');
+    isTyping = false;
+  }
 }
 
 function getGameTime() {
