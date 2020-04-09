@@ -1,5 +1,5 @@
 const { app, BrowserWindow, Menu, ipcMain, net } = require('electron');
-const robot = require('robotjs'); robot.setKeyboardDelay(15);
+const robot = require('robotjs'); robot.setKeyboardDelay(20);
 const HttpsProxyAgent = require('https-proxy-agent');
 const https = require('https');
 const io = require('socket.io-client');
