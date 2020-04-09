@@ -45,7 +45,7 @@ function typeit() {
     isTyping = true;
     robot.keyTap('enter');
     robot.keyTap('capslock');
-    robot.typeStringDelayed(clip.toLowerCase(), 99999);
+    robot.typeString(clip.toLowerCase());
     robot.keyTap('capslock');
     robot.keyTap('enter');
     isTyping = false;
