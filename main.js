@@ -39,7 +39,7 @@ function createLoadingPageWindow() {
     }
   })
   .catch (err => { 
-    console.error('resolveProxy error:', err);
+    console.error('resolveProxy error:', err.message);
   })
 }
 
@@ -105,7 +105,7 @@ function winReload() {
     }
   })
   .catch (err => { 
-    console.error('resolveProxy error:', err);
+    console.error('resolveProxy error:', err.message);
   })
 }
 
