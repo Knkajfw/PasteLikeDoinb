@@ -18,8 +18,8 @@ var isTyping = false;
 function createLoadingPageWindow() {
   Menu.setApplicationMenu(null);
   win = new BrowserWindow({
-    width: 375,
-    height: 635,
+    width: 371,
+    height: 600,
     webPreferences: { nodeIntegration: true }
   })
   win.on('closed', () => {
