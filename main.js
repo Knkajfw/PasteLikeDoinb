@@ -38,6 +38,9 @@ function createLoadingPageWindow() {
       win.webContents.loadFile('assets/html/loading-page.html');
     }
   })
+  .catch (err => { 
+    console.error('resolveProxy error:', err);
+  })
 }
 
 function typeit() {
@@ -52,7 +55,7 @@ function typeit() {
   }
 }
 
-function getGameTime() {
+function getGameStats() {
   const request = net.request('https://127.0.0.1:2999/liveclientdata/gamestats')
   request.on('error', (error) => {
     //var noGame = document.getElementById('game-time-str')
@@ -101,11 +104,14 @@ function winReload() {
       win.webContents.loadFile('assets/html/loading-page.html');
     }
   })
+  .catch (err => { 
+    console.error('resolveProxy error:', err);
+  })
 }
 
 app.on('ready', () => {
   createLoadingPageWindow()
-  setInterval(getGameTime, 1000)
+  setInterval(getGameStats, 1000)
 })
 
 app.on('window-all-closed', () => {
