@@ -25,7 +25,7 @@ function createLoadingPageWindow() {
   win.on('closed', () => {
     win = null;
   })
-  win.webContents.session.resolveProxy('https://www.google.com')
+  win.webContents.session.resolveProxy('https://www.indienost.com')
   .then(str => {
     let parts = str.split(' ');
     if (parts[0] === 'PROXY') {
@@ -85,7 +85,7 @@ function getGameTime() {
 }
 
 function winReload() {
-  win.webContents.session.resolveProxy('https://www.google.com')
+  win.webContents.session.resolveProxy('https://www.indienost.com')
   .then(str => {
     let parts = str.split(' ');
     if (parts[0] === 'PROXY') {
