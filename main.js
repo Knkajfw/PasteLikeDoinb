@@ -5,7 +5,7 @@ const https = require('https');
 const io = require('socket.io-client');
 const nanoid = require('nanoid');
 
-app.commandLine.appendSwitch('ignore-certificate-errors')
+app.commandLine.appendSwitch('ignore-certificate-errors');
 
 var socket;
 var socketServerAddress = '';
