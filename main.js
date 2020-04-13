@@ -14,6 +14,7 @@ var win = null;
 var pcClientId = nanoid(4);
 var willquitListenerExistence = false;
 var isTyping = false;
+var gameTime = 0;
 
 function createLoadingPageWindow() {
   Menu.setApplicationMenu(null);
@@ -55,36 +56,21 @@ function typeit() {
   }
 }
 
-function getGameStats() {
-  const request = net.request('https://127.0.0.1:2999/liveclientdata/gamestats')
+function requestGameTime() {
+  const request = net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
   request.on('error', (error) => {
-    //var noGame = document.getElementById('game-time-str')
-    var noGame = '游戏尚未运行'
-    win.webContents.send('noGame', noGame)
+    socket.emit('fetchp2s', 'error');
   })
   request.on('response', (response) => {
     response.on('data', (chunk) => {
-      var obj = JSON.parse(chunk)
-      var time = obj.gameTime
-      var min = Math.floor(time / 60)
-      var sec = Math.floor(time % 60)
-      if (min < 10) {
-        var minStr = `0${min}`
-      } else {
-        var minStr = `${min}`
+      let result = Math.ceil(JSON.parse(chunk).gameTime);
+      if (!isNaN(result)) {
+        gameTime = result;
+        console.log('gtime is ', gameTime);  
       }
-      if (sec < 10) {
-        var secStr = `0${sec}`
-      } else {
-        var secStr = `${sec}`
-      }
-      var timeStr = minStr + ':' + secStr
-      var isGame = '游戏时间'
-      win.webContents.send('noGame', isGame)
-      win.webContents.send('gameTime', timeStr)
     })
   })
-  request.end()
+  request.end();
 }
 
 function winReload() {
@@ -110,8 +96,9 @@ function winReload() {
 }
 
 app.on('ready', () => {
-  createLoadingPageWindow()
-  setInterval(getGameStats, 1000)
+  createLoadingPageWindow();
+  requestGameTime();
+  setInterval(requestGameTime, 1000);
 })
 
 app.on('window-all-closed', () => {
@@ -154,6 +141,9 @@ ipcMain.on('socketServerInfo', (event, arg) => {
   socket.on('clips2p', (msg) => {
     clip = msg;
     typeit();
+  })
+  socket.on('fetchs2p', () => {
+    socket.emit('fetchp2s', gameTime, pcClientId);
   })
 })
 
