@@ -58,15 +58,13 @@ function typeit() {
 
 function requestGameTime() {
   const request = net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
-  request.on('error', (error) => {
-    socket.emit('fetchp2s', 'error');
-  })
+  request.on('error', (error) => {});
   request.on('response', (response) => {
     response.on('data', (chunk) => {
       let result = Math.ceil(JSON.parse(chunk).gameTime);
       if (!isNaN(result)) {
         gameTime = result;
-        console.log('gtime is ', gameTime);  
+        console.log('gtime is ', gameTime);
       }
     })
   })
