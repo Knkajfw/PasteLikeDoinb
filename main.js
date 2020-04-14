@@ -15,6 +15,7 @@ var pcClientId = nanoid(4);
 var willquitListenerExistence = false;
 var isTyping = false;
 var gameTime = 0;
+var activeplayername = '';
 
 function createLoadingPageWindow() {
   Menu.setApplicationMenu(null);
@@ -41,6 +42,7 @@ function createLoadingPageWindow() {
   })
   .catch (err => { 
     console.error('resolveProxy error:', err.message);
+    win.webContents.loadFile('assets/html/loading-page.html');
   })
 }
 
@@ -56,19 +58,34 @@ function typeit() {
   }
 }
 
-function requestGameTime() {
-  const request = net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
-  request.on('error', (error) => {});
-  request.on('response', (response) => {
+function getActivePlayerName() {
+  const getActivePlayerNameReq = new net.request('https://127.0.0.1:2999/liveclientdata/activeplayername');
+  getActivePlayerNameReq.on('error', (error) => {
+    console.error('getActivePlayerNameErr', error.message);
+  })
+  getActivePlayerNameReq.on('response', (response) => {
     response.on('data', (chunk) => {
-      let result = Math.ceil(JSON.parse(chunk).gameTime);
-      if (!isNaN(result)) {
-        gameTime = result;
-        console.log('gtime is ', gameTime);
+      console.log(chunk);
+    })
+  })
+  getActivePlayerNameReq.end();
+}
+
+function getGameTime() {
+  const gtimereq = new net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
+  gtimereq.on('error', (error) => {
+    console.error('getGameTimeReqErr', error.message);
+  })
+  gtimereq.on('response', (response) => {
+    response.on('data', (chunk) => {
+      let parsed = Math.ceil(JSON.parse(chunk).gameTime);
+      if (!isNaN(parsed) && (typeof (parsed) === "number")) {
+        gameTime = parsed;
+        console.log('gametime', gameTime);
       }
     })
   })
-  request.end();
+  gtimereq.end();
 }
 
 function winReload() {
@@ -90,13 +107,14 @@ function winReload() {
   })
   .catch (err => { 
     console.error('resolveProxy error:', err.message);
+    win.webContents.loadFile('assets/html/loading-page.html');
   })
 }
 
 app.on('ready', () => {
   createLoadingPageWindow();
-  requestGameTime();
-  setInterval(requestGameTime, 1000);
+  getGameTime();
+  setInterval(getGameTime, 1000);
 })
 
 app.on('window-all-closed', () => {
