@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "https-proxy-agent": "^5.0.0",
+    "iconv-lite": "^0.5.1",
     "nanoid": "^2.1.9",
     "qrcode": "^1.4.4",
     "robotjs": "^0.6.0",

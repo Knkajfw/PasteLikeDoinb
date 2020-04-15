@@ -4,6 +4,7 @@ const HttpsProxyAgent = require('https-proxy-agent');
 const https = require('https');
 const io = require('socket.io-client');
 const nanoid = require('nanoid');
+const iconv = require('iconv-lite');
 
 app.commandLine.appendSwitch('ignore-certificate-errors');
 
@@ -15,7 +16,8 @@ var pcClientId = nanoid(4);
 var willquitListenerExistence = false;
 var isTyping = false;
 var gameTime = 0;
-var activeplayername = '';
+var activePlayerName = '';
+var playerList = {};
 
 function createLoadingPageWindow() {
   Menu.setApplicationMenu(null);
@@ -65,11 +67,44 @@ function getActivePlayerName() {
   })
   getActivePlayerNameReq.on('response', (response) => {
     response.on('data', (chunk) => {
-      console.log(chunk);
+      activePlayerName = chunk;
+      console.log(activePlayerName);
+      requestPlayerList();
     })
   })
   getActivePlayerNameReq.end();
 }
+
+function requestPlayerList() {
+  const playerListReq = new net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
+  playerListReq.on('error', (error) => {
+    console.log('playerListReqErr:', error.message);
+  })
+  playerListReq.on('response', (response) => {
+    response.on('data', (chunk) => {
+      playerList = JSON.parse(chunk);
+      //console.log(typeof playerList);
+      //console.log(playerList);
+      console.log(playerList[0].championName);
+      console.log(playerList[0].championName === '褰辨祦涔嬮暟');
+      //let r = findPlayerTeam();
+      //console.log(r);
+    })
+  })
+  playerListReq.end();
+}
+
+function findPlayerTeam() {
+  for (let i=0; i<playerList.length; i++) {
+    if (playerList[i].summonerName === activePlayerName) {
+      return playerList[i].team;
+    }
+  }
+}
+
+/*function getOpponentObejectArray() {
+
+}*/
 
 function getGameTime() {
   const gtimereq = new net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
@@ -115,6 +150,7 @@ app.on('ready', () => {
   createLoadingPageWindow();
   getGameTime();
   setInterval(getGameTime, 1000);
+  setTimeout(getActivePlayerName, 2500);
 })
 
 app.on('window-all-closed', () => {
