@@ -4,7 +4,6 @@ const HttpsProxyAgent = require('https-proxy-agent');
 const https = require('https');
 const io = require('socket.io-client');
 const nanoid = require('nanoid');
-const iconv = require('iconv-lite');
 
 app.commandLine.appendSwitch('ignore-certificate-errors');
 
@@ -18,6 +17,7 @@ var isTyping = false;
 var gameTime = 0;
 var activePlayerName = '';
 var playerList = {};
+var activePlayerTeam;
 
 function createLoadingPageWindow() {
   Menu.setApplicationMenu(null);
@@ -67,8 +67,7 @@ function getActivePlayerName() {
   })
   getActivePlayerNameReq.on('response', (response) => {
     response.on('data', (chunk) => {
-      activePlayerName = chunk;
-      console.log(activePlayerName);
+      activePlayerName = JSON.parse(chunk);
       requestPlayerList();
     })
   })
@@ -78,25 +77,20 @@ function getActivePlayerName() {
 function requestPlayerList() {
   const playerListReq = new net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
   playerListReq.on('error', (error) => {
-    console.log('playerListReqErr:', error.message);
+    console.error('playerListReqErr:', error.message);
   })
   playerListReq.on('response', (response) => {
     response.on('data', (chunk) => {
       playerList = JSON.parse(chunk);
-      //console.log(typeof playerList);
-      //console.log(playerList);
-      console.log(playerList[0].championName);
-      console.log(playerList[0].championName === '褰辨祦涔嬮暟');
-      //let r = findPlayerTeam();
-      //console.log(r);
+      activePlayerTeam = findPlayerTeam();
     })
   })
   playerListReq.end();
 }
 
 function findPlayerTeam() {
-  for (let i=0; i<playerList.length; i++) {
-    if (playerList[i].summonerName === activePlayerName) {
+  for (var i=0; i<playerList.length; i++) {
+    if (playerList[0].summonerName === activePlayerName) {
       return playerList[i].team;
     }
   }
