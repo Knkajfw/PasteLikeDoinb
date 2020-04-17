@@ -36,6 +36,7 @@ const opponentSummonerSpellsObject = {
   supf: undefined
 };
 var opponentSummonerSpellsString = '';
+var currentGameMode = '';
 
 function createLoadingPageWindow() {
   Menu.setApplicationMenu(null);
@@ -167,9 +168,11 @@ function getGameTime() {
   })
   gtimereq.on('response', (response) => {
     response.on('data', (chunk) => {
-      let parsed = Math.ceil(JSON.parse(chunk).gameTime);
-      if (!isNaN(parsed) && (typeof (parsed) === "number")) {
-        gameTime = parsed;
+      let parsed = JSON.parse(chunk);
+      let ceiledGameTime = Math.ceil(parsed.gameTime);
+      currentGameMode = parsed.gameMode;
+      if (!isNaN(ceiledGameTime) && (typeof (ceiledGameTime) === "number")) {
+        gameTime = ceiledGameTime;
       }
     })
   })
@@ -247,7 +250,12 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     typeit();
   })
   socket.on('fetchs2p', () => {
-    getActivePlayerName();
+    if (currentGameMode === 'CLASSIC') {
+      getActivePlayerName();
+    }
+    else {
+      socket.emit('fetchp2snc', pcClientId);
+    }
   })
 })
 
