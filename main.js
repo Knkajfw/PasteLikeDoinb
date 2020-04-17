@@ -5,6 +5,7 @@ const https = require('https');
 const io = require('socket.io-client');
 const nanoid = require('nanoid');
 
+app.commandLine.appendSwitch('disable-http-cache');
 app.commandLine.appendSwitch('ignore-certificate-errors');
 
 var socket;
@@ -17,7 +18,24 @@ var isTyping = false;
 var gameTime = 0;
 var activePlayerName = '';
 var playerList = {};
-var activePlayerTeam;
+var activePlayerTeam = '';
+var opponentTeam = '';
+var opponents;
+var opponentSummonerSpells = [];
+var opponentSummonerSpellsTrimmed;
+const opponentSummonerSpellsObject = {
+  topd: undefined,
+  topf: undefined,
+  jugd: undefined,
+  jugf: undefined,
+  midd: undefined,
+  midf: undefined,
+  add: undefined,
+  adf: undefined,
+  supd: undefined,
+  supf: undefined
+};
+var opponentSummonerSpellsString = '';
 
 function createLoadingPageWindow() {
   Menu.setApplicationMenu(null);
@@ -83,22 +101,64 @@ function requestPlayerList() {
     response.on('data', (chunk) => {
       playerList = JSON.parse(chunk);
       activePlayerTeam = findPlayerTeam();
+      if (activePlayerTeam === 'ORDER') {
+        opponentTeam = 'CHAOS';
+      }
+      else if (activePlayerTeam === 'CHAOS') {
+        opponentTeam = 'ORDER';
+      }
+      getOpponentObjectArray();
     })
   })
   playerListReq.end();
 }
 
 function findPlayerTeam() {
-  for (var i=0; i<playerList.length; i++) {
-    if (playerList[0].summonerName === activePlayerName) {
+  for (let i=0; i<playerList.length; i++) {
+    if (playerList[i].summonerName === activePlayerName) {
       return playerList[i].team;
     }
   }
 }
 
-/*function getOpponentObejectArray() {
+function getOpponentObjectArray() {
+  opponents = playerList.filter(player => {
+    return player.team === opponentTeam;
+  })
+  getSummonerSpells();
+}
 
-}*/
+function getSummonerSpells() {
+  opponentSummonerSpells = [];
+  opponents.map(parseAndPushSummonerSpells);
+  opponentSummonerSpellsTrimmed = trimSummonerSpells();
+  opponentSummonerSpellsObject.topd = opponentSummonerSpellsTrimmed[0];
+  opponentSummonerSpellsObject.topf = opponentSummonerSpellsTrimmed[1];
+  opponentSummonerSpellsObject.jugd = opponentSummonerSpellsTrimmed[2];
+  opponentSummonerSpellsObject.jugf = opponentSummonerSpellsTrimmed[3];
+  opponentSummonerSpellsObject.midd = opponentSummonerSpellsTrimmed[4];
+  opponentSummonerSpellsObject.midf = opponentSummonerSpellsTrimmed[5];
+  opponentSummonerSpellsObject.add = opponentSummonerSpellsTrimmed[6];
+  opponentSummonerSpellsObject.adf = opponentSummonerSpellsTrimmed[7];
+  opponentSummonerSpellsObject.supd = opponentSummonerSpellsTrimmed[8];
+  opponentSummonerSpellsObject.supf = opponentSummonerSpellsTrimmed[9];
+  opponentSummonerSpellsString = JSON.stringify(opponentSummonerSpellsObject);
+  console.log(opponentSummonerSpellsString);
+  socket.emit('fetchp2s', gameTime, pcClientId, opponentSummonerSpellsString);
+}
+
+function parseAndPushSummonerSpells(summoner) {
+  let raw = summoner.summonerSpells.summonerSpellOne.rawDisplayName;
+  let extracted = raw.split('_')[2];
+  opponentSummonerSpells.push(extracted);
+  raw = summoner.summonerSpells.summonerSpellTwo.rawDisplayName;
+  extracted = raw.split('_')[2];
+  opponentSummonerSpells.push(extracted);
+}
+
+function trimSummonerSpells() {
+  return opponentSummonerSpells.map(spellStr => spellStr.substring(8).toLowerCase());
+}
 
 function getGameTime() {
   const gtimereq = new net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
@@ -110,7 +170,6 @@ function getGameTime() {
       let parsed = Math.ceil(JSON.parse(chunk).gameTime);
       if (!isNaN(parsed) && (typeof (parsed) === "number")) {
         gameTime = parsed;
-        console.log('gametime', gameTime);
       }
     })
   })
@@ -144,7 +203,6 @@ app.on('ready', () => {
   createLoadingPageWindow();
   getGameTime();
   setInterval(getGameTime, 1000);
-  setTimeout(getActivePlayerName, 2500);
 })
 
 app.on('window-all-closed', () => {
@@ -189,7 +247,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     typeit();
   })
   socket.on('fetchs2p', () => {
-    socket.emit('fetchp2s', gameTime, pcClientId);
+    getActivePlayerName();
   })
 })
 
