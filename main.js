@@ -5,7 +5,6 @@ const https = require('https');
 const io = require('socket.io-client');
 const nanoid = require('nanoid');
 
-app.commandLine.appendSwitch('disable-http-cache');
 app.commandLine.appendSwitch('ignore-certificate-errors');
 
 var socket;
@@ -144,7 +143,6 @@ function getSummonerSpells() {
   opponentSummonerSpellsObject.supd = opponentSummonerSpellsTrimmed[8];
   opponentSummonerSpellsObject.supf = opponentSummonerSpellsTrimmed[9];
   opponentSummonerSpellsString = JSON.stringify(opponentSummonerSpellsObject);
-  console.log(opponentSummonerSpellsString);
   socket.emit('fetchp2s', gameTime, pcClientId, opponentSummonerSpellsString);
 }
 
