@@ -100,14 +100,19 @@ function requestPlayerList() {
   playerListReq.on('response', (response) => {
     response.on('data', (chunk) => {
       playerList = JSON.parse(chunk);
-      activePlayerTeam = findPlayerTeam();
-      if (activePlayerTeam === 'ORDER') {
-        opponentTeam = 'CHAOS';
+      if (playerList.length === 9) {
+        activePlayerTeam = findPlayerTeam();
+        if (activePlayerTeam === 'ORDER') {
+          opponentTeam = 'CHAOS';
+        }
+        else if (activePlayerTeam === 'CHAOS') {
+          opponentTeam = 'ORDER';
+        }
+        getOpponentObjectArray();  
       }
-      else if (activePlayerTeam === 'CHAOS') {
-        opponentTeam = 'ORDER';
+      else {
+        socket.emit('fetcherrp2s',pcClientId, 'Sync only works for 5v5 game.')
       }
-      getOpponentObjectArray();
     })
   })
   playerListReq.end();
@@ -200,6 +205,28 @@ function winReload() {
   })
 }
 
+function getLevelArrayIndexFromSkillSlot(skillSlot) {
+  switch (skillSlot) {
+    case 'topd':
+    case 'topf':
+      return 0;
+    case 'jugd':
+    case 'jugf':
+      return 1;
+    case 'midd':
+    case 'midf':
+      return 2;
+    case 'add':
+    case 'adf':
+      return 3;
+    case 'supd':
+    case 'supf':
+      return 4;
+    default:
+      console.log('undefined skill slot string input');
+  }
+}
+
 app.on('ready', () => {
   createLoadingPageWindow();
   getGameTime();
@@ -254,6 +281,22 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     else {
       socket.emit('fetchp2snc', pcClientId);
     }
+  })
+  socket.on('fetchlvs2p', (skillSlot) => {
+    let index = getLevelArrayIndexFromSkillSlot(skillSlot);
+    let lvreq = net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
+    lvreq.on('error', (error) => {
+      console.error('lvreq err:', error.message);
+    })
+    lvreq.on('response', (response) => {
+      response.on('data', (chunk) => {
+        let lvPlayerList = JSON.parse(chunk);
+        let level = lvPlayerList[index].level;
+        console.log(pcClientId, skillSlot, level);
+        socket.emit('fetchlvp2s',pcClientId, skillSlot, level);    
+      })
+    })
+    lvreq.end();
   })
 })
 
