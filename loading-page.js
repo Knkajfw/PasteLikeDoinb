@@ -1,5 +1,5 @@
 const { ipcRenderer, shell } = require('electron');
-const pldVersion = 440389;
+const pldVersion = 440921;
 var statusBlock = document.getElementById('status-block');
 var iconLink = document.getElementById('icon-link');
 var infobar = document.getElementById('top-info-bar');

@@ -34,7 +34,26 @@ function doorReload() {
     ipcRenderer.send('reload');
 }
 
+function sendOpenDevTools() {
+    ipcRenderer.send('opendev');
+}
+
 var copylinkdiv = document.getElementById('copy-link-div');
 copylinkdiv.addEventListener('click', () => {
     navigator.clipboard.writeText(correspMobileClientLink);
 })
+
+const pldVersion = 440921;
+var infobar = document.getElementById('top-info-bar');
+var infobar2 = document.getElementById('top-info-bar-2');
+var topInfoBarLink1 = document.getElementById('top-info-bar-link1');
+
+infobar.innerHTML = info;
+
+if (info2TargetVersion >= pldVersion) {
+  infobar2.innerHTML = info2;
+}
+
+if (topInfoBarLink1) {
+  topInfoBarLink1.addEventListener('click', (e)=>{e.preventDefault();shell.openExternal(infoLink)});
+}

@@ -303,3 +303,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
 ipcMain.on('reload', () => {
   winReload();
 })
+
+ipcMain.on('opendev', () => {
+  win.webContents.openDevTools({mode: 'undocked'});
+})
