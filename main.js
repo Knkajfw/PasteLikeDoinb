@@ -100,7 +100,8 @@ function requestPlayerList() {
   playerListReq.on('response', (response) => {
     response.on('data', (chunk) => {
       playerList = JSON.parse(chunk);
-      if (playerList.length === 9) {
+      console.log(playerList.length)
+      if (playerList.length === 10) {
         activePlayerTeam = findPlayerTeam();
         if (activePlayerTeam === 'ORDER') {
           opponentTeam = 'CHAOS';
