@@ -292,7 +292,8 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     lvreq.on('response', (response) => {
       response.on('data', (chunk) => {
         let lvPlayerList = JSON.parse(chunk);
-        let level = lvPlayerList[index].level;
+        let lvOpponents = lvPlayerList.filter(lvPlayer => lvPlayer.team === opponentTeam);
+        let level = lvOpponents[index].level;
         console.log(pcClientId, skillSlot, level);
         socket.emit('fetchlvp2s',pcClientId, skillSlot, level);    
       })
