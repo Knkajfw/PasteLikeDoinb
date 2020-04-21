@@ -62,11 +62,11 @@ This product has been registered on Riot Dev Portal and has been approved. Riot#
 Please note that the Windows client needs to be run as admin in order to type the generated msg into the game. Please allow the elevation when you are prompted by Windows. The program has no malicious feature and has been certificated by Microsoft Store. You can also choose to build from source. See Electron's [document](https://www.electronjs.org/docs/tutorial/application-packaging) for help.
 
 # FAQ
-#### 1.Windows商店下载慢？
-国内商店连接不稳定，可以过会再试试，注意不用代理很可能会更快。
+#### 1.时间和游戏内时间不同步了？
+如果web控制台不在前台的时间较长，页面加载的js可能会停止工作，计时也就会跟不上。
 
-#### 2.客户端连接不上服务器？
-国内连接问题请先参看[这个页面](https://knkajfw.github.io/paste-like-doinb/CNConnection.html)。  
+#### 2.使用同步功能，但发现位置不正确，比如Mid的位置上其实是对方上单？
+游戏内按tab键的话，会出现能看到所有玩家装备的面板，在这个面板通过拖动把对方玩家按上单/打野/中单/ad/辅助的顺序排好，再同步一次即可。
 
 #### 3.安装包体积怎么有60多M？
 程序在Electron框架下运行，而大多数用户的电脑上并没有，因此安装包中包含了这个框架。如果你之前已在使用Electron，可以clone本仓库 -> npm install -> npm start 来启动。
@@ -77,13 +77,7 @@ Please note that the Windows client needs to be run as admin in order to type th
 #### 5.访问web控制台让手机电量消耗得很快？
 为了方便快速记录，使用了[NoSleep.js](https://github.com/richtr/NoSleep.js/)模块来实现计时期间手机不休眠和屏幕一直点亮。上述特性确实会对电池续航造成影响，建议手机插电使用。把计时器暂停/重置之后，NoSleep就不会起作用了，不再会消耗额外电量。
 
-#### 6.时间和游戏内时间不同步了？
-如果web控制台不在前台的时间较长，页面加载的js可能会停止工作，计时也就会跟不上。
-
-#### 7.使用同步功能，但发现位置不正确，比如Mid的位置上其实是对方上单？
-游戏内按tab键的话，会出现能看到所有玩家装备的面板，在这个面板通过拖动把对方玩家按上单/打野/中单/ad/辅助的顺序排好，再同步一次即可。
-
-#### 8.其他问题？
+#### 6.其他问题？
 加入QQ群699702899和作者/其他用户一起讨论这个软件吧！
 
 ## Build
