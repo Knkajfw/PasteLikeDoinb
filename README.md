@@ -7,10 +7,10 @@ Record your opponents' Flash CD and share it with an auto-generated game chat ms
 # 下载 Download
 请移步[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)下载zip压缩包。  
 百度网盘下载：
-链接: https://pan.baidu.com/s/1iTCADtRa48hpTTHFa3sg2A 提取码: s1qe
+链接: https://pan.baidu.com/s/1iWvKsgdhpPWenWAHXtj8BA 提取码: 7uju
 
 Head over to [Release Page](https://github.com/Knkajfw/PasteLikeDoinb/releases) to download the Windows client.  
-Baidu NetDisk: https://pan.baidu.com/s/1iTCADtRa48hpTTHFa3sg2A Code:s1qe
+Baidu NetDisk: https://pan.baidu.com/s/1iWvKsgdhpPWenWAHXtj8BA Code: 7uju
 
 # 截图 Screenshots
 #### 游戏内截图 In-game
