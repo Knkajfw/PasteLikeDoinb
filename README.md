@@ -83,7 +83,7 @@ Please note that the Windows client needs to be run as admin in order to type th
 #### 7.使用同步功能，但发现位置不正确，比如Mid的位置上其实是对方上单？
 游戏内按tab键的话，会出现能看到所有玩家装备的面板，在这个面板通过拖动把对方玩家按上单/打野/中单/ad/辅助的顺序排好，再同步一次即可。
 
-#### 7.其他问题？
+#### 8.其他问题？
 加入QQ群699702899和作者/其他用户一起讨论这个软件吧！
 
 ## Build
