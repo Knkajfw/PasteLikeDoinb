@@ -1,5 +1,5 @@
 const { ipcRenderer, shell } = require('electron');
-const pldVersion = 440389;
+const pldVersion = 440921;
 var statusBlock = document.getElementById('status-block');
 var iconLink = document.getElementById('icon-link');
 var infobar = document.getElementById('top-info-bar');
@@ -15,9 +15,13 @@ function openCannotConnectHelpExternally(event) {
   shell.openExternal('https://knkajfw.github.io/paste-like-doinb/cannot-connect.html');
 }
 function replaceIconLinkWithCannotConnectHelp() {
-  iconLink.innerHTML = '<small>不能连接请点我</small>';
+  iconLink.innerHTML = "<small>Can't get connected? See help</small>";
   iconLink.removeEventListener('click', openIconLinkExternally);
   iconLink.addEventListener('click', openCannotConnectHelpExternally);
+}
+
+function reload(){
+  ipcRenderer.send('reload');
 }
 
 ipcRenderer.on('loadStatus_SocketLinked', () => {

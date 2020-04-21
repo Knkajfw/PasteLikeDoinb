@@ -7,6 +7,18 @@
   <title>记闪现PasteLikeDoinb</title>
 </head>
 <body style="font-family: 微软雅黑;">
+
+  <div id='top-info-bar' class="container-fluid bg-dark text-white text-center" style="font-size: 0.8rem;"></div>
+  <div id='top-info-bar-2' class="container-fluid text-white text-center" style="font-size: 0.8rem; background-color: #3FA5FF;"></div>
+
+  <button type="button" id="door-reload-button" class="btn btn-outline-danger" onclick="doorReload()" style="position: absolute; top: 40px; left: 20px; width: 24px; height: 24px; padding: 0px;">
+    <img src="../img/reload.png" style="width: 15px; height: 15px; position: relative; top: -2px; left: 1px;">
+  </button>
+
+  <button type="button" id="open-devtools-button" class="btn btn-outline-dark" onclick="sendOpenDevTools()" style="position: absolute; top: 40px; left: 48px; width: 24px; height: 24px; padding: 0px;">
+    <img src="../img/console.png" style="width: 15px; height: 15px; position: relative; top: -2px; left: 1px;">
+  </button>
+
   <div class="mt-5 mb-3 mx-0 row justify-content-center">
     <img src="../img/signal.svg" style="max-width: 30%; max-height: 30%;">
   </div>
@@ -15,7 +27,7 @@
   </div>
 
   <div class="row mx-0 justify-content-center">
-    <span class="text-muted" style="font-size: small; padding-right: 185px;">移动端地址</span>
+    <span class="text-muted" style="font-size: small; padding-right: 160px;">移动端地址</span>
     <div id="copy-link-div" style="margin: 0px; padding: 0px;">
       <a id="copy-link" href="#" style="font-size: small;">复制链接</a>
     </div>
@@ -32,15 +44,15 @@
   </div>
 
   <div class="row mx-0 mb-0 justify-content-center">
-    <p style="font-size: 10px;" class="text-muted">二维码即为上方链接，微信扫无效</p>
-    <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="微信屏蔽过于严格，可用支付宝/相机/浏览器等扫码，建议使用谷歌/火狐/Safari打开链接。" style="transform: translate(2px, -8px);">
+    <p style="font-size: 10px;" class="text-muted">二维码即为上方链接</p>
+    <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="建议使用谷歌/火狐/Safari打开链接" style="transform: translate(2px, -8px);">
   </div>
-
 
   <div class="mx-5">
     <div id="qrerror"></div>
   </div>
 
 </body >
+<script src="http://indienost.gitee.io/paste-like-doinb/serverinfo.js"></script>
 <script src="../../renderer.js"></script>
 </html>
