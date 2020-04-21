@@ -28,7 +28,7 @@ Run the client in background. It receives the command to type from the web conso
 用手机扫码访问，在此处记录对手何时使用了闪现，查看cd情况，指示发送到游戏聊天。  
 You can also scan the QR Code to access your web console. Here you can record it when an opponent uses Flash and see the remaining cooldown time. Click the green button to indicate the Windows client to send a msg into the game chat.
 
-![移动端截图](https://i.loli.net/2020/04/21/6sWBHhvu1dL7jYl.jpg)
+![移动端截图](https://i.loli.net/2020/04/21/CyuBHoat4AE3qNs.jpg)
 
 详细的使用说明[在这](https://jingyan.baidu.com/article/f79b7cb3b90f6cd044023ef9.html)
 
