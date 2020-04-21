@@ -81,8 +81,9 @@ Please note that the Windows client needs to be run as admin in order to type th
 加入QQ群699702899和作者/其他用户一起讨论这个软件吧！
 
 ## Build
-1.Install Node  
-[Official Site](https://nodejs.org/en/)  
+1.Install Node & Git  
+[Node Official Site](https://nodejs.org/en/)  
+[Git Official Site](https://git-scm.com/)  
 This project was developed under node v12.13.0
 
 2.Clone this repo  
