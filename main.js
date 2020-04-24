@@ -47,22 +47,25 @@ function createLoadingPageWindow() {
   win.on('closed', () => {
     win = null;
   })
-  win.webContents.session.resolveProxy('https://www.indienost.com')
-  .then(str => {
-    let parts = str.split(' ');
-    if (parts[0] === 'PROXY') {
-      let resolvedProxyAddress = parts[1];
-      let resolvedProxyhref = 'http://' + resolvedProxyAddress;
-      https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
+  win.webContents.session.clearCache()
+  .then(() => {
+    win.webContents.session.resolveProxy('https://www.indienost.com')
+    .then(str => {
+      let parts = str.split(' ');
+      if (parts[0] === 'PROXY') {
+        let resolvedProxyAddress = parts[1];
+        let resolvedProxyhref = 'http://' + resolvedProxyAddress;
+        https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
+        win.webContents.loadFile('assets/html/loading-page.html');
+      }
+      else {
+        win.webContents.loadFile('assets/html/loading-page.html');
+      }
+    })
+    .catch (err => { 
+      console.error('resolveProxy error:', err.message);
       win.webContents.loadFile('assets/html/loading-page.html');
-    }
-    else {
-      win.webContents.loadFile('assets/html/loading-page.html');
-    }
-  })
-  .catch (err => { 
-    console.error('resolveProxy error:', err.message);
-    win.webContents.loadFile('assets/html/loading-page.html');
+    })  
   })
 }
 
@@ -184,25 +187,28 @@ function getGameTime() {
 }
 
 function winReload() {
-  win.webContents.session.resolveProxy('https://www.indienost.com')
-  .then(str => {
-    let parts = str.split(' ');
-    if (parts[0] === 'PROXY') {
-      let resolvedProxyAddress = parts[1];
-      let resolvedProxyhref = 'http://' + resolvedProxyAddress;
-      https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
-      socket.close();
+  win.webContents.session.clearCache()
+  .then(() => {
+    win.webContents.session.resolveProxy('https://www.indienost.com')
+    .then(str => {
+      let parts = str.split(' ');
+      if (parts[0] === 'PROXY') {
+        let resolvedProxyAddress = parts[1];
+        let resolvedProxyhref = 'http://' + resolvedProxyAddress;
+        https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
+        socket.close();
+        win.webContents.loadFile('assets/html/loading-page.html');
+      }
+      else {
+        https.globalAgent = new https.Agent({});
+        socket.close();
+        win.webContents.loadFile('assets/html/loading-page.html');
+      }
+    })
+    .catch (err => { 
+      console.error('resolveProxy error:', err.message);
       win.webContents.loadFile('assets/html/loading-page.html');
-    }
-    else {
-      https.globalAgent = new https.Agent({});
-      socket.close();
-      win.webContents.loadFile('assets/html/loading-page.html');
-    }
-  })
-  .catch (err => { 
-    console.error('resolveProxy error:', err.message);
-    win.webContents.loadFile('assets/html/loading-page.html');
+    })  
   })
 }
 
