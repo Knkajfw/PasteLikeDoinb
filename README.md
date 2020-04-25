@@ -113,6 +113,8 @@ See this [page](https://github.com/electron/electron-rebuild)
 
 感谢以下同学的赞助支持：
 
-<a href='https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727'><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'>NGA论坛@我跟你描述一个灵魂</a>
-<p><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'>h*y</p>
-<p><img src='https://i.loli.net/2020/04/25/ojbDdfagcM6BxtP.jpg' alt='UserIcon'>渣男<p>
+<a href='https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727'><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'> NGA论坛@我跟你描述一个灵魂</a>
+<p><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'> h*y</p>
+<p><img src='https://i.loli.net/2020/04/25/ojbDdfagcM6BxtP.jpg' alt='UserIcon'> 渣男</p>
+<p><img src='https://i.loli.net/2020/04/25/k6JwxS8UmHV3ifh.jpg' alt='UserIcon'> <img src='https://i.loli.net/2020/04/25/PWB8UfI4YRoyd2J.png'></p>
+<p><img src='https://i.loli.net/2020/04/25/CTXRoYUwyu62bke.jpg' alt='UserIcon'> 驼驼安</p>
