@@ -78,8 +78,13 @@ Please note that the Windows client needs to be run as admin in order to type th
 #### 5.访问web控制台让手机电量消耗得很快？
 为了方便快速记录，使用了[NoSleep.js](https://github.com/richtr/NoSleep.js/)模块来实现计时期间手机不休眠和屏幕一直点亮。上述特性确实会对电池续航造成影响，建议手机插电使用。把计时器暂停/重置之后，NoSleep就不会起作用了，不再会消耗额外电量。
 
-#### 6.其他问题？
-加入QQ群699702899和作者/其他用户一起讨论这个软件吧！
+#### 6.如何更新和卸载旧版本？如何完整地卸载PLD？
+目前PLD还没有加入自动更新的机制，更新需要通过手动下载新的zip包来完成。  
+PLD使用过程中产生的缓存存放在%appdata%/pastelikedoinb目录。  
+PLD没有向系统的其他位置写入内容，删除解压后的文件夹和前述的缓存文件夹就完成了卸载。  
+
+#### 7.其他问题？
+加入QQ群699702899和作者/其他用户一起讨论这个软件吧！新版本也会率先在群内测试哦！
 
 ## Build
 1.Install Node & Git  
