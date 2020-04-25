@@ -7,10 +7,10 @@ Record your opponents' Flash CD and share it with an auto-generated game chat ms
 # 下载 Download
 请移步[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)下载zip压缩包。  
 百度网盘下载：
-链接: https://pan.baidu.com/s/1iWvKsgdhpPWenWAHXtj8BA 提取码: 7uju
+链接: https://pan.baidu.com/s/1ABOCeHBBjjId6r-8yChPAQ 提取码: isr6
 
 Head over to [Release Page](https://github.com/Knkajfw/PasteLikeDoinb/releases) to download the Windows client.  
-Baidu NetDisk: https://pan.baidu.com/s/1iWvKsgdhpPWenWAHXtj8BA Code: 7uju
+Baidu NetDisk: https://pan.baidu.com/s/1ABOCeHBBjjId6r-8yChPAQ Code: isr6
 
 # 截图 Screenshots
 #### 游戏内截图 In-game
@@ -66,7 +66,8 @@ Please note that the Windows client needs to be run as admin in order to type th
 如果web控制台不在前台的时间较长，页面加载的js可能会停止工作，计时也就会跟不上。
 
 #### 2.使用同步功能，但发现位置不正确，比如Mid的位置上其实是对方上单？
-游戏内按tab键的话，会出现能看到所有玩家装备的面板，在这个面板通过拖动把对方玩家按上单/打野/中单/ad/辅助的顺序排好，再同步一次即可。
+游戏内按tab键的话，会出现能看到所有玩家装备的面板，在这个面板通过拖动把对方玩家按上单/打野/中单/ad/辅助的顺序排好，再同步一次即可。  
+[这里](https://knkajfw.github.io/paste-like-doinb/TongBuShuoMing.html)有一份关于同步功能的说明。
 
 #### 3.安装包体积怎么有60多M？
 程序在Electron框架下运行，而大多数用户的电脑上并没有，因此安装包中包含了这个框架。如果你之前已在使用Electron，可以clone本仓库 -> npm install -> npm start 来启动。
@@ -114,3 +115,4 @@ See this [page](https://github.com/electron/electron-rebuild)
 
 <a href='https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727'><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'>NGA论坛@我跟你描述一个灵魂</a>
 <p><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'>h*y</p>
+<p><img src='https://i.loli.net/2020/04/25/ojbDdfagcM6BxtP.jpg' alt='UserIcon'>渣男<p>
