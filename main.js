@@ -36,6 +36,8 @@ const opponentSummonerSpellsObject = {
 };
 var opponentSummonerSpellsString = '';
 var currentGameMode = '';
+var opponentToGetLevelIndex = 0;
+var skillSlotToGetLevel = '';
 
 function createLoadingPageWindow() {
   Menu.setApplicationMenu(null);
@@ -95,6 +97,20 @@ function getActivePlayerName() {
   getActivePlayerNameReq.end();
 }
 
+function getActivePlayerNameForLv() {
+  const getActivePlayerNameForLvReq = new net.request('https://127.0.0.1:2999/liveclientdata/activeplayername');
+  getActivePlayerNameForLvReq.on('error', (error) => {
+    console.error('getActivePlayerNameForLvReqErr', error.message);
+  })
+  getActivePlayerNameForLvReq.on('response', (response) => {
+    response.on('data', (chunk) => {
+      activePlayerName = JSON.parse(chunk);
+      requestPlayerListForLv();
+    })
+  })
+  getActivePlayerNameForLvReq.end();
+}
+
 function requestPlayerList() {
   const playerListReq = new net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
   playerListReq.on('error', (error) => {
@@ -103,7 +119,6 @@ function requestPlayerList() {
   playerListReq.on('response', (response) => {
     response.on('data', (chunk) => {
       playerList = JSON.parse(chunk);
-      console.log(playerList.length)
       if (playerList.length === 10) {
         activePlayerTeam = findPlayerTeam();
         if (activePlayerTeam === 'ORDER') {
@@ -122,6 +137,27 @@ function requestPlayerList() {
   playerListReq.end();
 }
 
+function requestPlayerListForLv() {
+  const playerListForLvReq = new net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
+  playerListForLvReq.on('error', (error) => {
+    console.error('playerListForLvReqErr:', error.message);
+  })
+  playerListForLvReq.on('response', (response) => {
+    response.on('data', (chunk) => {
+      playerList = JSON.parse(chunk);
+      activePlayerTeam = findPlayerTeam();
+      if (activePlayerTeam === 'ORDER') {
+        opponentTeam = 'CHAOS';
+      }
+      else if (activePlayerTeam === 'CHAOS') {
+        opponentTeam = 'ORDER';
+      }
+      getOpponentObjectArrayForLv();  
+    })
+  })
+  playerListForLvReq.end();
+}
+
 function findPlayerTeam() {
   for (let i=0; i<playerList.length; i++) {
     if (playerList[i].summonerName === activePlayerName) {
@@ -135,6 +171,22 @@ function getOpponentObjectArray() {
     return player.team === opponentTeam;
   })
   getSummonerSpells();
+}
+
+function getOpponentObjectArrayForLv() {
+  opponents = playerList.filter(player => {
+    return player.team === opponentTeam;
+  })
+  sendLevel();
+}
+
+function sendLevel() {
+  if (opponents[opponentToGetLevelIndex] === undefined) /* Do nothing */;
+  else {
+    let level = opponents[opponentToGetLevelIndex].level;
+    console.log(pcClientId, skillSlotToGetLevel, level);
+    socket.emit('fetchlvp2s', pcClientId, skillSlotToGetLevel, level);  
+  }
 }
 
 function getSummonerSpells() {
@@ -290,21 +342,9 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     }
   })
   socket.on('fetchlvs2p', (skillSlot) => {
-    let index = getLevelArrayIndexFromSkillSlot(skillSlot);
-    let lvreq = net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
-    lvreq.on('error', (error) => {
-      console.error('lvreq err:', error.message);
-    })
-    lvreq.on('response', (response) => {
-      response.on('data', (chunk) => {
-        let lvPlayerList = JSON.parse(chunk);
-        let lvOpponents = lvPlayerList.filter(lvPlayer => lvPlayer.team === opponentTeam);
-        let level = lvOpponents[index].level;
-        console.log(pcClientId, skillSlot, level);
-        socket.emit('fetchlvp2s',pcClientId, skillSlot, level);    
-      })
-    })
-    lvreq.end();
+    opponentToGetLevelIndex = getLevelArrayIndexFromSkillSlot(skillSlot);
+    skillSlotToGetLevel = skillSlot;
+    getActivePlayerNameForLv();
   })
 })
 
