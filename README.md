@@ -102,13 +102,10 @@ cd PasteLikeDoinb
 npm install
 ```
 
-4.Modify the source code of RobotJs(one of the dependencies)  
-See this [issue](https://github.com/octalmage/robotjs/issues/530#issuecomment-570795846).
+4.Rebuild RobotJs for Electron  
+See this [page](https://github.com/octalmage/robotjs/wiki/Electron)
 
-5.Rebuild RobotJs for Electron  
-See this [page](https://github.com/electron/electron-rebuild)
-
-6.Start the program  
+5.Start the program  
 `npm start`
 
 ## 赞助
