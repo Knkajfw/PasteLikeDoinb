@@ -18,7 +18,7 @@
     "minimist": ">=0.2.1",
     "nanoid": "^2.1.9",
     "qrcode": "^1.4.4",
-    "robotjs": "git+https://github.com/octalmage/robotjs.git",
+    "robotjs": "git+https://github.com/Knkajfw/robotjs.git",
     "socket.io-client": "^2.3.0"
   }
 }
