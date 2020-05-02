@@ -1,5 +1,5 @@
 const { app, BrowserWindow, Menu, ipcMain, net } = require('electron');
-const robot = require('robotjs'); robot.setKeyboardDelay(20);
+const robot = require('robotjs'); robot.setKeyboardDelay(30);
 const HttpsProxyAgent = require('https-proxy-agent');
 const https = require('https');
 const io = require('socket.io-client');
@@ -76,7 +76,7 @@ function typeit() {
     isTyping = true;
     robot.keyTap('enter');
     robot.keyTap('capslock');
-    robot.typeString(clip);
+    robot.typeStringDelayed(clip, 20000);
     robot.keyTap('capslock');
     robot.keyTap('enter');
     isTyping = false;
