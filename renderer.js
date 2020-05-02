@@ -31,7 +31,7 @@ copylinkdiv.addEventListener('click', () => {
     navigator.clipboard.writeText(correspMobileClientLink);
 })
 
-const pldVersion = 441201;
+const pldVersion = 441231;
 var infobar = document.getElementById('top-info-bar');
 var infobar2 = document.getElementById('top-info-bar-2');
 var topInfoBarLink1 = document.getElementById('top-info-bar-link1');
