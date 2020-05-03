@@ -297,7 +297,7 @@ app.on('window-all-closed', () => {
 })
 
 ipcMain.on('socketServerInfo', (event, arg) => {
-  socketServerAddress = arg;
+  socketServerAddress = process.env.plddevsa || arg;
   let opts = {
     rejectUnauthorized: false,
     reconnection: true,
