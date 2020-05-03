@@ -76,7 +76,7 @@ function typeit() {
     isTyping = true;
     robot.keyTap('enter');
     robot.keyTap('capslock');
-    robot.typeStringDelayed(clip, 10000);
+    robot.typeStringDelayed(clip, 5000);
     robot.keyTap('capslock');
     robot.keyTap('enter');
     isTyping = false;
