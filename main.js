@@ -3,7 +3,7 @@ const robot = require('robotjs'); robot.setKeyboardDelay(30);
 const HttpsProxyAgent = require('https-proxy-agent');
 const https = require('https');
 const io = require('socket.io-client');
-const nanoid = require('nanoid');
+const { nanoid } = require('nanoid');
 
 app.commandLine.appendSwitch('ignore-certificate-errors');
 
