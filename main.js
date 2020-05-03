@@ -51,7 +51,7 @@ function createLoadingPageWindow() {
   })
   win.webContents.session.clearCache()
   .then(() => {
-    win.webContents.session.resolveProxy('https://www.indienost.com')
+    win.webContents.session.resolveProxy(process.env.plddevsa || 'https://www.indienost.com')
     .then(str => {
       let parts = str.split(' ');
       if (parts[0] === 'PROXY') {
@@ -241,7 +241,7 @@ function getGameTime() {
 function winReload() {
   win.webContents.session.clearCache()
   .then(() => {
-    win.webContents.session.resolveProxy('https://www.indienost.com')
+    win.webContents.session.resolveProxy(process.env.plddevsa || 'https://www.indienost.com')
     .then(str => {
       let parts = str.split(' ');
       if (parts[0] === 'PROXY') {
