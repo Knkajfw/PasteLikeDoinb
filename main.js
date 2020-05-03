@@ -320,12 +320,12 @@ ipcMain.on('socketServerInfo', (event, arg) => {
   socket.on('pcoc', () => {
     app.quit();
   })
-  socket.on('pcintro', (msg) => {
+  socket.on('pcintro', () => {
     win.webContents.send('loadStatus_MobileLinkReceived')
-    var correspMobileClientLink = socketServerAddress + '/m/' + msg;
+    var referLink = socketServerAddress + '/refer' + `?pcClientId=${pcClientId}`;
     win.loadFile('assets/html/door.html');
     win.webContents.on('did-finish-load', () => {
-      win.webContents.send('refer', correspMobileClientLink);
+      win.webContents.send('refer', referLink);
     })
   })
   socket.on('clips2p', (msg) => {
