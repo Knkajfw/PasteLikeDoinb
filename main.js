@@ -3,8 +3,7 @@ const robot = require('robotjs'); robot.setKeyboardDelay(30);
 const HttpsProxyAgent = require('https-proxy-agent');
 const https = require('https');
 const io = require('socket.io-client');
-const { nanoid } = require('nanoid');
-const fs = require('fs');
+const pld = require('./pld');
 
 app.commandLine.appendSwitch('ignore-certificate-errors');
 
@@ -12,13 +11,7 @@ var socket;
 var socketServerAddress = '';
 var clip = '';
 var win = null;
-if (fs.existsSync('pcClientId')) {
-  var pcClientId = fs.readFileSync('pcClientId', 'utf-8');
-}
-else {
-  var pcClientId = nanoid(10);
-  fs.writeFileSync('pcClientId',pcClientId, 'utf-8');
-}
+var pcClientId = pld.setPcClientId();
 var willquitListenerExistence = false;
 var isTyping = false;
 var gameTime = 0;
@@ -325,8 +318,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     win.webContents.send('loadStatus_PCIdEmitted')
   })
   socket.on('pcoc', () => {
-    pcClientId = nanoid(4);
-    socket.emit('ispc', pcClientId);
+    app.quit();
   })
   socket.on('pcintro', (msg) => {
     win.webContents.send('loadStatus_MobileLinkReceived')
