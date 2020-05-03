@@ -4,6 +4,7 @@ const HttpsProxyAgent = require('https-proxy-agent');
 const https = require('https');
 const io = require('socket.io-client');
 const { nanoid } = require('nanoid');
+const fs = require('fs');
 
 app.commandLine.appendSwitch('ignore-certificate-errors');
 
@@ -11,7 +12,13 @@ var socket;
 var socketServerAddress = '';
 var clip = '';
 var win = null;
-var pcClientId = nanoid(4);
+if (fs.existsSync('pcClientId')) {
+  var pcClientId = fs.readFileSync('pcClientId', 'utf-8');
+}
+else {
+  var pcClientId = nanoid(10);
+  fs.writeFileSync('pcClientId',pcClientId, 'utf-8');
+}
 var willquitListenerExistence = false;
 var isTyping = false;
 var gameTime = 0;
