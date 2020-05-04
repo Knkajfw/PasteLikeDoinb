@@ -2,6 +2,7 @@ const pld = {};
 const { nanoid } = require('nanoid');
 const fs = require('fs');
 
+//TBF fs rw try catch
 pld.setPcClientId = function () {
   if (fs.existsSync('pcClientId')) {
     let pcClientId = fs.readFileSync('pcClientId', 'utf-8');

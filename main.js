@@ -317,6 +317,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     socket.emit('ispc', pcClientId);
     win.webContents.send('loadStatus_PCIdEmitted')
   })
+  //TBF 提示已有，不要重复开启
   socket.on('pcoc', () => {
     app.quit();
   })
