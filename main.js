@@ -3,15 +3,18 @@ const robot = require('robotjs'); robot.setKeyboardDelay(30);
 const HttpsProxyAgent = require('https-proxy-agent');
 const https = require('https');
 const io = require('socket.io-client');
-const pld = require('./pld');
+const fs = require('fs');
+const path = require('path');
+const { nanoid } = require('nanoid');
 
 app.commandLine.appendSwitch('ignore-certificate-errors');
 
+const userDataPath = app.getPath('userData');
 var socket;
 var socketServerAddress = '';
 var clip = '';
 var win = null;
-var pcClientId = pld.setPcClientId();
+var pcClientId = getOrGeneratePcClientId();
 var willquitListenerExistence = false;
 var isTyping = false;
 var gameTime = 0;
@@ -33,11 +36,24 @@ const opponentSummonerSpellsObject = {
   adf: undefined,
   supd: undefined,
   supf: undefined
-};
+}
 var opponentSummonerSpellsString = '';
 var currentGameMode = '';
 var opponentToGetLevelIndex = 0;
 var skillSlotToGetLevel = '';
+
+function getOrGeneratePcClientId() {
+  let filePath = path.join(userDataPath, 'pcClientId');
+  if (fs.existsSync(filePath)) {
+    let pcClientId = fs.readFileSync(filePath, 'utf-8');
+    return pcClientId;
+  }
+  else {
+    let pcClientId = nanoid(10);
+    fs.writeFileSync(filePath, pcClientId, 'utf-8');
+    return pcClientId;
+  }  
+}
 
 function createLoadingPageWindow() {
   Menu.setApplicationMenu(null);
@@ -317,7 +333,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     socket.emit('ispc', pcClientId);
     win.webContents.send('loadStatus_PCIdEmitted')
   })
-  //TBF 提示已有，不要重复开启
+  //DRAFT 提示已有，不要重复开启
   socket.on('pcoc', () => {
     app.quit();
   })
@@ -345,6 +361,31 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     opponentToGetLevelIndex = getLevelArrayIndexFromSkillSlot(skillSlot);
     skillSlotToGetLevel = skillSlot;
     getActivePlayerNameForLv();
+  })
+  socket.on('pair-s2p', (mbTopair) => {
+    //DRAFT fs catch
+    let filePath = path.join(userDataPath, 'approvedMobiles.json');
+    if (fs.existsSync(filePath)) {
+      var approvedMobiles = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      let approvedMobilesList = approvedMobiles.list;
+      if (approvedMobilesList.indexOf(mbTopair) < 0) {
+        while (approvedMobilesList.length >= 5) {
+          approvedMobilesList.shift();
+        }
+        approvedMobilesList.push(mbTopair);  
+      }
+      else {
+        return ;
+      }
+    }
+    else {
+      var approvedMobiles = {
+        list: [mbTopair]
+      }
+    }
+    let approvedMobilesJson = JSON.stringify(approvedMobiles);
+    fs.writeFileSync(filePath, approvedMobilesJson, 'utf-8');
+    win.webContents.send('updateAllowedMobiles', approvedMobilesJson);
   })
 })
 

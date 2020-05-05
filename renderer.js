@@ -17,6 +17,33 @@ ipcRenderer.on('refer', (e, msg) => {
         }
     })
 })
+ipcRenderer.on('updateAllowedMobiles', (e, allowedMobilesJson) => {
+    let allowedMobiles = JSON.parse(allowedMobilesJson);
+    let listItemsHTML = '';
+    for (let i = 0; i < allowedMobiles.list.length; i++) {
+        const element = allowedMobiles.list[i];
+        if (allowedMobiles[element]) {
+            if (allowedMobiles[element].friendlyName) {
+                listItemsHTML += `<li>Approved: ${allowedMobiles[element].friendlyName}</li>`;
+            }
+            else {
+                listItemsHTML += `<li>Approved: ${element}</li>`;
+            }
+        }
+        else {
+            listItemsHTML += `<li>Approved: ${element}</li>`;
+        }
+    }
+    const pairedDiv = document.querySelector('#paired-div');
+    const existingList = document.querySelector('#paired-list');
+    let newList = document.createElement('ul');
+    newList.innerHTML = listItemsHTML;
+    newList.id = 'paired-list';
+    if (existingList) {
+        pairedDiv.removeChild(existingList);
+    }
+    pairedDiv.appendChild(newList);
+})
 
 function doorReload() {
     ipcRenderer.send('reload');
