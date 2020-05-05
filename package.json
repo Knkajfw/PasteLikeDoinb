@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "set plddevsa=https://pld-dev.herokuapp.com&&electron .",
+    "dev": "set plddevsa=https://pld-dev.herokuapp.com&electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "IndieNoSt",
