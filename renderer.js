@@ -17,6 +17,7 @@ ipcRenderer.on('refer', (e, msg) => {
     }
   })
 })
+
 ipcRenderer.on('updateAllowedMobiles', (e, allowedMobilesJson) => {
   let allowedMobiles = JSON.parse(allowedMobilesJson);
   let listItemsHTML = '';

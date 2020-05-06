@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="view-port" content="width=400px, initial-scale=1, shrink-to-fit:no">
   <link rel="stylesheet" href="../css/bootstrap.min.css">
-  <title>记闪现PasteLikeDoinb</title>
+  <title>记闪现PasteLikeDoinb</title>  
 </head>
 <body style="font-family: 微软雅黑;">
 
@@ -54,7 +54,22 @@
 
   <div id="paired-div"></div>
 
+  <div>
+    <button id="pair-mode-btn" class="btn btn-primary" data-toggle="collapse" data-target="#pair-mode-collapse">Pair Mode</button>
+  </div>
+  <div id="pair-mode-collapse" class="collapse">
+    <div class="card card-body">
+      <p>Pair Mode:</p>
+      <p id="verification-code">021511</p>
+    </div>
+  </div>
+    
 </body >
+<script>
+  window.jQuery = window.$ = require('jquery');
+</script>
+<script src="../js/bootstrap.bundle.min.js"></script>
 <script src="http://indienost.gitee.io/paste-like-doinb/serverinfo.js"></script>
 <script src="../../renderer.js"></script>
+
 </html>
