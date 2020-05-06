@@ -239,7 +239,8 @@ function trimSummonerSpells() {
 function getGameTime() {
   const gtimereq = new net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
   gtimereq.on('error', (error) => {
-    console.error('getGameTimeReqErr', error.message);
+    //DRAFT
+    // console.error('getGameTimeReqErr', error.message);
   })
   gtimereq.on('response', (response) => {
     response.on('data', (chunk) => {
