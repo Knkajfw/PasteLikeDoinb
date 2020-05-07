@@ -239,7 +239,7 @@ function trimSummonerSpells() {
 function getGameTime() {
   const gtimereq = new net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
   gtimereq.on('error', (error) => {
-    //DRAFT
+    //DRAFT restroe log error
     // console.error('getGameTimeReqErr', error.message);
   })
   gtimereq.on('response', (response) => {
@@ -363,7 +363,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     skillSlotToGetLevel = skillSlot;
     getActivePlayerNameForLv();
   })
-  socket.on('pair-s2p', (mbTopair, fn) => {
+  socket.on('pair-s2p', (mbTopair) => {
     //DRAFT fs catch
     let filePath = path.join(userDataPath, 'approvedMobiles.json');
     if (fs.existsSync(filePath)) {
@@ -387,8 +387,6 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     let approvedMobilesJson = JSON.stringify(approvedMobiles);
     fs.writeFileSync(filePath, approvedMobilesJson, 'utf-8');
     win.webContents.send('updateAllowedMobiles', approvedMobilesJson);
-    //DRAFT may delete param
-    fn('c');
   })
   socket.on('already-set-as-discoverable', (codeNumber) => {
     win.webContents.send('already-set-as-discoverable', codeNumber);
