@@ -74,16 +74,14 @@ function createLoadingPageWindow() {
         let resolvedProxyAddress = parts[1];
         let resolvedProxyhref = 'http://' + resolvedProxyAddress;
         https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
-        win.webContents.loadFile('assets/html/loading-page.html');
-      }
-      else {
-        win.webContents.loadFile('assets/html/loading-page.html');
       }
     })
-    .catch (err => { 
+    .catch(err => { 
       console.error('resolveProxy error:', err.message);
-      win.webContents.loadFile('assets/html/loading-page.html');
-    })  
+    })
+    .finally(() => {
+      win.webContents.loadFile('assets/html/loading-page.html')
+    })
   })
 }
 
@@ -266,18 +264,18 @@ function winReload() {
         let resolvedProxyhref = 'http://' + resolvedProxyAddress;
         https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
         socket.close();
-        win.webContents.loadFile('assets/html/loading-page.html');
       }
       else {
         https.globalAgent = new https.Agent({});
         socket.close();
-        win.webContents.loadFile('assets/html/loading-page.html');
       }
     })
-    .catch (err => { 
+    .catch(err => {
       console.error('resolveProxy error:', err.message);
-      win.webContents.loadFile('assets/html/loading-page.html');
-    })  
+    })
+    .finally(() => {
+      win.webContents.loadFile('assets/html/loading-page.html')
+    })
   })
 }
 
@@ -341,7 +339,18 @@ ipcMain.on('socketServerInfo', (event, arg) => {
   socket.on('pcintro', () => {
     win.webContents.send('loadStatus_MobileLinkReceived')
     var referLink = socketServerAddress + '/refer' + `?pcClientId=${pcClientId}`;
-    win.loadFile('assets/html/door.html');
+    win.loadFile('assets/html/door.html')
+    .then(() => {
+      let filePath = path.join(userDataPath, 'approvedMobiles.json');
+      if (fs.existsSync(filePath)) {
+        var approvedMobilesStr = fs.readFileSync(filePath, 'utf-8');
+        let approvedMobiles = JSON.parse(approvedMobilesStr);
+        let approvedMobilesList = approvedMobiles.list;
+        if (approvedMobilesList.length >= 1) {
+          win.webContents.send('updateAllowedMobiles', approvedMobilesStr)
+        }
+      }
+    })
     win.webContents.on('did-finish-load', () => {
       win.webContents.send('refer', referLink);
     })
