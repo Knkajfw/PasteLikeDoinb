@@ -73,3 +73,50 @@ if (info2TargetVersion >= pldVersion) {
 if (topInfoBarLink1) {
   topInfoBarLink1.addEventListener('click', (e) => { e.preventDefault(); shell.openExternal(infoLink) });
 }
+
+const pairModeBtn = document.querySelector('#pair-mode-btn');
+const pairStatus = document.querySelector('#pair-status');
+const verificationCode = document.querySelector('#verification-code');
+const verificationCodeLabel = document.querySelector('#verification-code-label');
+var codeNumeber = '';
+var discoverable = false;
+
+function reqToSetAsDiscoverable() {
+  codeNumeber = generateVerificationCode(6);
+  ipcRenderer.send('request-to-set-as-discoverable', codeNumeber);
+}
+function reqToSetAsUndiscoverable() {
+  ipcRenderer.send('request-to-set-as-undiscoverable');
+}
+function generateVerificationCode(digit) {
+  let alphabet = '0123456789';
+  let result = '';
+  for (let i = 0; i < digit; i++) {
+    let newNumber = alphabet[Math.floor(Math.random()*10)];
+    result += newNumber;
+  }
+  return result;
+}
+pairModeBtn.addEventListener('click', reqToSetAsDiscoverable);
+
+ipcRenderer.on('already-set-as-discoverable', (e, codeNumeber) => {
+  verificationCode.innerText = codeNumeber;
+  if (!discoverable) {
+    pairStatus.innerText = 'Discoverable';
+    pairModeBtn.removeEventListener('click', reqToSetAsDiscoverable);
+    pairModeBtn.addEventListener('click', reqToSetAsUndiscoverable);
+    verificationCodeLabel.innerText = 'Pair Code:';
+    discoverable = true;
+  }
+})
+
+ipcRenderer.on('already-set-as-undiscoverable', () => {
+  if (discoverable) {
+    pairStatus.innerText = 'Not discoverable';
+    pairModeBtn.removeEventListener('click', reqToSetAsUndiscoverable);
+    pairModeBtn.addEventListener('click', reqToSetAsDiscoverable);
+    verificationCode.innerText = '';
+    verificationCodeLabel.innerText = '';
+    discoverable = false;
+  }
+})

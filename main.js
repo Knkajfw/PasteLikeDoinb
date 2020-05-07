@@ -388,6 +388,12 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     fs.writeFileSync(filePath, approvedMobilesJson, 'utf-8');
     win.webContents.send('updateAllowedMobiles', approvedMobilesJson);
   })
+  socket.on('already-set-as-discoverable', (codeNumber) => {
+    win.webContents.send('already-set-as-discoverable', codeNumber);
+  })
+  socket.on('already-set-as-undiscoverable', () => {
+    win.webContents.send('already-set-as-undiscoverable');
+  })
 })
 
 ipcMain.on('reload', () => {
@@ -396,4 +402,12 @@ ipcMain.on('reload', () => {
 
 ipcMain.on('opendev', () => {
   win.webContents.openDevTools({mode: 'undocked'});
+})
+
+ipcMain.on('request-to-set-as-discoverable', (e, codeNumber) => {
+  socket.emit('request-to-set-as-discoverable', pcClientId, codeNumber);
+})
+
+ipcMain.on('request-to-set-as-undiscoverable', () => {
+  socket.emit('request-to-set-as-undiscoverable', pcClientId);
 })
