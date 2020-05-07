@@ -346,7 +346,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
       win.webContents.send('refer', referLink);
     })
   })
-  socket.on('clips2p', (msg) => {
+  socket.on('clips2p', (msg, mobileClientId) => {
     clip = msg;
     typeit();
   })
@@ -363,7 +363,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     skillSlotToGetLevel = skillSlot;
     getActivePlayerNameForLv();
   })
-  socket.on('pair-s2p', (mbTopair) => {
+  socket.on('pair-s2p', (mbTopair, fn) => {
     //DRAFT fs catch
     let filePath = path.join(userDataPath, 'approvedMobiles.json');
     if (fs.existsSync(filePath)) {
@@ -387,6 +387,8 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     let approvedMobilesJson = JSON.stringify(approvedMobiles);
     fs.writeFileSync(filePath, approvedMobilesJson, 'utf-8');
     win.webContents.send('updateAllowedMobiles', approvedMobilesJson);
+    //DRAFT may delete param
+    fn('c');
   })
   socket.on('already-set-as-discoverable', (codeNumber) => {
     win.webContents.send('already-set-as-discoverable', codeNumber);
