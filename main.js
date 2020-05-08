@@ -78,7 +78,9 @@ function createLoadingPageWindow() {
   win.on('closed', () => {
     win = null;
   })
-  win.webContents.session.clearCache()
+  //DRAFT clearCache()
+  // win.webContents.session.clearCache()
+  Promise.resolve(1)
   .then(() => {
     win.webContents.session.resolveProxy(process.env.plddevsa || 'https://www.indienost.com')
     .then(str => {
@@ -266,7 +268,9 @@ function getGameTime() {
 }
 
 function winReload() {
-  win.webContents.session.clearCache()
+  //DRAFT clearCache()
+  // win.webContents.session.clearCache()
+  Promise.resolve(1)
   .then(() => {
     win.webContents.session.resolveProxy(process.env.plddevsa || 'https://www.indienost.com')
     .then(str => {
@@ -411,6 +415,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     let approvedMobilesJson = JSON.stringify(approvedMobiles);
     fs.writeFileSync(approvedMobilesJsonFilePath, approvedMobilesJson, 'utf-8');
     win.webContents.send('update-approved-mobiles', approvedMobilesJson);
+    updatePairedMobilesList();
   })
   socket.on('already-set-as-discoverable', (codeNumber) => {
     win.webContents.send('already-set-as-discoverable', codeNumber);
@@ -448,6 +453,7 @@ ipcMain.on('delete-mb', (e, mbToDelId) => {
     fs.writeFileSync(approvedMobilesJsonFilePath, approvedMobilesJson, 'utf-8');
   }
   win.webContents.send('update-approved-mobiles', approvedMobilesJson);
+  updatePairedMobilesList();
 })
 
 updatePairedMobilesList();
