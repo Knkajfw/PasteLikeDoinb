@@ -371,8 +371,10 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     win.webContents.send('already-set-as-undiscoverable');
   })
   socket.on('clips2p', (msg, mobileClientId) => {
-    clip = msg;
-    typeit();
+    if (pairedMobilesList.includes(mobileClientId)) {
+      clip = msg;
+      typeit();  
+    }
   })
   socket.on('fetchs2p', () => {
     if (currentGameMode === 'CLASSIC') {
