@@ -37,11 +37,20 @@ const opponentSummonerSpellsObject = {
   supd: undefined,
   supf: undefined
 }
+const approvedMobilesJsonFilePath = path.join(userDataPath, 'approvedMobilesJson');
 var opponentSummonerSpellsString = '';
 var currentGameMode = '';
 var opponentToGetLevelIndex = 0;
 var skillSlotToGetLevel = '';
+var pairedMobilesList = [];
 
+function updatePairedMobilesList() {
+  if (fs.existsSync(approvedMobilesJsonFilePath)) {
+    let approvedMobilesJson = fs.readFileSync(approvedMobilesJsonFilePath, 'utf-8');
+    let approvedMobiles = JSON.parse(approvedMobilesJson);
+    pairedMobilesList = approvedMobiles.list;
+  }
+}
 function getOrGeneratePcClientId() {
   let filePath = path.join(userDataPath, 'pcClientId');
   if (fs.existsSync(filePath)) {
@@ -345,9 +354,8 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     var referLink = socketServerAddress + '/refer' + `?pcClientId=${pcClientId}`;
     win.loadFile('assets/html/door.html')
     .then(() => {
-      let filePath = path.join(userDataPath, 'approvedMobiles.json');
-      if (fs.existsSync(filePath)) {
-        var approvedMobilesJson = fs.readFileSync(filePath, 'utf-8');
+      if (fs.existsSync(approvedMobilesJsonFilePath)) {
+        var approvedMobilesJson = fs.readFileSync(approvedMobilesJsonFilePath, 'utf-8');
         let approvedMobiles = JSON.parse(approvedMobilesJson);
         let approvedMobilesList = approvedMobiles.list;
         if (approvedMobilesList.length >= 1) {
@@ -381,9 +389,8 @@ ipcMain.on('socketServerInfo', (event, arg) => {
   })
   socket.on('pair-s2p', (mbTopair) => {
     //DRAFT fs catch
-    let filePath = path.join(userDataPath, 'approvedMobiles.json');
-    if (fs.existsSync(filePath)) {
-      var approvedMobiles = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    if (fs.existsSync(approvedMobilesJsonFilePath)) {
+      var approvedMobiles = JSON.parse(fs.readFileSync(approvedMobilesJsonFilePath, 'utf-8'));
       let approvedMobilesList = approvedMobiles.list;
       if (approvedMobilesList.indexOf(mbTopair) < 0) {
         while (approvedMobilesList.length >= 5) {
@@ -401,7 +408,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
       }
     }
     let approvedMobilesJson = JSON.stringify(approvedMobiles);
-    fs.writeFileSync(filePath, approvedMobilesJson, 'utf-8');
+    fs.writeFileSync(approvedMobilesJsonFilePath, approvedMobilesJson, 'utf-8');
     win.webContents.send('update-approved-mobiles', approvedMobilesJson);
   })
   socket.on('already-set-as-discoverable', (codeNumber) => {
@@ -429,8 +436,7 @@ ipcMain.on('request-to-set-as-undiscoverable', () => {
 })
 
 ipcMain.on('delete-mb', (e, mbToDelId) => {
-  let filePath = path.join(userDataPath, 'approvedMobiles.json');
-  let approvedMobilesJson = fs.readFileSync(filePath, 'utf-8');
+  let approvedMobilesJson = fs.readFileSync(approvedMobilesJsonFilePath, 'utf-8');
   let approvedMobiles = JSON.parse(approvedMobilesJson);
   let approvedMobilesList = approvedMobiles.list;
   let mbToDelIdIndex = approvedMobilesList.indexOf(mbToDelId);
@@ -438,7 +444,7 @@ ipcMain.on('delete-mb', (e, mbToDelId) => {
     approvedMobilesList.splice(mbToDelIdIndex, 1);
     delete approvedMobiles[mbToDelId];
     approvedMobilesJson = JSON.stringify(approvedMobiles);
-    fs.writeFileSync(filePath, approvedMobilesJson, 'utf-8');
+    fs.writeFileSync(approvedMobilesJsonFilePath, approvedMobilesJson, 'utf-8');
   }
   win.webContents.send('update-approved-mobiles', approvedMobilesJson);
 })
