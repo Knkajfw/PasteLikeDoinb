@@ -5,7 +5,7 @@ var canvas = document.getElementById('canvas');
 var correspMobileClientLink = '';
 
 ipcRenderer.on('refer', (e, msg) => {
-  correspMobileClientLink = msg;
+  correspMobileClientLink = msg + `?vfCode=${codeNumber}`;
   var linkSpan = document.getElementById('link-span');
   linkSpan.innerText = correspMobileClientLink;
   qrcode.toCanvas(canvas, correspMobileClientLink, (error) => {

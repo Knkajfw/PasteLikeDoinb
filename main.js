@@ -354,7 +354,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
   })
   socket.on('pcintro', () => {
     win.webContents.send('loadStatus_MobileLinkReceived')
-    var referLink = socketServerAddress + '/refer' + `?pcClientId=${pcClientId}`;
+    var referLink = socketServerAddress + '/refer';
     win.loadFile('assets/html/door.html')
     .then(() => {
       if (fs.existsSync(approvedMobilesJsonFilePath)) {
