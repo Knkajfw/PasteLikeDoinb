@@ -110,7 +110,7 @@ function typeit() {
   }
 }
 
-function getActivePlayerName() {
+function getActivePlayerName(mobileClientId) {
   const getActivePlayerNameReq = new net.request('https://127.0.0.1:2999/liveclientdata/activeplayername');
   getActivePlayerNameReq.on('error', (error) => {
     console.error('getActivePlayerNameErr', error.message);
@@ -118,13 +118,13 @@ function getActivePlayerName() {
   getActivePlayerNameReq.on('response', (response) => {
     response.on('data', (chunk) => {
       activePlayerName = JSON.parse(chunk);
-      requestPlayerList();
+      requestPlayerList(mobileClientId);
     })
   })
   getActivePlayerNameReq.end();
 }
 
-function getActivePlayerNameForLv() {
+function getActivePlayerNameForLv(mobileClientId) {
   const getActivePlayerNameForLvReq = new net.request('https://127.0.0.1:2999/liveclientdata/activeplayername');
   getActivePlayerNameForLvReq.on('error', (error) => {
     console.error('getActivePlayerNameForLvReqErr', error.message);
@@ -132,13 +132,13 @@ function getActivePlayerNameForLv() {
   getActivePlayerNameForLvReq.on('response', (response) => {
     response.on('data', (chunk) => {
       activePlayerName = JSON.parse(chunk);
-      requestPlayerListForLv();
+      requestPlayerListForLv(mobileClientId);
     })
   })
   getActivePlayerNameForLvReq.end();
 }
 
-function requestPlayerList() {
+function requestPlayerList(mobileClientId) {
   const playerListReq = new net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
   playerListReq.on('error', (error) => {
     console.error('playerListReqErr:', error.message);
@@ -154,7 +154,7 @@ function requestPlayerList() {
         else if (activePlayerTeam === 'CHAOS') {
           opponentTeam = 'ORDER';
         }
-        getOpponentObjectArray();  
+        getOpponentObjectArray(mobileClientId);  
       }
       else {
         socket.emit('fetcherrp2s',pcClientId, 'Sync only works for 5v5 game.')
@@ -164,7 +164,7 @@ function requestPlayerList() {
   playerListReq.end();
 }
 
-function requestPlayerListForLv() {
+function requestPlayerListForLv(mobileClientId) {
   const playerListForLvReq = new net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
   playerListForLvReq.on('error', (error) => {
     console.error('playerListForLvReqErr:', error.message);
@@ -179,7 +179,7 @@ function requestPlayerListForLv() {
       else if (activePlayerTeam === 'CHAOS') {
         opponentTeam = 'ORDER';
       }
-      getOpponentObjectArrayForLv();  
+      getOpponentObjectArrayForLv(mobileClientId);  
     })
   })
   playerListForLvReq.end();
@@ -193,30 +193,29 @@ function findPlayerTeam() {
   }
 }
 
-function getOpponentObjectArray() {
+function getOpponentObjectArray(mobileClientId) {
   opponents = playerList.filter(player => {
     return player.team === opponentTeam;
   })
-  getSummonerSpells();
+  getSummonerSpells(mobileClientId);
 }
 
-function getOpponentObjectArrayForLv() {
+function getOpponentObjectArrayForLv(mobileClientId) {
   opponents = playerList.filter(player => {
     return player.team === opponentTeam;
   })
-  sendLevel();
+  sendLevel(mobileClientId);
 }
 
-function sendLevel() {
+function sendLevel(mobileClientId) {
   if (opponents[opponentToGetLevelIndex] === undefined) /* Do nothing */;
   else {
     let level = opponents[opponentToGetLevelIndex].level;
-    console.log(pcClientId, skillSlotToGetLevel, level);
-    socket.emit('fetchlvp2s', pcClientId, skillSlotToGetLevel, level);  
+    socket.emit('fetchlvp2s', mobileClientId, skillSlotToGetLevel, level);  
   }
 }
 
-function getSummonerSpells() {
+function getSummonerSpells(mobileClientId) {
   opponentSummonerSpells = [];
   opponents.map(parseAndPushSummonerSpells);
   opponentSummonerSpellsTrimmed = trimSummonerSpells();
@@ -231,7 +230,7 @@ function getSummonerSpells() {
   opponentSummonerSpellsObject.supd = opponentSummonerSpellsTrimmed[8];
   opponentSummonerSpellsObject.supf = opponentSummonerSpellsTrimmed[9];
   opponentSummonerSpellsString = JSON.stringify(opponentSummonerSpellsObject);
-  socket.emit('fetchp2s', gameTime, pcClientId, opponentSummonerSpellsString);
+  socket.emit('fetchp2s', gameTime, opponentSummonerSpellsString, mobileClientId);
 }
 
 function parseAndPushSummonerSpells(summoner) {
@@ -376,18 +375,18 @@ ipcMain.on('socketServerInfo', (event, arg) => {
       typeit();  
     }
   })
-  socket.on('fetchs2p', () => {
+  socket.on('fetchs2p', (mobileClientId) => {
     if (currentGameMode === 'CLASSIC') {
-      getActivePlayerName();
+      getActivePlayerName(mobileClientId);
     }
     else {
-      socket.emit('fetchp2snc', pcClientId);
+      socket.emit('fetchp2snc', mobileClientId);
     }
   })
-  socket.on('fetchlvs2p', (skillSlot) => {
+  socket.on('fetchlvs2p', (skillSlot, mobileClientId) => {
     opponentToGetLevelIndex = getLevelArrayIndexFromSkillSlot(skillSlot);
     skillSlotToGetLevel = skillSlot;
-    getActivePlayerNameForLv();
+    getActivePlayerNameForLv(mobileClientId);
   })
   socket.on('pair-s2p', (mbTopair) => {
     //DRAFT fs catch
