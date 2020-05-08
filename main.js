@@ -49,7 +49,11 @@ function getOrGeneratePcClientId() {
     return pcClientId;
   }
   else {
-    let pcClientId = nanoid(10);
+    let pattern = /[a-zA-Z]/;
+    let pcClientId;
+    do {
+      pcClientId = nanoid(10);
+    } while (!pcClientId.charAt(0).match(pattern));
     fs.writeFileSync(filePath, pcClientId, 'utf-8');
     return pcClientId;
   }  
