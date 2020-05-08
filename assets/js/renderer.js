@@ -78,12 +78,11 @@ const pairModeBtn = document.querySelector('#pair-mode-btn');
 const pairStatus = document.querySelector('#pair-status');
 const verificationCode = document.querySelector('#verification-code');
 const verificationCodeLabel = document.querySelector('#verification-code-label');
-var codeNumeber = '';
+const codeNumber = generateVerificationCode(6);
 var discoverable = false;
 
 function reqToSetAsDiscoverable() {
-  codeNumeber = generateVerificationCode(6);
-  ipcRenderer.send('request-to-set-as-discoverable', codeNumeber);
+  ipcRenderer.send('request-to-set-as-discoverable', codeNumber);
 }
 function reqToSetAsUndiscoverable() {
   ipcRenderer.send('request-to-set-as-undiscoverable');
@@ -99,8 +98,8 @@ function generateVerificationCode(digit) {
 }
 pairModeBtn.addEventListener('click', reqToSetAsDiscoverable);
 
-ipcRenderer.on('already-set-as-discoverable', (e, codeNumeber) => {
-  verificationCode.innerText = codeNumeber;
+ipcRenderer.on('already-set-as-discoverable', (e, codeNumber) => {
+  verificationCode.innerText = codeNumber;
   if (!discoverable) {
     pairStatus.innerText = 'Discoverable';
     pairModeBtn.removeEventListener('click', reqToSetAsDiscoverable);
