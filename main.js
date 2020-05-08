@@ -448,3 +448,5 @@ ipcMain.on('delete-mb', (e, mbToDelId) => {
   }
   win.webContents.send('update-approved-mobiles', approvedMobilesJson);
 })
+
+updatePairedMobilesList();
