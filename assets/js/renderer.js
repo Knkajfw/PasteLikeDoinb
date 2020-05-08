@@ -18,21 +18,21 @@ ipcRenderer.on('refer', (e, msg) => {
   })
 })
 
-ipcRenderer.on('updateAllowedMobiles', (e, allowedMobilesJson) => {
-  let allowedMobiles = JSON.parse(allowedMobilesJson);
+ipcRenderer.on('update-approved-mobiles', (e, approvedMobilesJson) => {
+  let allowedMobiles = JSON.parse(approvedMobilesJson);
   let listItemsHTML = '';
   for (let i = 0; i < allowedMobiles.list.length; i++) {
     const element = allowedMobiles.list[i];
     if (allowedMobiles[element]) {
       if (allowedMobiles[element].friendlyName) {
-        listItemsHTML += `<li>Approved: ${allowedMobiles[element].friendlyName}</li>`;
+        listItemsHTML += `<li>Approved: ${allowedMobiles[element].friendlyName}  <a href="#" class="del-mb-link" del-target="${element}"><small>Del</small></a></li>`;
       }
       else {
-        listItemsHTML += `<li>Approved: ${element}</li>`;
+        listItemsHTML += `<li>Approved: ${element}  <a href="#" class="del-mb-link" del-target="${element}"><small>Del</small></a></li>`;
       }
     }
     else {
-      listItemsHTML += `<li>Approved: ${element}</li>`;
+      listItemsHTML += `<li>Approved: ${element}  <a href="#" class="del-mb-link" del-target="${element}"><small>Del</small></a></li>`;
     }
   }
   const pairedDiv = document.querySelector('#paired-div');
@@ -44,7 +44,18 @@ ipcRenderer.on('updateAllowedMobiles', (e, allowedMobilesJson) => {
     pairedDiv.removeChild(existingList);
   }
   pairedDiv.appendChild(newList);
+  const delMbLinks = document.querySelectorAll('.del-mb-link');
+  for (const link of delMbLinks) {
+    link.addEventListener('click', ipcSendDelete);
+  }
 })
+
+function ipcSendDelete(event) {
+  event.preventDefault();
+  let target = event.target.parentNode;
+  let mbToDelId = target.getAttribute('del-target');
+  ipcRenderer.send('delete-mb', mbToDelId);
+}
 
 function doorReload() {
   ipcRenderer.send('reload');
@@ -118,6 +129,10 @@ ipcRenderer.on('already-set-as-undiscoverable', () => {
     verificationCodeLabel.innerText = '';
     discoverable = false;
   }
+})
+
+ipcRenderer.on('confirm-delete-mb', (e, mbToDelId) => {
+  //TODO
 })
 
 if (discoverable) {

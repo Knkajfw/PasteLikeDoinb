@@ -347,11 +347,11 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     .then(() => {
       let filePath = path.join(userDataPath, 'approvedMobiles.json');
       if (fs.existsSync(filePath)) {
-        var approvedMobilesStr = fs.readFileSync(filePath, 'utf-8');
-        let approvedMobiles = JSON.parse(approvedMobilesStr);
+        var approvedMobilesJson = fs.readFileSync(filePath, 'utf-8');
+        let approvedMobiles = JSON.parse(approvedMobilesJson);
         let approvedMobilesList = approvedMobiles.list;
         if (approvedMobilesList.length >= 1) {
-          win.webContents.send('updateAllowedMobiles', approvedMobilesStr)
+          win.webContents.send('update-approved-mobiles', approvedMobilesJson)
         }
       }
     })
@@ -402,7 +402,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     }
     let approvedMobilesJson = JSON.stringify(approvedMobiles);
     fs.writeFileSync(filePath, approvedMobilesJson, 'utf-8');
-    win.webContents.send('updateAllowedMobiles', approvedMobilesJson);
+    win.webContents.send('update-approved-mobiles', approvedMobilesJson);
   })
   socket.on('already-set-as-discoverable', (codeNumber) => {
     win.webContents.send('already-set-as-discoverable', codeNumber);
@@ -426,4 +426,19 @@ ipcMain.on('request-to-set-as-discoverable', (e, codeNumber) => {
 
 ipcMain.on('request-to-set-as-undiscoverable', () => {
   socket.emit('request-to-set-as-undiscoverable', pcClientId);
+})
+
+ipcMain.on('delete-mb', (e, mbToDelId) => {
+  let filePath = path.join(userDataPath, 'approvedMobiles.json');
+  let approvedMobilesJson = fs.readFileSync(filePath, 'utf-8');
+  let approvedMobiles = JSON.parse(approvedMobilesJson);
+  let approvedMobilesList = approvedMobiles.list;
+  let mbToDelIdIndex = approvedMobilesList.indexOf(mbToDelId);
+  if (mbToDelIdIndex >= 0) {
+    approvedMobilesList.splice(mbToDelIdIndex, 1);
+    delete approvedMobiles[mbToDelId];
+    approvedMobilesJson = JSON.stringify(approvedMobiles);
+    fs.writeFileSync(filePath, approvedMobilesJson, 'utf-8');
+  }
+  win.webContents.send('update-approved-mobiles', approvedMobilesJson);
 })
