@@ -119,3 +119,10 @@ ipcRenderer.on('already-set-as-undiscoverable', () => {
     discoverable = false;
   }
 })
+
+if (discoverable) {
+  pairStatus.textContent = 'Discoverable';
+}
+else {
+  pairStatus.textContent = 'Not discoverable';
+}

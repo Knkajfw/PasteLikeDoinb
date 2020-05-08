@@ -359,6 +359,9 @@ ipcMain.on('socketServerInfo', (event, arg) => {
       win.webContents.send('refer', referLink);
     })
   })
+  socket.on('disconnect', () => {
+    win.webContents.send('already-set-as-undiscoverable');
+  })
   socket.on('clips2p', (msg, mobileClientId) => {
     clip = msg;
     typeit();
