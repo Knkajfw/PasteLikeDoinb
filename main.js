@@ -37,7 +37,7 @@ const opponentSummonerSpellsObject = {
   supd: undefined,
   supf: undefined
 }
-const approvedMobilesJsonFilePath = path.join(userDataPath, 'approvedMobilesJson');
+const approvedMobilesJsonFilePath = path.join(userDataPath, 'approvedMobiles.json');
 var opponentSummonerSpellsString = '';
 var currentGameMode = '';
 var opponentToGetLevelIndex = 0;
@@ -45,7 +45,7 @@ var skillSlotToGetLevel = '';
 var pairedMobilesList = [];
 const computerName = process.env.COMPUTERNAME.substring(0, 16);
 
-function updatePairedMobilesList() {
+function updatePairedMobilesListInRAM() {
   if (fs.existsSync(approvedMobilesJsonFilePath)) {
     let approvedMobilesJson = fs.readFileSync(approvedMobilesJsonFilePath, 'utf-8');
     let approvedMobiles = JSON.parse(approvedMobilesJson);
@@ -393,30 +393,39 @@ ipcMain.on('socketServerInfo', (event, arg) => {
     skillSlotToGetLevel = skillSlot;
     getActivePlayerNameForLv(mobileClientId);
   })
-  socket.on('pair-s2p', (mbTopair) => {
+
+  socket.on('pair-s2p', (mbTopair, mbDeviceName) => {
     //DRAFT fs catch
     if (fs.existsSync(approvedMobilesJsonFilePath)) {
       var approvedMobiles = JSON.parse(fs.readFileSync(approvedMobilesJsonFilePath, 'utf-8'));
-      let approvedMobilesList = approvedMobiles.list;
-      if (approvedMobilesList.indexOf(mbTopair) < 0) {
-        while (approvedMobilesList.length >= 5) {
-          approvedMobilesList.shift();
+      if (!approvedMobiles.list.includes(mbTopair)) {
+        while (approvedMobiles.list.length >= 5) {
+          approvedMobiles.list.shift();
         }
-        approvedMobilesList.push(mbTopair);  
+        approvedMobiles.list.push(mbTopair);
+        approvedMobiles[mbTopair] = {
+          deviceName: mbDeviceName
+        }
       }
       else {
-        return ;
+        if (approvedMobiles[mbTopair].deviceName !== mbDeviceName) {
+          approvedMobiles[mbTopair].deviceName = mbDeviceName;
+        }
+        else return;
       }
     }
     else {
       var approvedMobiles = {
         list: [mbTopair]
       }
+      approvedMobiles[mbTopair] = {
+        deviceName: mbDeviceName
+      }
     }
     let approvedMobilesJson = JSON.stringify(approvedMobiles);
     fs.writeFileSync(approvedMobilesJsonFilePath, approvedMobilesJson, 'utf-8');
     win.webContents.send('update-approved-mobiles', approvedMobilesJson);
-    updatePairedMobilesList();
+    updatePairedMobilesListInRAM();
   })
   socket.on('already-set-as-discoverable', (codeNumber) => {
     win.webContents.send('already-set-as-discoverable', codeNumber);
@@ -454,7 +463,7 @@ ipcMain.on('delete-mb', (e, mbToDelId) => {
     fs.writeFileSync(approvedMobilesJsonFilePath, approvedMobilesJson, 'utf-8');
   }
   win.webContents.send('update-approved-mobiles', approvedMobilesJson);
-  updatePairedMobilesList();
+  updatePairedMobilesListInRAM();
 })
 
-updatePairedMobilesList();
+updatePairedMobilesListInRAM();

@@ -23,9 +23,10 @@ ipcRenderer.on('update-approved-mobiles', (e, approvedMobilesJson) => {
   let listItemsHTML = '';
   for (let i = 0; i < allowedMobiles.list.length; i++) {
     const element = allowedMobiles.list[i];
+    //TRIM remove the check?
     if (allowedMobiles[element]) {
-      if (allowedMobiles[element].friendlyName) {
-        listItemsHTML += `<li>Approved: ${allowedMobiles[element].friendlyName}  <a href="#" class="del-mb-link" del-target="${element}"><small>Del</small></a></li>`;
+      if (allowedMobiles[element].deviceName) {
+        listItemsHTML += `<li>Approved: ${allowedMobiles[element].deviceName}  <a href="#" class="del-mb-link" del-target="${element}"><small>Del</small></a></li>`;
       }
       else {
         listItemsHTML += `<li>Approved: ${element}  <a href="#" class="del-mb-link" del-target="${element}"><small>Del</small></a></li>`;
@@ -52,8 +53,8 @@ ipcRenderer.on('update-approved-mobiles', (e, approvedMobilesJson) => {
 
 function ipcSendDelete(event) {
   event.preventDefault();
-  let target = event.target.parentNode;
-  let mbToDelId = target.getAttribute('del-target');
+  let targetParent = event.target.parentNode;
+  let mbToDelId = targetParent.getAttribute('del-target');
   ipcRenderer.send('delete-mb', mbToDelId);
 }
 
