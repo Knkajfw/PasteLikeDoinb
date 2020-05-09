@@ -43,6 +43,7 @@ var currentGameMode = '';
 var opponentToGetLevelIndex = 0;
 var skillSlotToGetLevel = '';
 var pairedMobilesList = [];
+const computerName = process.env.COMPUTERNAME.substring(0, 16);
 
 function updatePairedMobilesList() {
   if (fs.existsSync(approvedMobilesJsonFilePath)) {
@@ -434,7 +435,7 @@ ipcMain.on('opendev', () => {
 })
 
 ipcMain.on('request-to-set-as-discoverable', (e, codeNumber) => {
-  socket.emit('request-to-set-as-discoverable', pcClientId, codeNumber);
+  socket.emit('request-to-set-as-discoverable', pcClientId, codeNumber, computerName);
 })
 
 ipcMain.on('request-to-set-as-undiscoverable', () => {
