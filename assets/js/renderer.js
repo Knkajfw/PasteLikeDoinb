@@ -26,7 +26,7 @@ ipcRenderer.on('update-approved-mobiles', (e, approvedMobilesJson) => {
     //TRIM remove the check?
     if (allowedMobiles[element]) {
       if (allowedMobiles[element].deviceName) {
-        listItemsHTML += `<li>Approved: ${allowedMobiles[element].deviceName}  <a href="#" class="del-mb-link" del-target="${element}"><small>Del</small></a></li>`;
+        listItemsHTML += `<li>Approved: <abbr title="${element}">${allowedMobiles[element].deviceName}</abbr>  <a href="#" class="del-mb-link" del-target="${element}"><small>Del</small></a></li>`;
       }
       else {
         listItemsHTML += `<li>Approved: ${element}  <a href="#" class="del-mb-link" del-target="${element}"><small>Del</small></a></li>`;
@@ -142,3 +142,8 @@ if (discoverable) {
 else {
   pairStatus.textContent = 'Not discoverable';
 }
+
+ipcRenderer.on('update-self-id', (e, pcClientId) => {
+  const selfIdDiv = document.querySelector('#self-id');
+  selfIdDiv.textContent = `ID: ${pcClientId}`;
+})

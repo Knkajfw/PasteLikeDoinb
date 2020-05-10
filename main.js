@@ -366,8 +366,7 @@ ipcMain.on('socketServerInfo', (event, arg) => {
           win.webContents.send('update-approved-mobiles', approvedMobilesJson)
         }
       }
-    })
-    win.webContents.on('did-finish-load', () => {
+      win.webContents.send('update-self-id', pcClientId);
       win.webContents.send('refer', referLink);
     })
   })
