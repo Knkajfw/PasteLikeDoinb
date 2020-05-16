@@ -132,10 +132,6 @@ ipcRenderer.on('already-set-as-undiscoverable', () => {
   }
 })
 
-ipcRenderer.on('confirm-delete-mb', (e, mbToDelId) => {
-  //TODO
-})
-
 if (discoverable) {
   pairStatus.textContent = 'Discoverable';
 }
