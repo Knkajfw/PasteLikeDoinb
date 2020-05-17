@@ -1,6 +1,7 @@
 const { ipcRenderer, shell } = require('electron');
 var statusBlock = document.getElementById('status-block');
 var iconLink = document.getElementById('icon-link');
+const reloadBtn = document.querySelector('reload-btn');
 
 function openIconLinkExternally(event) {
   event.preventDefault();
@@ -16,7 +17,7 @@ function replaceIconLinkWithCannotConnectHelp() {
   iconLink.addEventListener('click', openCannotConnectHelpExternally);
 }
 
-function reload(){
+function sendReload(){
   ipcRenderer.send('reload');
 }
 
@@ -33,4 +34,6 @@ ipcRenderer.on('loadStatus_MobileLinkReceived', () => {
 })
 
 iconLink.addEventListener('click', openIconLinkExternally);
+reloadBtn.addEventListener('click', sendReload);
+
 setTimeout(replaceIconLinkWithCannotConnectHelp, 15000);
