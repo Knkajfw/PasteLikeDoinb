@@ -1,7 +1,7 @@
 const { ipcRenderer, shell } = require('electron');
 var statusBlock = document.getElementById('status-block');
 var iconLink = document.getElementById('icon-link');
-const reloadBtn = document.querySelector('reload-btn');
+const reloadBtn = document.querySelector('#reload-btn');
 
 function openIconLinkExternally(event) {
   event.preventDefault();
