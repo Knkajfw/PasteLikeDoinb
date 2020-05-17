@@ -96,7 +96,7 @@ function createLoadingPageWindow() {
       console.error('resolveProxy error:', err.message);
     })
     .finally(() => {
-      win.webContents.loadFile('assets/html/loading-page.html')
+      win.webContents.loadFile('assets/html/loading-page.html');
     })
   })
 }
@@ -291,7 +291,7 @@ function winReload() {
       console.error('resolveProxy error:', err.message);
     })
     .finally(() => {
-      win.webContents.loadFile('assets/html/loading-page.html')
+      win.webContents.loadFile('assets/html/loading-page.html');
     })
   })
 }
