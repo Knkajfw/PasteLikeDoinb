@@ -115,7 +115,7 @@ function typeit() {
 }
 
 function getActivePlayerName(mobileClientId) {
-  const getActivePlayerNameReq = new net.request('https://127.0.0.1:2999/liveclientdata/activeplayername');
+  const getActivePlayerNameReq = net.request('https://127.0.0.1:2999/liveclientdata/activeplayername');
   getActivePlayerNameReq.on('error', (error) => {
     console.error('getActivePlayerNameErr', error.message);
   })
@@ -129,7 +129,7 @@ function getActivePlayerName(mobileClientId) {
 }
 
 function getActivePlayerNameForLv(mobileClientId) {
-  const getActivePlayerNameForLvReq = new net.request('https://127.0.0.1:2999/liveclientdata/activeplayername');
+  const getActivePlayerNameForLvReq = net.request('https://127.0.0.1:2999/liveclientdata/activeplayername');
   getActivePlayerNameForLvReq.on('error', (error) => {
     console.error('getActivePlayerNameForLvReqErr', error.message);
   })
@@ -143,7 +143,7 @@ function getActivePlayerNameForLv(mobileClientId) {
 }
 
 function requestPlayerList(mobileClientId) {
-  const playerListReq = new net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
+  const playerListReq = net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
   playerListReq.on('error', (error) => {
     console.error('playerListReqErr:', error.message);
   })
@@ -169,7 +169,7 @@ function requestPlayerList(mobileClientId) {
 }
 
 function requestPlayerListForLv(mobileClientId) {
-  const playerListForLvReq = new net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
+  const playerListForLvReq = net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
   playerListForLvReq.on('error', (error) => {
     console.error('playerListForLvReqErr:', error.message);
   })
@@ -251,7 +251,7 @@ function trimSummonerSpells() {
 }
 
 function getGameTime() {
-  const gtimereq = new net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
+  const gtimereq = net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
   gtimereq.on('error', (error) => {
     //DRAFT restroe log error
     // console.error('getGameTimeReqErr', error.message);
