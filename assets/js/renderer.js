@@ -58,7 +58,7 @@ function ipcSendDelete(event) {
   ipcRenderer.send('delete-mb', mbToDelId);
 }
 
-function doorReload() {
+function sendReload() {
   ipcRenderer.send('reload');
 }
 
@@ -143,3 +143,8 @@ ipcRenderer.on('update-self-id', (e, pcClientId) => {
   const selfIdDiv = document.querySelector('#self-id');
   selfIdDiv.textContent = `ID: ${pcClientId}`;
 })
+
+const reloadBtn = document.querySelector('#reload-btn');
+reloadBtn.addEventListener('click', sendReload);
+const openDevBtn = document.querySelector('#open-devtools-btn');
+openDevBtn.addEventListener('click', sendOpenDevTools);
