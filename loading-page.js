@@ -12,7 +12,7 @@ function openIconLinkExternally(event) {
 }
 function openCannotConnectHelpExternally(event) {
   event.preventDefault();
-  shell.openExternal('https://knkajfw.github.io/paste-like-doinb/cannot-connect.html');
+  shell.openExternal('https://indienost.gitee.io/paste-like-doinb/cannot-connect.html');
 }
 function replaceIconLinkWithCannotConnectHelp() {
   iconLink.innerHTML = "<small>Can't get connected? See help</small>";
