@@ -48,6 +48,7 @@ if (topInfoBarLink1) {
   topInfoBarLink1.addEventListener('click', (e)=>{e.preventDefault();shell.openExternal(infoLink)});
 }
 
+//TODO remove socketServerAddress send
 if (socketServerAddress) {
   ipcRenderer.send('socketServerInfo', socketServerAddress);
   statusBlock.innerText = "已取得服务器地址，连接中";

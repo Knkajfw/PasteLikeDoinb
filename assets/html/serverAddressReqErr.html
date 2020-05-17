@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="view-port" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href='../css/bootstrap.min.css'>
+  <title>记闪现PasteLikeDoinb</title>
+</head>
+<body>
+  <img src="../img/error.png">
+  <p>Some error.</p>
+  <div id="retry-server-addr-btn" class="btn btn-primary">Retry</div>
+</body>
+<script>
+  const { ipcRenderer } = require('electron');
+  const retryBtn = document.querySelector('#retry-server-addr-btn');
+  retryBtn.addEventListener('click', sendRelaunchApp);
+  function sendRelaunchApp() {
+    ipcRenderer.send('relaunch');
+  }
+</script>
+</html>

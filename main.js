@@ -76,6 +76,7 @@ function createLoadingPageWindow() {
     height: 600,
     webPreferences: { nodeIntegration: true }
   })
+  //TODO may remove this 'closed' listener
   win.on('closed', () => {
     win = null;
   })
@@ -83,7 +84,7 @@ function createLoadingPageWindow() {
   // win.webContents.session.clearCache()
   Promise.resolve(1)
   .then(() => {
-    win.webContents.session.resolveProxy(process.env.plddevsa || 'https://www.indienost.com')
+    win.webContents.session.resolveProxy(process.env.plddevsa || socketServerAddress)
     .then(str => {
       let parts = str.split(' ');
       if (parts[0] === 'PROXY') {
@@ -273,7 +274,7 @@ function winReload() {
   // win.webContents.session.clearCache()
   Promise.resolve(1)
   .then(() => {
-    win.webContents.session.resolveProxy(process.env.plddevsa || 'https://www.indienost.com')
+    win.webContents.session.resolveProxy(process.env.plddevsa || socketServerAddress)
     .then(str => {
       let parts = str.split(' ');
       if (parts[0] === 'PROXY') {
@@ -317,19 +318,13 @@ function getLevelArrayIndexFromSkillSlot(skillSlot) {
       console.log('undefined skill slot string input');
   }
 }
-
-app.on('ready', () => {
-  createLoadingPageWindow();
-  getGameTime();
-  setInterval(getGameTime, 1000);
-})
+app.on('ready', requestServerAddress);
 
 app.on('window-all-closed', () => {
   app.quit();
 })
 
 ipcMain.on('socketServerInfo', (event, arg) => {
-  socketServerAddress = process.env.plddevsa || arg;
   let opts = {
     rejectUnauthorized: false,
     reconnection: true,
@@ -465,4 +460,42 @@ ipcMain.on('delete-mb', (e, mbToDelId) => {
   updatePairedMobilesListInRAM();
 })
 
+ipcMain.on('relaunch', (e) => {
+  app.relaunch();
+  app.quit();
+})
+
 updatePairedMobilesListInRAM();
+
+function requestServerAddress() {
+  const serverAddressRequest = net.request('https://indienost.gitee.io/paste-like-doinb/pld-server-address');
+  serverAddressRequest.on('error', (error) => {
+    logErrorAndCreateErrWin(error);
+  })
+  serverAddressRequest.on('response', (res) => {
+    res.on('data', (chunk) => {
+      socketServerAddress = process.env.plddevsa || chunk.toString();
+      createLoadingPageWindow();
+      setInterval(getGameTime, 1000);  
+    })
+    if (res.statusCode !== 200) {
+      const err = new Error('Response not ok');
+      logErrorAndCreateErrWin(err);
+    }
+  })
+  serverAddressRequest.end();
+}
+
+//TRIM remove console.log
+function logErrorAndCreateErrWin(error) {
+  console.log(error.message);
+  win = new BrowserWindow({
+    width: 371,
+    height: 600,
+    webPreferences: { nodeIntegration: true }
+  })
+  win.on('closed', () => {
+    win = null;
+  })
+  win.webContents.loadFile('assets/html/serverAddressReqErr.html');
+}
