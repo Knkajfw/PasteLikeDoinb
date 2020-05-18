@@ -1,14 +1,15 @@
 const { ipcRenderer } = require('electron');
 const qrcode = require('qrcode');
+const pldVersion = 110;
 
 var canvas = document.getElementById('canvas');
-var correspMobileClientLink = '';
+var referLink = '';
 
 ipcRenderer.on('refer', (e, msg) => {
-  correspMobileClientLink = msg + `?vfCode=${codeNumber}`;
+  referLink = msg + `?vfCode=${codeNumber}`;
   var linkSpan = document.getElementById('link-span');
-  linkSpan.innerText = correspMobileClientLink;
-  qrcode.toCanvas(canvas, correspMobileClientLink, (error) => {
+  linkSpan.innerText = referLink;
+  qrcode.toCanvas(canvas, referLink, (error) => {
     if (error) {
       var qrerror = document.getElementById('qrerror');
       qrerror.className = "text-break alert alert-danger py-1";
@@ -47,11 +48,11 @@ ipcRenderer.on('update-approved-mobiles', (e, approvedMobilesJson) => {
   pairedDiv.appendChild(newList);
   const delMbLinks = document.querySelectorAll('.del-mb-link');
   for (const link of delMbLinks) {
-    link.addEventListener('click', ipcSendDelete);
+    link.addEventListener('click', sendDelete);
   }
 })
 
-function ipcSendDelete(event) {
+function sendDelete(event) {
   event.preventDefault();
   let targetParent = event.target.parentNode;
   let mbToDelId = targetParent.getAttribute('del-target');
@@ -68,23 +69,8 @@ function sendOpenDevTools() {
 
 var copylinkdiv = document.getElementById('copy-link-div');
 copylinkdiv.addEventListener('click', () => {
-  navigator.clipboard.writeText(correspMobileClientLink);
+  navigator.clipboard.writeText(referLink);
 })
-
-const pldVersion = 441231;
-var infobar = document.getElementById('top-info-bar');
-var infobar2 = document.getElementById('top-info-bar-2');
-var topInfoBarLink1 = document.getElementById('top-info-bar-link1');
-
-infobar.innerHTML = info;
-
-if (info2TargetVersion >= pldVersion) {
-  infobar2.innerHTML = info2;
-}
-
-if (topInfoBarLink1) {
-  topInfoBarLink1.addEventListener('click', (e) => { e.preventDefault(); shell.openExternal(infoLink) });
-}
 
 const pairModeBtn = document.querySelector('#pair-mode-btn');
 const pairStatus = document.querySelector('#pair-status');
@@ -148,3 +134,36 @@ const reloadBtn = document.querySelector('#reload-btn');
 reloadBtn.addEventListener('click', sendReload);
 const openDevBtn = document.querySelector('#open-devtools-btn');
 openDevBtn.addEventListener('click', sendOpenDevTools);
+
+(function showStartNotifications() {
+  const startNotifications = serverOffer.notifications;
+  const notiDiv = document.querySelector('#noti-div');
+  function showNoti(note) {
+    let noti = document.createElement('p');
+    noti.classList.add('noti');
+    noti.innerHTML = note.content;
+    notiDiv.appendChild(noti);
+  }
+  for (note of startNotifications) {
+    const targetVersion = note.target;
+    switch (note.mode) {
+      case 'targetVersionArray':
+        if (targetVersion.includes(pldVersion)) {
+          showNoti(note);
+        }
+        break;
+      case 'toVersionLessThan':
+        if (pldVersion <= targetVersion) {
+          showNoti(note);
+        }
+        break;
+      case 'toVersionGreaterThan':
+        if (pldVersion >= targetVersion) {
+          showNoti(note);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+})()
