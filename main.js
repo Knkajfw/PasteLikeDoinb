@@ -93,7 +93,8 @@ function createLoadingPageWindow() {
         https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
       }
     })
-    .catch(err => { 
+    .catch(err => {
+      //DRAFT better resolveProxy error handling
       console.error('resolveProxy error:', err.message);
     })
     .finally(() => {
@@ -324,7 +325,7 @@ app.on('window-all-closed', () => {
   app.quit();
 })
 
-ipcMain.on('socketServerInfo', (event, arg) => {
+ipcMain.on('socketServerInfo', () => {
   let opts = {
     rejectUnauthorized: false,
     reconnection: true,
