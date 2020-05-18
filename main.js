@@ -8,6 +8,7 @@ const path = require('path');
 const { nanoid } = require('nanoid');
 
 app.commandLine.appendSwitch('ignore-certificate-errors');
+app.commandLine.appendSwitch('disable-http-cache');
 
 const userDataPath = app.getPath('userData');
 var socket;
@@ -487,7 +488,7 @@ function requestServerAddress() {
   serverAddressRequest.end();
 }
 
-//TRIM remove console.log
+//TRIM remove logging
 function logErrorAndCreateErrWin(error) {
   console.log(error.message);
   win = new BrowserWindow({
