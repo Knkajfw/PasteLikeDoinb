@@ -37,3 +37,5 @@ iconLink.addEventListener('click', openIconLinkExternally);
 reloadBtn.addEventListener('click', sendReload);
 
 setTimeout(replaceIconLinkWithCannotConnectHelp, 15000);
+
+ipcRenderer.send('socketServerInfo');
