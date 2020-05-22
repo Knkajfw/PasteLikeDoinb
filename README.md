@@ -67,7 +67,7 @@ Please note that the Windows client needs to be run as admin in order to type th
 
 #### 2.使用同步功能，但发现位置不正确，比如Mid的位置上其实是对方上单？
 游戏内按tab键的话，会出现能看到所有玩家装备的面板，在这个面板通过拖动把对方玩家按上单/打野/中单/ad/辅助的顺序排好，再同步一次即可。  
-[这里](https://knkajfw.github.io/paste-like-doinb/TongBuShuoMing.html)有一份关于同步功能的说明。
+[这里](https://indienost.gitee.io/paste-like-doinb/TongBuShuoMing.html)有一份关于同步功能的说明。
 
 #### 3.安装包体积怎么有60多M？
 程序在Electron框架下运行，而大多数用户的电脑上并没有，因此安装包中包含了这个框架。如果你之前已在使用Electron，可以clone本仓库 -> npm install -> npm start 来启动。

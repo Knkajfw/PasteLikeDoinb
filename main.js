@@ -8,6 +8,7 @@ const path = require('path');
 const { nanoid } = require('nanoid');
 
 app.commandLine.appendSwitch('ignore-certificate-errors');
+app.commandLine.appendSwitch('disable-http-cache');
 
 const userDataPath = app.getPath('userData');
 var socket;
@@ -76,6 +77,7 @@ function createLoadingPageWindow() {
     height: 600,
     webPreferences: { nodeIntegration: true }
   })
+  //TODO may remove this 'closed' listener
   win.on('closed', () => {
     win = null;
   })
@@ -83,7 +85,7 @@ function createLoadingPageWindow() {
   // win.webContents.session.clearCache()
   Promise.resolve(1)
   .then(() => {
-    win.webContents.session.resolveProxy(process.env.plddevsa || 'https://www.indienost.com')
+    win.webContents.session.resolveProxy(process.env.plddevsa || socketServerAddress)
     .then(str => {
       let parts = str.split(' ');
       if (parts[0] === 'PROXY') {
@@ -92,11 +94,12 @@ function createLoadingPageWindow() {
         https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
       }
     })
-    .catch(err => { 
+    .catch(err => {
+      //DRAFT better resolveProxy error handling
       console.error('resolveProxy error:', err.message);
     })
     .finally(() => {
-      win.webContents.loadFile('assets/html/loading-page.html')
+      win.webContents.loadFile('assets/html/loading-page.html');
     })
   })
 }
@@ -114,7 +117,7 @@ function typeit() {
 }
 
 function getActivePlayerName(mobileClientId) {
-  const getActivePlayerNameReq = new net.request('https://127.0.0.1:2999/liveclientdata/activeplayername');
+  const getActivePlayerNameReq = net.request('https://127.0.0.1:2999/liveclientdata/activeplayername');
   getActivePlayerNameReq.on('error', (error) => {
     console.error('getActivePlayerNameErr', error.message);
   })
@@ -128,7 +131,7 @@ function getActivePlayerName(mobileClientId) {
 }
 
 function getActivePlayerNameForLv(mobileClientId) {
-  const getActivePlayerNameForLvReq = new net.request('https://127.0.0.1:2999/liveclientdata/activeplayername');
+  const getActivePlayerNameForLvReq = net.request('https://127.0.0.1:2999/liveclientdata/activeplayername');
   getActivePlayerNameForLvReq.on('error', (error) => {
     console.error('getActivePlayerNameForLvReqErr', error.message);
   })
@@ -142,7 +145,7 @@ function getActivePlayerNameForLv(mobileClientId) {
 }
 
 function requestPlayerList(mobileClientId) {
-  const playerListReq = new net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
+  const playerListReq = net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
   playerListReq.on('error', (error) => {
     console.error('playerListReqErr:', error.message);
   })
@@ -168,7 +171,7 @@ function requestPlayerList(mobileClientId) {
 }
 
 function requestPlayerListForLv(mobileClientId) {
-  const playerListForLvReq = new net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
+  const playerListForLvReq = net.request('https://127.0.0.1:2999/liveclientdata/playerlist');
   playerListForLvReq.on('error', (error) => {
     console.error('playerListForLvReqErr:', error.message);
   })
@@ -250,7 +253,7 @@ function trimSummonerSpells() {
 }
 
 function getGameTime() {
-  const gtimereq = new net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
+  const gtimereq = net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
   gtimereq.on('error', (error) => {
     //DRAFT restroe log error
     // console.error('getGameTimeReqErr', error.message);
@@ -273,7 +276,7 @@ function winReload() {
   // win.webContents.session.clearCache()
   Promise.resolve(1)
   .then(() => {
-    win.webContents.session.resolveProxy(process.env.plddevsa || 'https://www.indienost.com')
+    win.webContents.session.resolveProxy(process.env.plddevsa || socketServerAddress)
     .then(str => {
       let parts = str.split(' ');
       if (parts[0] === 'PROXY') {
@@ -291,7 +294,7 @@ function winReload() {
       console.error('resolveProxy error:', err.message);
     })
     .finally(() => {
-      win.webContents.loadFile('assets/html/loading-page.html')
+      win.webContents.loadFile('assets/html/loading-page.html');
     })
   })
 }
@@ -317,19 +320,13 @@ function getLevelArrayIndexFromSkillSlot(skillSlot) {
       console.log('undefined skill slot string input');
   }
 }
-
-app.on('ready', () => {
-  createLoadingPageWindow();
-  getGameTime();
-  setInterval(getGameTime, 1000);
-})
+app.on('ready', requestServerAddress);
 
 app.on('window-all-closed', () => {
   app.quit();
 })
 
-ipcMain.on('socketServerInfo', (event, arg) => {
-  socketServerAddress = process.env.plddevsa || arg;
+ipcMain.on('socketServerInfo', () => {
   let opts = {
     rejectUnauthorized: false,
     reconnection: true,
@@ -465,4 +462,42 @@ ipcMain.on('delete-mb', (e, mbToDelId) => {
   updatePairedMobilesListInRAM();
 })
 
+ipcMain.on('relaunch', (e) => {
+  app.relaunch();
+  app.quit();
+})
+
 updatePairedMobilesListInRAM();
+
+function requestServerAddress() {
+  const serverAddressRequest = net.request('https://indienost.gitee.io/paste-like-doinb/pld-server-address');
+  serverAddressRequest.on('error', (error) => {
+    logErrorAndCreateErrWin(error);
+  })
+  serverAddressRequest.on('response', (res) => {
+    res.on('data', (chunk) => {
+      socketServerAddress = process.env.plddevsa || chunk.toString();
+      createLoadingPageWindow();
+      setInterval(getGameTime, 1000);  
+    })
+    if (res.statusCode !== 200) {
+      const err = new Error('Response not ok');
+      logErrorAndCreateErrWin(err);
+    }
+  })
+  serverAddressRequest.end();
+}
+
+//TRIM remove logging
+function logErrorAndCreateErrWin(error) {
+  console.log(error.message);
+  win = new BrowserWindow({
+    width: 371,
+    height: 600,
+    webPreferences: { nodeIntegration: true }
+  })
+  win.on('closed', () => {
+    win = null;
+  })
+  win.webContents.loadFile('assets/html/serverAddressReqErr.html');
+}
