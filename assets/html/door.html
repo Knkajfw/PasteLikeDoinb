@@ -64,8 +64,37 @@
     <p id="self-id"></p>
   </div>
   <div id="noti-div"></div>
-  <div id="launch-target-div"></div>
-    
+  <div id="launch-target-div">
+    <a href="" id="add-launch-target-link">Add</a>
+  </div>
+  
+  <div class="modal" id="add-launch-target-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create an extra launch target</h5>
+          <button class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="friendly-name-input">Task name:</label>
+            <input type="text" id="friendly-name-input">
+          </div>
+          <div class="form-group">
+            <label>Select path:</label>
+            <p id="modal-path-para"></p>
+            <button class="btn btn-primary" id="browse-btn">Browse</button>
+          </div>
+          <div><small id="modal-input-feedback" style="color: red;"></small></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" id="add-launch-target-save-btn">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body >
 <script>
   window.jQuery = window.$ = require('jquery');

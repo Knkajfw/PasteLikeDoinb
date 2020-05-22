@@ -78,7 +78,7 @@ const verificationCode = document.querySelector('#verification-code');
 const verificationCodeLabel = document.querySelector('#verification-code-label');
 const codeNumber = generateVerificationCode(6);
 var discoverable = false;
-var launchTarget;
+var launchTarget = {};
 
 function reqToSetAsDiscoverable() {
   ipcRenderer.send('request-to-set-as-discoverable', codeNumber);
@@ -135,37 +135,82 @@ ipcRenderer.on('launch-target', (e, launchTargetJson) => {
   launchTarget = JSON.parse(launchTargetJson);
   for (const target in launchTarget) {
     const targetDiv = document.createElement('div');
-    const targetP = document.createElement('p');
-    const targetDel = document.createElement('span')
-    const targetExploreLink = document.createElement('a');
-    targetDiv.setAttribute('launch-target', target.exeName);
-    targetP.textContent = target.exeName;
-    targetDel.innerText = '&times;';
+    const targetSpan = document.createElement('span');
+    const targetDel = document.createElement('a')
+    targetDiv.setAttribute('launch-target', launchTarget[target].friendlyName);
+    targetSpan.textContent = launchTarget[target].friendlyName;
+    targetDel.innerHTML = '&times;';
     targetDel.addEventListener('click', delLaunchTarget);
-    targetExploreLink.textContent = 'Explore';
-    targetExploreLink.addEventListener('click', handleExplore);
-    targetDiv.appendChild(targetP);
-    targetDiv.appendChild(targetExploreLink);
+    targetDiv.appendChild(targetSpan);
     targetDiv.appendChild(targetDel);
     const launchTargetDiv = document.querySelector('#launch-target-div');
     launchTargetDiv.appendChild(targetDiv);
   }
 });
 
-//TODO delLaunchTarget
 function delLaunchTarget(event) {
-
-}
-
-//TODO handleExplore
-function handleExplore(event) {
   event.preventDefault();
+  const targetDiv = event.target.parentNode;
+  const targetName = targetDiv.getAttribute('launch-target');
+  delete launchTarget[targetName];
+  targetDiv.parentNode.removeChild(targetDiv);
+  backUpdateLaunchTarget();
 }
 
-//TODO backUpdateLaunchTarget
+function addLaunchTarget(event) {
+  event.preventDefault();
+  const modalInput = document.querySelector('#friendly-name-input');
+  const modalPathPara = document.querySelector('#modal-path-para');
+  modalInput.value = '';
+  modalPathPara.textContent = '';
+  $('#add-launch-target-modal').modal('show');
+}
+
+function saveAddedLaunchTarget() {
+  let targetToAdd = {};
+  targetToAdd.friendlyName = document.querySelector('#friendly-name-input').value.trim();
+  targetToAdd.path = document.querySelector('#modal-path-para').textContent;
+  if (targetToAdd.friendlyName && targetToAdd.path) {
+    const targetDiv = document.createElement('div');
+    const targetSpan = document.createElement('span');
+    const targetDel = document.createElement('a')
+    targetDiv.setAttribute('launch-target', targetToAdd.friendlyName);
+    targetSpan.textContent = targetToAdd.friendlyName;
+    targetDel.innerHTML = '&times;';
+    targetDel.addEventListener('click', delLaunchTarget);
+    targetDiv.appendChild(targetSpan);
+    targetDiv.appendChild(targetDel);
+    const launchTargetDiv = document.querySelector('#launch-target-div');
+    launchTargetDiv.appendChild(targetDiv);
+    launchTarget[targetToAdd.friendlyName] = targetToAdd;
+    backUpdateLaunchTarget();
+    $('#add-launch-target-modal').modal('hide');  
+  } else {
+    const modalInputFeedback = document.querySelector('#modal-input-feedback');
+    modalInputFeedback.textContent = '';
+    modalInputFeedback.textContent = 'Please provide all required information.'
+  }
+}
+
+const addLaunchTargetSaveBtn = document.querySelector('#add-launch-target-save-btn');
+addLaunchTargetSaveBtn.addEventListener('click', saveAddedLaunchTarget);
+
 function backUpdateLaunchTarget() {
   ipcRenderer.send('back-update-launch-target', JSON.stringify(launchTarget));
 }
+
+function requestToOpenDialog() {
+  ipcRenderer.send('request-to-open-dialog');
+}
+
+const addLaunchTargetLink = document.querySelector('#add-launch-target-link');
+addLaunchTargetLink.addEventListener('click', addLaunchTarget);
+const browseBtn = document.querySelector('#browse-btn');
+browseBtn.addEventListener('click', requestToOpenDialog);
+ipcRenderer.on('file-path', (e, filePath) => {
+  const modalPathPara = document.querySelector('#modal-path-para');
+  modalPathPara.textContent = filePath;
+})
 
 const reloadBtn = document.querySelector('#reload-btn');
 reloadBtn.addEventListener('click', sendReload);

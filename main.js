@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain, net } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, net, dialog } = require('electron');
 const robot = require('robotjs'); robot.setKeyboardDelay(30);
 const HttpsProxyAgent = require('https-proxy-agent');
 const https = require('https');
@@ -46,7 +46,7 @@ var opponentToGetLevelIndex = 0;
 var skillSlotToGetLevel = '';
 var pairedMobilesList = [];
 const computerName = process.env.COMPUTERNAME.substring(0, 16);
-var launchTarget;
+var launchTarget = {};
 
 function updatePairedMobilesListInRAM() {
   if (fs.existsSync(approvedMobilesJsonFilePath)) {
@@ -73,6 +73,7 @@ function getOrGeneratePcClientId() {
 }
 
 function createLoadingPageWindow() {
+  //DRAFT check menu
   Menu.setApplicationMenu(null);
   win = new BrowserWindow({
     width: 371,
@@ -475,6 +476,18 @@ ipcMain.on('back-update-launch-target', (e, targetJson) => {
   fs.writeFileSync(path.join(userDataPath, 'launchTarget.json'), targetJson, 'utf-8');
 })
 
+ipcMain.on('request-to-open-dialog', () => {
+  dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [{ name: 'Custom File Type', extensions: ['exe'] }]
+  })
+  .then((dialogResult) => {
+    if (dialogResult.canceled) return;
+    const filePath = dialogResult.filePaths[0];
+    win.webContents.send('file-path', filePath);
+  });
+})
+
 updatePairedMobilesListInRAM();
 
 function requestServerAddress() {
@@ -511,17 +524,21 @@ function logErrorAndCreateErrWin(error) {
 }
 
 function getLaunchTarget() {
-  const content = fs.readFileSync(path.join(userDataPath, 'launchTarget.json'), 'utf-8');
-  if (content) {
-    launchTarget = JSON.parse(content);
+  const launchTargetJsonFilePath = path.join(userDataPath, 'launchTarget.json');
+  if (fs.existsSync(launchTargetJsonFilePath)) {
+    const content = fs.readFileSync(launchTargetJsonFilePath, 'utf-8');
+    if (content) {
+      launchTarget = JSON.parse(content);
+    }
   }
 }
 
 function launchAll(launchTarget) {
+  const regex = /\\/g;
   for (const target in launchTarget) {
-    if (target.enabled) {
-      execFile(target.path, { shell: true });
-    }
+    //RSM
+    const path ='"' + launchTarget[target].path.replace(regex, '\\\\') + '"';
+    execFile(path, { shell: true });
   }
 }
 
