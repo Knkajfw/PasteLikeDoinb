@@ -79,7 +79,6 @@ function createLoadingPageWindow() {
     height: 600,
     webPreferences: { nodeIntegration: true }
   })
-  //TODO may remove this 'closed' listener
   win.on('closed', () => {
     win = null;
   })
