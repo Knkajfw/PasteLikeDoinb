@@ -78,6 +78,7 @@ const verificationCode = document.querySelector('#verification-code');
 const verificationCodeLabel = document.querySelector('#verification-code-label');
 const codeNumber = generateVerificationCode(6);
 var discoverable = false;
+var launchTarget;
 
 function reqToSetAsDiscoverable() {
   ipcRenderer.send('request-to-set-as-discoverable', codeNumber);
@@ -129,6 +130,42 @@ ipcRenderer.on('update-self-id', (e, pcClientId) => {
   const selfIdDiv = document.querySelector('#self-id');
   selfIdDiv.textContent = `ID: ${pcClientId}`;
 })
+
+ipcRenderer.on('launch-target', (e, launchTargetJson) => {
+  launchTarget = JSON.parse(launchTargetJson);
+  for (const target in launchTarget) {
+    const targetDiv = document.createElement('div');
+    const targetP = document.createElement('p');
+    const targetDel = document.createElement('span')
+    const targetExploreLink = document.createElement('a');
+    targetDiv.setAttribute('launch-target', target.exeName);
+    targetP.textContent = target.exeName;
+    targetDel.innerText = '&times;';
+    targetDel.addEventListener('click', delLaunchTarget);
+    targetExploreLink.textContent = 'Explore';
+    targetExploreLink.addEventListener('click', handleExplore);
+    targetDiv.appendChild(targetP);
+    targetDiv.appendChild(targetExploreLink);
+    targetDiv.appendChild(targetDel);
+    const launchTargetDiv = document.querySelector('#launch-target-div');
+    launchTargetDiv.appendChild(targetDiv);
+  }
+});
+
+//TODO delLaunchTarget
+function delLaunchTarget(event) {
+
+}
+
+//TODO handleExplore
+function handleExplore(event) {
+  event.preventDefault();
+}
+
+//TODO backUpdateLaunchTarget
+function backUpdateLaunchTarget() {
+  ipcRenderer.send('back-update-launch-target', JSON.stringify(launchTarget));
+}
 
 const reloadBtn = document.querySelector('#reload-btn');
 reloadBtn.addEventListener('click', sendReload);

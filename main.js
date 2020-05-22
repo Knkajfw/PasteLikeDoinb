@@ -6,6 +6,7 @@ const io = require('socket.io-client');
 const fs = require('fs');
 const path = require('path');
 const { nanoid } = require('nanoid');
+const { execFile } = require('child_process');
 
 app.commandLine.appendSwitch('ignore-certificate-errors');
 app.commandLine.appendSwitch('disable-http-cache');
@@ -45,6 +46,7 @@ var opponentToGetLevelIndex = 0;
 var skillSlotToGetLevel = '';
 var pairedMobilesList = [];
 const computerName = process.env.COMPUTERNAME.substring(0, 16);
+var launchTarget;
 
 function updatePairedMobilesListInRAM() {
   if (fs.existsSync(approvedMobilesJsonFilePath)) {
@@ -365,6 +367,7 @@ ipcMain.on('socketServerInfo', () => {
       }
       win.webContents.send('update-self-id', pcClientId);
       win.webContents.send('refer', referLink);
+      if (launchTarget) win.webContents.send('launch-target', JSON.stringify(launchTarget));
     })
   })
   socket.on('disconnect', () => {
@@ -467,6 +470,12 @@ ipcMain.on('relaunch', (e) => {
   app.quit();
 })
 
+ipcMain.on('back-update-launch-target', (e, targetJson) => {
+  let newlaunchTarget = JSON.parse(targetJson);
+  launchTarget = newlaunchTarget;
+  fs.writeFileSync(path.join(userDataPath, 'launchTarget.json'), targetJson, 'utf-8');
+})
+
 updatePairedMobilesListInRAM();
 
 function requestServerAddress() {
@@ -478,7 +487,7 @@ function requestServerAddress() {
     res.on('data', (chunk) => {
       socketServerAddress = process.env.plddevsa || chunk.toString();
       createLoadingPageWindow();
-      setInterval(getGameTime, 1000);  
+      setInterval(getGameTime, 1000);
     })
     if (res.statusCode !== 200) {
       const err = new Error('Response not ok');
@@ -501,3 +510,23 @@ function logErrorAndCreateErrWin(error) {
   })
   win.webContents.loadFile('assets/html/serverAddressReqErr.html');
 }
+
+function getLaunchTarget() {
+  const content = fs.readFileSync(path.join(userDataPath, 'launchTarget.json'), 'utf-8');
+  if (content) {
+    launchTarget = JSON.parse(content);
+  }
+}
+
+function launchAll(launchTarget) {
+  for (const target in launchTarget) {
+    if (target.enabled) {
+      execFile(target.path, { shell: true });
+    }
+  }
+}
+
+(function launchExtra() {
+  getLaunchTarget();
+  launchAll(launchTarget);
+})();
