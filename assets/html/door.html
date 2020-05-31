@@ -6,92 +6,120 @@
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <title>记闪现PasteLikeDoinb</title>  
 </head>
-<body style="font-family: 微软雅黑;">
 
-  <div id='top-info-bar' class="container-fluid bg-dark text-white text-center" style="font-size: 0.8rem;"></div>
-  <div id='top-info-bar-2' class="container-fluid text-white text-center" style="font-size: 0.8rem; background-color: #3FA5FF;"></div>
+<body>
 
-  <button type="button" id="reload-btn" class="btn btn-outline-danger" style="position: absolute; top: 40px; left: 20px; width: 24px; height: 24px; padding: 0px;">
+  <!-- TODO reposition 2 buttons -->
+  <!-- <button type="button" id="reload-btn" class="btn btn-outline-danger" style="position: absolute; top: 40px; left: 20px; width: 24px; height: 24px; padding: 0px;">
     <img src="../img/reload.png" style="width: 15px; height: 15px; position: relative; top: -2px; left: 1px;">
   </button>
 
   <button type="button" id="open-devtools-btn" class="btn btn-outline-dark" style="position: absolute; top: 40px; left: 48px; width: 24px; height: 24px; padding: 0px;">
     <img src="../img/console.png" style="width: 15px; height: 15px; position: relative; top: -2px; left: 1px;">
-  </button>
+  </button> -->
 
-  <div class="mt-5 mb-3 mx-0 row justify-content-center">
-    <img src="../img/signal.svg" style="max-width: 30%; max-height: 30%;">
-  </div>
-  <div class="text-center mx-0 mb-4 text-muted">正在接收来自移动端的指令
-    <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="用手机打开下方网址，在页面中记录闪现时间，点击发送便可以指示本程序发送到游戏聊天中。打开后就可以最小化本程序啦。" style="transform: translate(-2px, -2px);">
-  </div>
 
-  <div class="row mx-0 justify-content-center">
-    <span class="text-muted" style="font-size: small; padding-right: 160px;">移动端地址</span>
-    <div id="copy-link-div" style="margin: 0px; padding: 0px;">
-      <a id="copy-link" href="#" style="font-size: small;">复制链接</a>
-    </div>
-  </div>
+  <div class="container-fluid">
+    <div class="row">
 
-  <div class="row mx-0 justify-content-center">
-    <div class="mb-2 col-auto">
-      <span id="link-span" class="font-weight-light bg-dark text-white rounded px-1 py-1" style="font-size: small;"></span>
-    </div>  
-  </div>
+      <div id="left-panel" class="col-6 px-5" >
 
-  <div class="row mx-0 justify-content-center">
-    <canvas id="canvas" style="max-width: 140px; max-height: 140px;"></canvas>
-  </div>
-
-  <div class="row mx-0 mb-0 justify-content-center">
-    <p style="font-size: 10px;" class="text-muted">二维码即为上方链接</p>
-    <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="建议使用谷歌/火狐/Safari打开链接" style="transform: translate(2px, -8px);">
-  </div>
-
-  <div class="mx-5">
-    <div id="qrerror"></div>
-  </div>
-
-  <div id="paired-div"></div>
-
-  <div>
-    <button id="pair-mode-btn" class="btn btn-primary">Pair Mode</button>
-  </div>
-  <div class="card card-body">
-    <p id="pair-status"></p>
-    <p id="verification-code-label"></p>
-    <p id="verification-code"></p>
-    <p id="self-id"></p>
-  </div>
-  <div id="noti-div"></div>
-  <div id="launch-target-div">
-    <a href="" id="add-launch-target-link">Add</a>
-  </div>
-  
-  <div class="modal" id="add-launch-target-modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Create an extra launch target</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
+        <div class="d-flex justify-content-between mt-5 text-muted">
+          <span>允许移动端搜索到本机</span>
+          <label class="switch">
+            <input type="checkbox" id="pair-mode-btn" data-toggle="collapse" data-target="#refer-info-collapse">
+            <span class="slider round"></span>
+          </label>
         </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="friendly-name-input">Task name:</label>
-            <input type="text" id="friendly-name-input">
+        <!-- <div>
+          <button id="pair-mode-btn" class="btn btn-primary">Pair Mode</button>
+        </div> -->
+
+        <div id="refer-info-collapse" class="collapse">
+          <div class="card card-body">
+            <p id="pair-status"></p>
+            <p id="verification-code-label"></p>
+            <p id="verification-code"></p>
+            <p id="self-id"></p>
+          </div>  
+        </div>
+        <div id="noti-div"></div>
+        <div id="launch-target-div">
+          <a href="" id="add-launch-target-link">Add</a>
+        </div>
+        
+        <div class="modal" id="add-launch-target-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Create an extra launch target</h5>
+                <button class="close" data-dismiss="modal">
+                  <span>&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="friendly-name-input">Task name:</label>
+                  <input type="text" id="friendly-name-input">
+                </div>
+                <div class="form-group">
+                  <label>Select path:</label>
+                  <p id="modal-path-para"></p>
+                  <button class="btn btn-primary" id="browse-btn">Browse</button>
+                </div>
+                <div><small id="modal-input-feedback" style="color: red;"></small></div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" id="add-launch-target-save-btn">Save</button>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Select path:</label>
-            <p id="modal-path-para"></p>
-            <button class="btn btn-primary" id="browse-btn">Browse</button>
+        </div>
+      </div>
+
+      <div id="right-panel" class="col-6">
+
+        
+        <div class="container">
+          <div class="mt-5 mb-3 mx-0 row justify-content-center">
+            <img src="../img/signal.svg" style="max-width: 30%; max-height: 30%;">
+          </div>  
+        </div>
+
+        <div class="text-center mx-0 mb-4 font-weight-bold">正在接收来自移动端的指令
+          <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="用手机打开下方网址，在页面中记录闪现时间，点击发送便可以指示本程序发送到游戏聊天中。打开后就可以最小化本程序啦。" style="transform: translate(-2px, -2px);">
+        </div>
+
+        <div class="text-muted" style="font-size: smaller;">允许以下移动端向本机发出指令：</div>
+
+        <div id="paired-div"></div>
+
+<!--       
+        <div class="row mx-0 justify-content-center">
+          <span class="text-muted" style="font-size: small; padding-right: 160px;">移动端地址</span>
+          <div id="copy-link-div" style="margin: 0px; padding: 0px;">
+            <a id="copy-link" href="#" style="font-size: small;">复制链接</a>
           </div>
-          <div><small id="modal-input-feedback" style="color: red;"></small></div>
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" id="add-launch-target-save-btn">Save</button>
+      
+        <div class="row mx-0 justify-content-center">
+          <div class="mb-2 col-auto">
+            <span id="link-span" class="font-weight-light bg-dark text-white rounded px-1 py-1" style="font-size: small;"></span>
+          </div>  
         </div>
+      
+        <div class="row mx-0 justify-content-center">
+          <canvas id="canvas" style="max-width: 140px; max-height: 140px;"></canvas>
+        </div>
+      
+        <div class="row mx-0 mb-0 justify-content-center">
+          <p style="font-size: 10px;" class="text-muted">二维码即为上方链接</p>
+          <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="建议使用谷歌/火狐/Safari打开链接" style="transform: translate(2px, -8px);">
+        </div>
+      
+        <div class="mx-5">
+          <div id="qrerror"></div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -101,5 +129,81 @@
 </script>
 <script src="../js/bootstrap.bundle.min.js"></script>
 <script src="https://indienost.gitee.io/paste-like-doinb/server-offer.js"></script>
+<!-- TODO renderer.js -->
 <script src="../js/renderer.js"></script>
+
+<style>
+  .paired-list-img {
+    height: 3vw;
+    width: 3vw;
+    vertical-align: middle;
+    flex: 0 0 auto;
+  }
+  .paired-list-name-area {
+    flex: 1 0 auto;
+  }
+  #paired-div {
+    padding: 0 8%;
+    color: var(--gray);
+    margin-top: 3vh;
+  }
+  .switch {
+    position: relative;
+    top: 0.25em;
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(16px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 12px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+</style>
 </html>

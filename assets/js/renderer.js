@@ -5,57 +5,63 @@ const pldVersion = 110;
 var canvas = document.getElementById('canvas');
 var referLink = '';
 
-ipcRenderer.on('refer', (e, msg) => {
-  referLink = msg + `?vfCode=${codeNumber}`;
-  var linkSpan = document.getElementById('link-span');
-  linkSpan.innerText = referLink;
-  qrcode.toCanvas(canvas, referLink, (error) => {
-    if (error) {
-      var qrerror = document.getElementById('qrerror');
-      qrerror.className = "text-break alert alert-danger py-1";
-      qrerror.style = "font-size: small; text-align: center";
-      qrerror.innerText = "二维码绘制出错，重启app试试";
-    }
-  })
-})
+// ipcRenderer.on('refer', (e, msg) => {
+//   referLink = msg + `?vfCode=${codeNumber}`;
+//   var linkSpan = document.getElementById('link-span');
+//   linkSpan.innerText = referLink;
+//   qrcode.toCanvas(canvas, referLink, (error) => {
+//     if (error) {
+//       var qrerror = document.getElementById('qrerror');
+//       qrerror.className = "text-break alert alert-danger py-1";
+//       qrerror.style = "font-size: small; text-align: center";
+//       qrerror.innerText = "二维码绘制出错，重启app试试";
+//     }
+//   })
+// })
 
 ipcRenderer.on('update-approved-mobiles', (e, approvedMobilesJson) => {
-  let allowedMobiles = JSON.parse(approvedMobilesJson);
-  let listItemsHTML = '';
-  for (let i = 0; i < allowedMobiles.list.length; i++) {
-    const element = allowedMobiles.list[i];
-    //TRIM remove the check?
-    if (allowedMobiles[element]) {
-      if (allowedMobiles[element].deviceName) {
-        listItemsHTML += `<li>Approved: <abbr title="${element}">${allowedMobiles[element].deviceName}</abbr>  <a href="#" class="del-mb-link" del-target="${element}"><small>Del</small></a></li>`;
-      }
-      else {
-        listItemsHTML += `<li>Approved: ${element}  <a href="#" class="del-mb-link" del-target="${element}"><small>Del</small></a></li>`;
-      }
-    }
-    else {
-      listItemsHTML += `<li>Approved: ${element}  <a href="#" class="del-mb-link" del-target="${element}"><small>Del</small></a></li>`;
-    }
-  }
+  const allowedMobiles = JSON.parse(approvedMobilesJson);
   const pairedDiv = document.querySelector('#paired-div');
-  const existingList = document.querySelector('#paired-list');
-  let newList = document.createElement('ul');
-  newList.innerHTML = listItemsHTML;
-  newList.id = 'paired-list';
-  if (existingList) {
-    pairedDiv.removeChild(existingList);
-  }
-  pairedDiv.appendChild(newList);
-  const delMbLinks = document.querySelectorAll('.del-mb-link');
-  for (const link of delMbLinks) {
-    link.addEventListener('click', sendDelete);
+  
+  pairedDiv.innerHTML = '';
+  for (let i = 0; i < allowedMobiles.list.length; i++) {
+    const pairedMbId = allowedMobiles.list[i];
+    const newListItemDiv = document.createElement('div');
+    const newNameArea = document.createElement('div');
+    const newIdTooltip = document.createElement('img');
+    const newDelBtn = document.createElement('img');
+
+    newListItemDiv.classList.add('d-flex');
+
+    if (allowedMobiles[pairedMbId] && allowedMobiles[pairedMbId].deviceName) {
+      newNameArea.textContent = '- ' + allowedMobiles[pairedMbId].deviceName;
+    } else {
+      newNameArea.textContent = '- ' + pairedMbId;
+    }
+    newNameArea.classList.add('paired-list-name-area');
+    newListItemDiv.appendChild(newNameArea);
+
+    newIdTooltip.src = '../img/info.png';
+    newIdTooltip.alt = 'ID';
+    newIdTooltip.classList.add('paired-list-img');
+    newIdTooltip.setAttribute('data-toggle', 'tooltip');
+    newIdTooltip.setAttribute('data-placement', 'top');
+    newIdTooltip.setAttribute('title', `ID: ${pairedMbId}`);
+    newListItemDiv.appendChild(newIdTooltip);
+
+    newDelBtn.src = '../img/delete.png';
+    newDelBtn.alt = 'Del';
+    newDelBtn.classList.add('paired-list-img');
+    newDelBtn.setAttribute('del-target', pairedMbId);
+    newDelBtn.addEventListener('click', sendDelete);
+    newListItemDiv.appendChild(newDelBtn);
+
+    pairedDiv.appendChild(newListItemDiv);
   }
 })
 
 function sendDelete(event) {
-  event.preventDefault();
-  let targetParent = event.target.parentNode;
-  let mbToDelId = targetParent.getAttribute('del-target');
+  const mbToDelId = event.target.getAttribute('del-target');
   ipcRenderer.send('delete-mb', mbToDelId);
 }
 
@@ -66,11 +72,6 @@ function sendReload() {
 function sendOpenDevTools() {
   ipcRenderer.send('opendev');
 }
-
-var copylinkdiv = document.getElementById('copy-link-div');
-copylinkdiv.addEventListener('click', () => {
-  navigator.clipboard.writeText(referLink);
-})
 
 const pairModeBtn = document.querySelector('#pair-mode-btn');
 const pairStatus = document.querySelector('#pair-status');
@@ -212,40 +213,40 @@ ipcRenderer.on('file-path', (e, filePath) => {
   modalPathPara.textContent = filePath;
 })
 
-const reloadBtn = document.querySelector('#reload-btn');
-reloadBtn.addEventListener('click', sendReload);
-const openDevBtn = document.querySelector('#open-devtools-btn');
-openDevBtn.addEventListener('click', sendOpenDevTools);
+// const reloadBtn = document.querySelector('#reload-btn');
+// reloadBtn.addEventListener('click', sendReload);
+// const openDevBtn = document.querySelector('#open-devtools-btn');
+// openDevBtn.addEventListener('click', sendOpenDevTools);
 
-(function showStartNotifications() {
-  const startNotifications = serverOffer.notifications;
-  const notiDiv = document.querySelector('#noti-div');
-  function showNoti(note) {
-    let noti = document.createElement('p');
-    noti.classList.add('noti');
-    noti.innerHTML = note.content;
-    notiDiv.appendChild(noti);
-  }
-  for (note of startNotifications) {
-    const targetVersion = note.target;
-    switch (note.mode) {
-      case 'targetVersionArray':
-        if (targetVersion.includes(pldVersion)) {
-          showNoti(note);
-        }
-        break;
-      case 'toVersionLessThan':
-        if (pldVersion <= targetVersion) {
-          showNoti(note);
-        }
-        break;
-      case 'toVersionGreaterThan':
-        if (pldVersion >= targetVersion) {
-          showNoti(note);
-        }
-        break;
-      default:
-        break;
-    }
-  }
-})()
+// (function showStartNotifications() {
+//   const startNotifications = serverOffer.notifications;
+//   const notiDiv = document.querySelector('#noti-div');
+//   function showNoti(note) {
+//     let noti = document.createElement('p');
+//     noti.classList.add('noti');
+//     noti.innerHTML = note.content;
+//     notiDiv.appendChild(noti);
+//   }
+//   for (note of startNotifications) {
+//     const targetVersion = note.target;
+//     switch (note.mode) {
+//       case 'targetVersionArray':
+//         if (targetVersion.includes(pldVersion)) {
+//           showNoti(note);
+//         }
+//         break;
+//       case 'toVersionLessThan':
+//         if (pldVersion <= targetVersion) {
+//           showNoti(note);
+//         }
+//         break;
+//       case 'toVersionGreaterThan':
+//         if (pldVersion >= targetVersion) {
+//           showNoti(note);
+//         }
+//         break;
+//       default:
+//         break;
+//     }
+//   }
+// })();

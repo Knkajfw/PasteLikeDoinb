@@ -45,7 +45,9 @@ var currentGameMode = '';
 var opponentToGetLevelIndex = 0;
 var skillSlotToGetLevel = '';
 var pairedMobilesList = [];
-const computerName = process.env.COMPUTERNAME.substring(0, 16);
+//DRAFT delete test com name
+// const computerName = 'SSSDDDDDGGGGGGX';
+const computerName = process.env.COMPUTERNAME.substring(0, 14);
 var launchTarget = {};
 
 function updatePairedMobilesListInRAM() {
@@ -74,10 +76,10 @@ function getOrGeneratePcClientId() {
 
 function createLoadingPageWindow() {
   //DRAFT check menu
-  Menu.setApplicationMenu(null);
+  // Menu.setApplicationMenu(null);
   win = new BrowserWindow({
-    width: 371,
-    height: 600,
+    width: 640,
+    height: 480,
     webPreferences: { nodeIntegration: true }
   })
   win.on('closed', () => {
@@ -496,6 +498,7 @@ function requestServerAddress() {
     logErrorAndCreateErrWin(error);
   })
   serverAddressRequest.on('response', (res) => {
+    //STR res!=200 means no data? 
     res.on('data', (chunk) => {
       socketServerAddress = process.env.plddevsa || chunk.toString();
       createLoadingPageWindow();
@@ -509,12 +512,10 @@ function requestServerAddress() {
   serverAddressRequest.end();
 }
 
-//TRIM remove logging
 function logErrorAndCreateErrWin(error) {
-  console.log(error.message);
   win = new BrowserWindow({
-    width: 371,
-    height: 600,
+    width: 640,
+    height: 480,
     webPreferences: { nodeIntegration: true }
   })
   win.on('closed', () => {
@@ -542,7 +543,8 @@ function launchAll(launchTarget) {
   }
 }
 
-(function launchExtra() {
-  getLaunchTarget();
-  launchAll(launchTarget);
-})();
+//DRAFT recovery launchExtra
+// (function launchExtra() {
+//   getLaunchTarget();
+//   launchAll(launchTarget);
+// })();
