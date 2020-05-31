@@ -5,19 +5,17 @@ const pldVersion = 110;
 var canvas = document.getElementById('canvas');
 var referLink = '';
 
-// ipcRenderer.on('refer', (e, msg) => {
-//   referLink = msg + `?vfCode=${codeNumber}`;
-//   var linkSpan = document.getElementById('link-span');
-//   linkSpan.innerText = referLink;
-//   qrcode.toCanvas(canvas, referLink, (error) => {
-//     if (error) {
-//       var qrerror = document.getElementById('qrerror');
-//       qrerror.className = "text-break alert alert-danger py-1";
-//       qrerror.style = "font-size: small; text-align: center";
-//       qrerror.innerText = "二维码绘制出错，重启app试试";
-//     }
-//   })
-// })
+ipcRenderer.on('refer', (e, msg) => {
+  referLink = msg + `?vfCode=${codeNumber}`;
+  qrcode.toCanvas(canvas, referLink, (error) => {
+    if (error) {
+      var qrerror = document.getElementById('qrerror');
+      qrerror.className = "text-break alert alert-danger py-1";
+      qrerror.style = "font-size: small; text-align: center";
+      qrerror.innerText = "二维码绘制出错，重启app试试";
+    }
+  })
+})
 
 ipcRenderer.on('update-approved-mobiles', (e, approvedMobilesJson) => {
   const allowedMobiles = JSON.parse(approvedMobilesJson);
@@ -73,20 +71,45 @@ function sendOpenDevTools() {
   ipcRenderer.send('opendev');
 }
 
-const pairModeBtn = document.querySelector('#pair-mode-btn');
-const pairStatus = document.querySelector('#pair-status');
+const pairModeToggle = document.querySelector('#pair-mode-toggle');
 const verificationCode = document.querySelector('#verification-code');
-const verificationCodeLabel = document.querySelector('#verification-code-label');
 const codeNumber = generateVerificationCode(6);
-var discoverable = false;
+var waitingForDiscoverabilityResponse = false;
+var discoverabilityRequestTimeOut;
+
 var launchTarget = {};
 
-function reqToSetAsDiscoverable() {
-  ipcRenderer.send('request-to-set-as-discoverable', codeNumber);
+
+pairModeToggle.addEventListener('click', reqToSetAsDiscoverable, true);
+
+function reqToSetAsDiscoverable(e) {
+  e.preventDefault();
+  if (!waitingForDiscoverabilityResponse) {
+    ipcRenderer.send('request-to-set-as-discoverable', codeNumber);
+    waitingForDiscoverabilityResponse = true;
+    document.querySelector('#discoverable-toggle-spinner').classList.remove('d-none');
+    discoverabilityRequestTimeOut = setTimeout(handleDiscoverabilityRequestTimeout, 2500);
+  }
 }
-function reqToSetAsUndiscoverable() {
-  ipcRenderer.send('request-to-set-as-undiscoverable');
+function reqToSetAsUndiscoverable(e) {
+  e.preventDefault();
+  if (!waitingForDiscoverabilityResponse) {
+    ipcRenderer.send('request-to-set-as-undiscoverable');
+    waitingForDiscoverabilityResponse = true;
+    document.querySelector('#discoverable-toggle-spinner').classList.remove('d-none');
+    discoverabilityRequestTimeOut = setTimeout(handleDiscoverabilityRequestTimeout, 2500);
+  }
 }
+
+function handleDiscoverabilityRequestTimeout() {
+  document.querySelector('#discoverable-toggle-spinner').classList.add('d-none');
+  document.querySelector('#discoverable-toggle-warning').classList.remove('d-none');
+  setTimeout(() => {
+    document.querySelector('#discoverable-toggle-warning').classList.add('d-none');
+  }, 1000);
+  waitingForDiscoverabilityResponse = false;
+}
+
 function generateVerificationCode(digit) {
   let alphabet = '0123456789';
   let result = '';
@@ -96,40 +119,37 @@ function generateVerificationCode(digit) {
   }
   return result;
 }
-pairModeBtn.addEventListener('click', reqToSetAsDiscoverable);
 
 ipcRenderer.on('already-set-as-discoverable', (e, codeNumber) => {
-  verificationCode.innerText = codeNumber;
-  if (!discoverable) {
-    pairStatus.innerText = 'Discoverable';
-    pairModeBtn.removeEventListener('click', reqToSetAsDiscoverable);
-    pairModeBtn.addEventListener('click', reqToSetAsUndiscoverable);
-    verificationCodeLabel.innerText = 'Pair Code:';
-    discoverable = true;
+  if (waitingForDiscoverabilityResponse) {
+    clearTimeout(discoverabilityRequestTimeOut);
+    verificationCode.innerText = codeNumber;
+    pairModeToggle.checked = true;
+    $('#refer-info-collapse').collapse('show');
+    document.querySelector('#discoverable-toggle-spinner').classList.add('d-none');
+    document.querySelector('#enter-pair-mode-prompt').classList.add('d-none');
+    pairModeToggle.removeEventListener('click', reqToSetAsDiscoverable, true);
+    pairModeToggle.addEventListener('click', reqToSetAsUndiscoverable, true);
+    waitingForDiscoverabilityResponse = false;
   }
 })
 
 ipcRenderer.on('already-set-as-undiscoverable', () => {
-  if (discoverable) {
-    pairStatus.innerText = 'Not discoverable';
-    pairModeBtn.removeEventListener('click', reqToSetAsUndiscoverable);
-    pairModeBtn.addEventListener('click', reqToSetAsDiscoverable);
-    verificationCode.innerText = '';
-    verificationCodeLabel.innerText = '';
-    discoverable = false;
+  if (waitingForDiscoverabilityResponse) {
+    clearTimeout(discoverabilityRequestTimeOut);
+    document.querySelector('#discoverable-toggle-spinner').classList.add('d-none');
+    document.querySelector('#enter-pair-mode-prompt').classList.remove('d-none');
+    pairModeToggle.checked = false;
+    $('#refer-info-collapse').collapse('hide');
+    pairModeToggle.removeEventListener('click', reqToSetAsUndiscoverable, true);
+    pairModeToggle.addEventListener('click', reqToSetAsDiscoverable, true);
+    waitingForDiscoverabilityResponse = false;
   }
 })
 
-if (discoverable) {
-  pairStatus.textContent = 'Discoverable';
-}
-else {
-  pairStatus.textContent = 'Not discoverable';
-}
-
 ipcRenderer.on('update-self-id', (e, pcClientId) => {
   const selfIdDiv = document.querySelector('#self-id');
-  selfIdDiv.textContent = `ID: ${pcClientId}`;
+  selfIdDiv.textContent = `PC端ID：${pcClientId}`;
 })
 
 ipcRenderer.on('launch-target', (e, launchTargetJson) => {

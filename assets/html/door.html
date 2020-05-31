@@ -22,31 +22,50 @@
   <div class="container-fluid">
     <div class="row">
 
-      <div id="left-panel" class="col-6 px-5" >
+      <div id="left-panel" class="col-6" style="padding-left: 60px; padding-right: 36px;">
 
-        <div class="d-flex justify-content-between mt-5 text-muted">
-          <span>允许移动端搜索到本机</span>
-          <label class="switch">
-            <input type="checkbox" id="pair-mode-btn" data-toggle="collapse" data-target="#refer-info-collapse">
-            <span class="slider round"></span>
-          </label>
-        </div>
-        <!-- <div>
-          <button id="pair-mode-btn" class="btn btn-primary">Pair Mode</button>
-        </div> -->
-
-        <div id="refer-info-collapse" class="collapse">
-          <div class="card card-body">
-            <p id="pair-status"></p>
-            <p id="verification-code-label"></p>
-            <p id="verification-code"></p>
-            <p id="self-id"></p>
+        <div class="d-flex" style="margin-top: 80px;">
+          <div class="d-flex justify-content-between" style="flex: 1 1 auto;">
+            <span style="font-weight: bold;">配对模式</span>
+            <label class="switch" style="transform: translateY(-0.1em);">
+              <input type="checkbox" id="pair-mode-toggle">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div style="flex: 0 0 35px; height: 32px;">
+            <img id="discoverable-toggle-spinner" class="d-none" src="../img/Spinner-0.5s-64px.gif" alt=".." style="width: 32px; height: 32px; transform: translateY(-0.2em);">
+            <span id="discoverable-toggle-warning" class="d-none">&#x26A0</span>
           </div>  
         </div>
-        <div id="noti-div"></div>
-        <div id="launch-target-div">
+
+        <div id="refer-info-collapse" class="collapse">
+          <div class="card card-body text-muted bg-light" style="margin-right: 40px; margin-left: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 8px;">
+            <div class="container">
+              <div class="row">
+                <div id="refer-info-div" class="col-6 px-0">
+                  <div style="font-size: smaller; margin-top: 15px;">验证码：</div>
+                  <kbd id="verification-code"></kbd>
+                </div>
+                <div class="col-6 px-0 d-flex" style="justify-content: center;">
+                  <canvas id="canvas" style="max-width: 80px; max-height: 80px;"></canvas>
+                  <div id="qrerror"></div>
+                </div>
+              </div>
+            </div>
+            <div class="text-muted text-center" style="font-size: 0.7em;">推荐直接扫描二维码添加</div>
+          </div>  
+        </div>
+
+        <p id="enter-pair-mode-prompt" class="text-center">
+          开启配对模式<br>与移动端进行连接
+        </p>
+
+        <div id="launch-target-div" style="margin-top: 16px;">
+          <p class="font-weight-bold">同时启动以下应用：</p>
           <a href="" id="add-launch-target-link">Add</a>
         </div>
+
+        <p id="self-id" class="text-muted" style="font-size: smaller;"></p>
         
         <div class="modal" id="add-launch-target-modal">
           <div class="modal-dialog">
@@ -134,8 +153,8 @@
 
 <style>
   .paired-list-img {
-    height: 3vw;
-    width: 3vw;
+    height: 1em;
+    width: 1em;
     vertical-align: middle;
     flex: 0 0 auto;
   }
@@ -153,57 +172,65 @@
     display: inline-block;
     width: 36px;
     height: 20px;
+    margin: 0;
 }
 
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
 
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 2px;
-  bottom: 2px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
 
-input:checked + .slider {
-  background-color: var(--primary);
-}
+  input:checked + .slider {
+    background-color: var(--primary);
+  }
 
-input:checked + .slider:before {
-  transform: translateX(16px);
-}
+  input:checked + .slider:before {
+    transform: translateX(16px);
+  }
 
-/* Rounded sliders */
-.slider.round {
-  border-radius: 12px;
-}
+  .slider.round {
+    border-radius: 12px;
+  }
 
-.slider.round:before {
-  border-radius: 50%;
-}
+  .slider.round:before {
+    border-radius: 50%;
+  }
 
+  .invisible {
+    visibility: hidden;
+  }
+
+  #enter-pair-mode-prompt {
+    font-size: smaller;
+    color: rgb(192, 192, 192);
+    transform: translateX(-1em);
+    transition: height 0.3s;
+  }
 
 </style>
 </html>
