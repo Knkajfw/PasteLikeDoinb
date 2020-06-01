@@ -68,14 +68,6 @@ function sendDelete(event) {
   ipcRenderer.send('delete-mb', mbToDelId);
 }
 
-// function sendReload() {
-//   ipcRenderer.send('reload');
-// }
-
-// function sendOpenDevTools() {
-//   ipcRenderer.send('opendev');
-// }
-
 const pairModeToggle = document.querySelector('#pair-mode-toggle');
 const verificationCode = document.querySelector('#verification-code');
 const codeNumber = generateVerificationCode(6);

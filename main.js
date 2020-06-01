@@ -441,10 +441,6 @@ ipcMain.on('reload', () => {
   winReload();
 })
 
-ipcMain.on('opendev', () => {
-  win.webContents.openDevTools({mode: 'undocked'});
-})
-
 ipcMain.on('request-to-set-as-discoverable', (e, codeNumber) => {
   socket.emit('request-to-set-as-discoverable', pcClientId, codeNumber, computerName);
 })
