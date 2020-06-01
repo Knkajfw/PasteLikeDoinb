@@ -287,35 +287,38 @@ ipcRenderer.on('file-path', (e, filePath) => {
 // const openDevBtn = document.querySelector('#open-devtools-btn');
 // openDevBtn.addEventListener('click', sendOpenDevTools);
 
-// (function showStartNotifications() {
-//   const startNotifications = serverOffer.notifications;
-//   const notiDiv = document.querySelector('#noti-div');
-//   function showNoti(note) {
-//     let noti = document.createElement('p');
-//     noti.classList.add('noti');
-//     noti.innerHTML = note.content;
-//     notiDiv.appendChild(noti);
-//   }
-//   for (note of startNotifications) {
-//     const targetVersion = note.target;
-//     switch (note.mode) {
-//       case 'targetVersionArray':
-//         if (targetVersion.includes(pldVersion)) {
-//           showNoti(note);
-//         }
-//         break;
-//       case 'toVersionLessThan':
-//         if (pldVersion <= targetVersion) {
-//           showNoti(note);
-//         }
-//         break;
-//       case 'toVersionGreaterThan':
-//         if (pldVersion >= targetVersion) {
-//           showNoti(note);
-//         }
-//         break;
-//       default:
-//         break;
-//     }
-//   }
-// })();
+function showNotifications() {
+  const notifications = serverOffer.notifications;
+  const notificationArea = document.querySelector('#notification-area');
+
+  function showNotification(notification) {
+    const noti = document.createElement('div');
+    noti.innerHTML = notification.content;
+    notificationArea.appendChild(noti);
+  }
+  for (noti of notifications) {
+    const targetVersion = noti.target;
+    switch (noti.mode) {
+      case 'targetVersionArray':
+        if (targetVersion.includes(pldVersion)) {
+          showNotification(noti);
+        }
+        break;
+      case 'toVersionIsOrLessThan':
+        if (pldVersion <= targetVersion) {
+          showNotification(noti);
+        }
+        break;
+      case 'toVersionIsOrGreaterThan':
+        if (pldVersion >= targetVersion) {
+          showNotification(noti);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  setCloseNotiBtns();
+}
+
+showNotifications();

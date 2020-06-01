@@ -10,6 +10,8 @@ const { execFile } = require('child_process');
 
 app.commandLine.appendSwitch('ignore-certificate-errors');
 app.commandLine.appendSwitch('disable-http-cache');
+  //DRAFT check menu
+Menu.setApplicationMenu(null);
 
 const userDataPath = app.getPath('userData');
 var socket;
@@ -350,9 +352,8 @@ ipcMain.on('socketServerInfo', () => {
     socket.emit('ispc', pcClientId);
     win.webContents.send('loadStatus_PCIdEmitted')
   })
-  //DRAFT 提示已有，不要重复开启
   socket.on('pcoc', () => {
-    app.quit();
+    throw new Error('已经有相同ID的PC端在线，请检查是否重复开启了应用');
   })
   socket.on('pcintro', () => {
     win.webContents.send('loadStatus_MobileLinkReceived')
@@ -512,7 +513,7 @@ function requestServerAddress() {
   serverAddressRequest.end();
 }
 
-function logErrorAndCreateErrWin(error) {
+function logErrorAndCreateErrWin() {
   win = new BrowserWindow({
     width: 640,
     height: 480,
