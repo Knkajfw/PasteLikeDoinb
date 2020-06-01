@@ -9,7 +9,6 @@
 
 <body>
 
-  <!-- TODO reposition 2 buttons -->
   <!-- <button type="button" id="reload-btn" class="btn btn-outline-danger" style="position: absolute; top: 40px; left: 20px; width: 24px; height: 24px; padding: 0px;">
     <img src="../img/reload.png" style="width: 15px; height: 15px; position: relative; top: -2px; left: 1px;">
   </button>
@@ -22,7 +21,7 @@
   <div class="container-fluid">
     <div class="row">
 
-      <div id="left-panel" class="col-6" style="padding-left: 60px; padding-right: 36px;">
+      <div id="left-panel" class="col-6 d-flex flex-column" style="padding-left: 60px; padding-right: 36px; overflow: hidden; min-height: 400px;">
 
         <div class="d-flex" style="margin-top: 80px;">
           <div class="d-flex justify-content-between" style="flex: 1 1 auto;">
@@ -60,36 +59,40 @@
           开启配对模式<br>与移动端进行连接
         </p>
 
-        <div id="launch-target-div" style="margin-top: 16px;">
-          <p class="font-weight-bold">同时启动以下应用：</p>
-          <a href="" id="add-launch-target-link">Add</a>
+        <div id="launch-target-area" style="margin-top: 30px; flex: 1 0 auto;">
+          <div class="d-flex justify-content-between">
+            <div class="font-weight-bold">共同启动</div>
+            <div id="add-launch-target-btn" class="btn btn-light py-0" style="transform: translateX(-100%);">+</div>
+          </div>
+          <div id="launch-target-div" class="my-2" style="padding-right: 48px; padding-left: 16px;"></div>
+          <div id="add-launch-target-prompt" class="text-center" style="font-size: 0.8em; color: rgb(192, 192, 192); transform: translateX(-1em);">添加程序路径<br>下次同时启动PLD和LOL</div>
         </div>
+        <p id="self-id" style="font-size: smaller; color: rgb(192, 192, 192);"></p>
 
-        <p id="self-id" class="text-muted" style="font-size: smaller;"></p>
         
         <div class="modal" id="add-launch-target-modal">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Create an extra launch target</h5>
+                <h5 class="modal-title">创建共同启动任务</h5>
                 <button class="close" data-dismiss="modal">
                   <span>&times;</span>
                 </button>
               </div>
               <div class="modal-body">
                 <div class="form-group">
-                  <label for="friendly-name-input">Task name:</label>
+                  <label for="friendly-name-input">任务名称：</label>
                   <input type="text" id="friendly-name-input">
                 </div>
                 <div class="form-group">
-                  <label>Select path:</label>
-                  <p id="modal-path-para"></p>
-                  <button class="btn btn-primary" id="browse-btn">Browse</button>
+                  <label>选择程序路径：</label>
+                  <p id="modal-path-para" class="bg-dark text-white px-2 text-break" style="border-radius: 5px;"></p>
+                  <button class="btn btn-primary" id="browse-btn">浏览</button>
                 </div>
                 <div><small id="modal-input-feedback" style="color: red;"></small></div>
               </div>
               <div class="modal-footer">
-                <button class="btn btn-primary" id="add-launch-target-save-btn">Save</button>
+                <button class="btn btn-primary" id="add-launch-target-save-btn">保存</button>
               </div>
             </div>
           </div>
@@ -106,60 +109,46 @@
         </div>
 
         <div class="text-center mx-0 mb-4 font-weight-bold">正在接收来自移动端的指令
-          <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="用手机打开下方网址，在页面中记录闪现时间，点击发送便可以指示本程序发送到游戏聊天中。打开后就可以最小化本程序啦。" style="transform: translate(-2px, -2px);">
+          <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="打开配对模式链接移动端，在移动端页面中记录闪现时间，并指示本程序发送到局内聊天。" style="transform: translate(-2px, -2px);">
         </div>
 
-        <div class="text-muted" style="font-size: smaller;">允许以下移动端向本机发出指令：</div>
+        <div class="text-muted" style="font-size: smaller; transform: translateX(2.4em); width: fit-content;">允许以下移动端向本机发出指令：</div>
 
         <div id="paired-div"></div>
+        <div id="add-paired-pc-prompt" class="text-center" style="font-size: smaller; color: rgb(192, 192, 192);">
+          暂时还没有允许的移动端
+        </div>
 
-<!--       
-        <div class="row mx-0 justify-content-center">
-          <span class="text-muted" style="font-size: small; padding-right: 160px;">移动端地址</span>
-          <div id="copy-link-div" style="margin: 0px; padding: 0px;">
-            <a id="copy-link" href="#" style="font-size: small;">复制链接</a>
-          </div>
-        </div>
-      
-        <div class="row mx-0 justify-content-center">
-          <div class="mb-2 col-auto">
-            <span id="link-span" class="font-weight-light bg-dark text-white rounded px-1 py-1" style="font-size: small;"></span>
-          </div>  
-        </div>
-      
-        <div class="row mx-0 justify-content-center">
-          <canvas id="canvas" style="max-width: 140px; max-height: 140px;"></canvas>
-        </div>
-      
-        <div class="row mx-0 mb-0 justify-content-center">
-          <p style="font-size: 10px;" class="text-muted">二维码即为上方链接</p>
-          <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="建议使用谷歌/火狐/Safari打开链接" style="transform: translate(2px, -8px);">
-        </div>
-      
-        <div class="mx-5">
-          <div id="qrerror"></div>
-        </div> -->
+
       </div>
+      
     </div>
   </div>
-</body >
-<script>
-  window.jQuery = window.$ = require('jquery');
-</script>
-<script src="../js/bootstrap.bundle.min.js"></script>
-<script src="https://indienost.gitee.io/paste-like-doinb/server-offer.js"></script>
-<!-- TODO renderer.js -->
-<script src="../js/renderer.js"></script>
 
+  <script>
+    window.jQuery = window.$ = require('jquery');
+  </script>
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script src="https://indienost.gitee.io/paste-like-doinb/server-offer.js"></script>
+  <script src="../js/renderer.js"></script>
+  
+</body >
 <style>
   .paired-list-img {
     height: 1em;
     width: 1em;
-    vertical-align: middle;
     flex: 0 0 auto;
+    transform: translateY(0.3em);
   }
   .paired-list-name-area {
     flex: 1 0 auto;
+  }
+  .launch-target-list-img {
+    height: 1em;
+    width: 1em;
+  }
+  .launch-target-list-img-console {
+    transform: translateY(-0.15em);
   }
   #paired-div {
     padding: 0 8%;
@@ -221,10 +210,6 @@
     border-radius: 50%;
   }
 
-  .invisible {
-    visibility: hidden;
-  }
-
   #enter-pair-mode-prompt {
     font-size: smaller;
     color: rgb(192, 192, 192);
@@ -232,5 +217,8 @@
     transition: height 0.3s;
   }
 
+  .cursor-pointer {
+    cursor: pointer;
+  }
 </style>
 </html>

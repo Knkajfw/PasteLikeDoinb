@@ -49,12 +49,17 @@ ipcRenderer.on('update-approved-mobiles', (e, approvedMobilesJson) => {
 
     newDelBtn.src = '../img/delete.png';
     newDelBtn.alt = 'Del';
-    newDelBtn.classList.add('paired-list-img');
+    newDelBtn.classList.add('paired-list-img', 'cursor-pointer');
     newDelBtn.setAttribute('del-target', pairedMbId);
     newDelBtn.addEventListener('click', sendDelete);
     newListItemDiv.appendChild(newDelBtn);
 
     pairedDiv.appendChild(newListItemDiv);
+  }
+  if (pairedDiv.hasChildNodes()) {
+    document.querySelector('#add-paired-pc-prompt').classList.add('d-none');
+  } else {
+    document.querySelector('#add-paired-pc-prompt').classList.remove('d-none');
   }
 })
 
@@ -63,13 +68,13 @@ function sendDelete(event) {
   ipcRenderer.send('delete-mb', mbToDelId);
 }
 
-function sendReload() {
-  ipcRenderer.send('reload');
-}
+// function sendReload() {
+//   ipcRenderer.send('reload');
+// }
 
-function sendOpenDevTools() {
-  ipcRenderer.send('opendev');
-}
+// function sendOpenDevTools() {
+//   ipcRenderer.send('opendev');
+// }
 
 const pairModeToggle = document.querySelector('#pair-mode-toggle');
 const verificationCode = document.querySelector('#verification-code');
@@ -138,7 +143,9 @@ ipcRenderer.on('already-set-as-undiscoverable', () => {
   if (waitingForDiscoverabilityResponse) {
     clearTimeout(discoverabilityRequestTimeOut);
     document.querySelector('#discoverable-toggle-spinner').classList.add('d-none');
-    document.querySelector('#enter-pair-mode-prompt').classList.remove('d-none');
+    setTimeout(() => {
+      document.querySelector('#enter-pair-mode-prompt').classList.remove('d-none');
+    }, 280);
     pairModeToggle.checked = false;
     $('#refer-info-collapse').collapse('hide');
     pairModeToggle.removeEventListener('click', reqToSetAsUndiscoverable, true);
@@ -147,25 +154,43 @@ ipcRenderer.on('already-set-as-undiscoverable', () => {
   }
 })
 
-ipcRenderer.on('update-self-id', (e, pcClientId) => {
+ipcRenderer.on('update-self-id', (e, pcClientId, computerName) => {
   const selfIdDiv = document.querySelector('#self-id');
-  selfIdDiv.textContent = `PC端ID：${pcClientId}`;
+  selfIdDiv.textContent = `${computerName}`;
 })
 
 ipcRenderer.on('launch-target', (e, launchTargetJson) => {
   launchTarget = JSON.parse(launchTargetJson);
+  const launchTargetDiv = document.querySelector('#launch-target-div');
   for (const target in launchTarget) {
     const targetDiv = document.createElement('div');
+    const targetDivDiv = document.createElement('div');
+    const targetPrefix = document.createElement('img');
     const targetSpan = document.createElement('span');
-    const targetDel = document.createElement('a')
+    const targetDel = document.createElement('img')
     targetDiv.setAttribute('launch-target', launchTarget[target].friendlyName);
-    targetSpan.textContent = launchTarget[target].friendlyName;
-    targetDel.innerHTML = '&times;';
+    targetDiv.classList.add('d-flex');
+
+    targetPrefix.src = '../img/console.png';
+    targetPrefix.alt = '- ';
+    targetPrefix.classList.add('launch-target-list-img', 'launch-target-list-img-console');
+    targetSpan.textContent = '  ' + launchTarget[target].friendlyName;
+    targetDel.src = '../img/delete.png';
+    targetDel.alt = 'Del';
+    targetDel.classList.add('launch-target-list-img', 'align-self-center', 'cursor-pointer');
     targetDel.addEventListener('click', delLaunchTarget);
-    targetDiv.appendChild(targetSpan);
+
+    targetDivDiv.setAttribute('style', 'flex: 1 1 auto');
+    targetDivDiv.appendChild(targetPrefix);
+    targetDivDiv.appendChild(targetSpan);
+
+    targetDiv.appendChild(targetDivDiv);
     targetDiv.appendChild(targetDel);
-    const launchTargetDiv = document.querySelector('#launch-target-div');
+
     launchTargetDiv.appendChild(targetDiv);
+  }
+  if (launchTargetDiv.hasChildNodes()) {
+    document.querySelector('#add-launch-target-prompt').classList.add('d-none');
   }
 });
 
@@ -175,15 +200,19 @@ function delLaunchTarget(event) {
   const targetName = targetDiv.getAttribute('launch-target');
   delete launchTarget[targetName];
   targetDiv.parentNode.removeChild(targetDiv);
+  if (!document.querySelector('#launch-target-div').hasChildNodes()) {
+    document.querySelector('#add-launch-target-prompt').classList.remove('d-none');
+  }
   backUpdateLaunchTarget();
 }
 
 function addLaunchTarget(event) {
-  event.preventDefault();
   const modalInput = document.querySelector('#friendly-name-input');
   const modalPathPara = document.querySelector('#modal-path-para');
+  const modalFeedBack = document.querySelector('#modal-input-feedback');
   modalInput.value = '';
   modalPathPara.textContent = '';
+  modalFeedBack.textContent = '';
   $('#add-launch-target-modal').modal('show');
 }
 
@@ -193,23 +222,43 @@ function saveAddedLaunchTarget() {
   targetToAdd.path = document.querySelector('#modal-path-para').textContent;
   if (targetToAdd.friendlyName && targetToAdd.path) {
     const targetDiv = document.createElement('div');
+    const targetDivDiv = document.createElement('div');
+    const targetPrefix = document.createElement('img');
     const targetSpan = document.createElement('span');
-    const targetDel = document.createElement('a')
+    const targetDel = document.createElement('img')
+
     targetDiv.setAttribute('launch-target', targetToAdd.friendlyName);
-    targetSpan.textContent = targetToAdd.friendlyName;
-    targetDel.innerHTML = '&times;';
+    targetDiv.classList.add('d-flex');
+
+    targetPrefix.src = '../img/console.png';
+    targetPrefix.alt = '- ';
+    targetPrefix.classList.add('launch-target-list-img', 'launch-target-list-img-console');
+
+    targetSpan.textContent = '  ' + targetToAdd.friendlyName;
+    targetDel.src = '../img/delete.png';
+    targetDel.alt = 'Del';
+    targetDel.classList.add('launch-target-list-img', 'align-self-center', 'cursor-pointer');
     targetDel.addEventListener('click', delLaunchTarget);
-    targetDiv.appendChild(targetSpan);
+
+    targetDivDiv.setAttribute('style', 'flex: 1 1 auto');
+    targetDivDiv.appendChild(targetPrefix);
+    targetDivDiv.appendChild(targetSpan);
+
+    targetDiv.appendChild(targetDivDiv);
     targetDiv.appendChild(targetDel);
+
     const launchTargetDiv = document.querySelector('#launch-target-div');
     launchTargetDiv.appendChild(targetDiv);
+    
+    const prompt = document.querySelector('#add-launch-target-prompt');
+    if (!prompt.classList.contains('d-none')) prompt.classList.add('d-none');
     launchTarget[targetToAdd.friendlyName] = targetToAdd;
     backUpdateLaunchTarget();
-    $('#add-launch-target-modal').modal('hide');  
+    $('#add-launch-target-modal').modal('hide');
   } else {
     const modalInputFeedback = document.querySelector('#modal-input-feedback');
     modalInputFeedback.textContent = '';
-    modalInputFeedback.textContent = 'Please provide all required information.'
+    modalInputFeedback.textContent = '请提供所需的所有信息'
   }
 }
 
@@ -224,8 +273,8 @@ function requestToOpenDialog() {
   ipcRenderer.send('request-to-open-dialog');
 }
 
-const addLaunchTargetLink = document.querySelector('#add-launch-target-link');
-addLaunchTargetLink.addEventListener('click', addLaunchTarget);
+const addLaunchTargetBtn = document.querySelector('#add-launch-target-btn');
+addLaunchTargetBtn.addEventListener('click', addLaunchTarget);
 const browseBtn = document.querySelector('#browse-btn');
 browseBtn.addEventListener('click', requestToOpenDialog);
 ipcRenderer.on('file-path', (e, filePath) => {

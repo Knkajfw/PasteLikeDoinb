@@ -367,7 +367,7 @@ ipcMain.on('socketServerInfo', () => {
           win.webContents.send('update-approved-mobiles', approvedMobilesJson)
         }
       }
-      win.webContents.send('update-self-id', pcClientId);
+      win.webContents.send('update-self-id', pcClientId, computerName);
       win.webContents.send('refer', referLink);
       if (launchTarget) win.webContents.send('launch-target', JSON.stringify(launchTarget));
     })
@@ -498,7 +498,7 @@ function requestServerAddress() {
     logErrorAndCreateErrWin(error);
   })
   serverAddressRequest.on('response', (res) => {
-    //STR res!=200 means no data? 
+    //DRAFT res!=200 means no data? 
     res.on('data', (chunk) => {
       socketServerAddress = process.env.plddevsa || chunk.toString();
       createLoadingPageWindow();
@@ -537,14 +537,13 @@ function getLaunchTarget() {
 function launchAll(launchTarget) {
   const regex = /\\/g;
   for (const target in launchTarget) {
-    //RSM
     const path ='"' + launchTarget[target].path.replace(regex, '\\\\') + '"';
     execFile(path, { shell: true });
   }
 }
 
 //DRAFT recovery launchExtra
-// (function launchExtra() {
-//   getLaunchTarget();
-//   launchAll(launchTarget);
-// })();
+(function launchExtra() {
+  getLaunchTarget();
+  // launchAll(launchTarget);
+})();
