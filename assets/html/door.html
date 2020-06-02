@@ -6,129 +6,6 @@
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <title>PLD</title>  
 </head>
-
-<body>
-
-  <div class="container-fluid">
-    <div class="row">
-
-      <div id="left-panel" class="col-6 d-flex flex-column" style="padding-left: 60px; padding-right: 36px; overflow: hidden; min-height: 400px;">
-
-        <div class="d-flex" style="margin-top: 80px;">
-          <div class="d-flex justify-content-between" style="flex: 1 1 auto;">
-            <span style="font-weight: bold;">配对模式</span>
-            <label class="switch" style="transform: translateY(-0.1em);">
-              <input type="checkbox" id="pair-mode-toggle">
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div style="flex: 0 0 35px; height: 32px;">
-            <img id="discoverable-toggle-spinner" class="d-none" src="../img/Spinner-0.5s-64px.gif" alt=".." style="width: 32px; height: 32px; transform: translateY(-0.2em);">
-            <span id="discoverable-toggle-warning" class="d-none">&#x26A0</span>
-          </div>  
-        </div>
-
-        <div id="refer-info-collapse" class="collapse">
-          <div class="card card-body text-muted bg-light" style="margin-right: 40px; margin-left: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 8px;">
-            <div class="container">
-              <div class="row">
-                <div id="refer-info-div" class="col-6 px-0">
-                  <div style="font-size: smaller; margin-top: 15px;">验证码：</div>
-                  <kbd id="verification-code"></kbd>
-                </div>
-                <div class="col-6 px-0 d-flex" style="justify-content: center;">
-                  <canvas id="canvas" style="max-width: 80px; max-height: 80px;"></canvas>
-                  <div id="qrerror"></div>
-                </div>
-              </div>
-            </div>
-            <div class="text-muted text-center" style="font-size: 0.7em;">推荐直接扫描二维码添加</div>
-            <div id="self-id" class="text-center" style="font-size: 0.7em; color: rgb(192, 192, 192);"></div>
-          </div>  
-        </div>
-
-        <p id="enter-pair-mode-prompt" class="text-center">
-          开启配对模式<br>与移动端进行连接
-        </p>
-
-        <div id="launch-target-area" style="margin-top: 30px; flex: 1 0 auto;">
-          <div class="d-flex justify-content-between">
-            <div class="font-weight-bold">共同启动</div>
-            <div id="add-launch-target-btn" class="btn btn-light py-0" style="transform: translateX(-100%);">+</div>
-          </div>
-          <div id="launch-target-div" class="my-2" style="padding-right: 48px; padding-left: 16px;"></div>
-          <div id="add-launch-target-prompt" class="text-center" style="font-size: 0.8em; color: rgb(192, 192, 192); transform: translateX(-1em);">添加程序路径<br>下次同时启动PLD和LOL</div>
-        </div>
-        <div class="mt-5 pl-3">
-          <img id="github-icon" class="mr-1 hover-enlarge" data-toggle="tooltip" data-placement="top" title="Github主页" src="../img/github.svg">
-          <img id="support-icon" class="mr-1 hover-enlarge" data-toggle="tooltip" data-placement="top" title="支持作者" src="../img/heart.png">
-          <img id="help-icon" class="hover-enlarge" data-toggle="tooltip" data-placement="top" title="使用指南" src="../img/help.png">
-        </div>
-        
-        <div class="modal" id="add-launch-target-modal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title font-weight-bold">创建共同启动任务</h5>
-                <button class="close" data-dismiss="modal">
-                  <span>&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                  <label for="friendly-name-input">任务名称：</label><br>
-                  <input type="text" id="friendly-name-input">
-                </div>
-                <div class="form-group">
-                  <label>选择程序路径：</label>
-                  <p id="modal-path-para" class="bg-dark text-white px-2 text-break" style="border-radius: 5px;"></p>
-                  <button class="btn btn-primary" id="browse-btn">浏览</button>
-                </div>
-                <div><small id="modal-input-feedback" style="color: red;"></small></div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-primary" id="add-launch-target-save-btn">保存</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="right-panel" class="col-6">
-
-        <div class="container">
-          <div class="mt-5 mb-3 mx-0 row justify-content-center">
-            <img src="../img/signal.svg" style="max-width: 30%; max-height: 30%;">
-          </div>  
-        </div>
-
-        <div class="text-center mx-0 mb-4 font-weight-bold">正在接收来自移动端的指令
-          <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="打开配对模式链接移动端，在移动端页面中记录闪现时间，并指示本程序发送到局内聊天。" style="transform: translate(-2px, -2px);">
-        </div>
-
-        <div class="text-muted" style="font-size: smaller; transform: translateX(2.4em); width: fit-content;">允许以下移动端向本机发出指令：</div>
-
-        <div id="add-paired-pc-prompt" class="text-center mt-4" style="font-size: smaller; color: rgb(192, 192, 192);">
-          暂时还没有允许的移动端
-        </div>
-        <div id="paired-div"></div>
-
-
-      </div>
-      
-    </div>
-  </div>
-
-  <div id="notification-area" class="w-100" style="position: absolute; top: 0px;"></div>
-
-  <script>
-    window.jQuery = window.$ = require('jquery');
-  </script>
-  <script src="../js/bootstrap.bundle.min.js"></script>
-  <script src="https://indienost.gitee.io/paste-like-doinb/server-offer.js"></script>
-  <script src="../js/renderer.js"></script>
-  
-</body >
 <style>
   .paired-list-img {
     height: 1em;
@@ -227,4 +104,127 @@
     height: 20px;
   }
 </style>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <div id="left-panel" class="col-6 d-flex flex-column" style="padding-left: 60px; padding-right: 36px; overflow: hidden; min-height: 400px;">
+
+        <div class="d-flex" style="margin-top: 80px;">
+          <div class="d-flex justify-content-between" style="flex: 1 1 auto;">
+            <span style="font-weight: bold;">配对模式</span>
+            <label class="switch" style="transform: translateY(-0.1em);">
+              <input type="checkbox" id="pair-mode-toggle">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div style="flex: 0 0 35px; height: 32px;">
+            <img id="discoverable-toggle-spinner" class="d-none" src="../img/Spinner-0.5s-64px.gif" alt=".." style="width: 32px; height: 32px; transform: translateY(-0.2em);">
+            <span id="discoverable-toggle-warning" class="d-none">&#x26A0</span>
+          </div>  
+        </div>
+
+        <div id="refer-info-collapse" class="collapse">
+          <div class="card card-body text-muted bg-light" style="margin-right: 40px; margin-left: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 8px;">
+            <div class="container">
+              <div class="row">
+                <div id="refer-info-div" class="col-6 px-0">
+                  <div style="font-size: smaller; margin-top: 15px;">验证码：</div>
+                  <kbd id="verification-code"></kbd>
+                </div>
+                <div class="col-6 px-0 d-flex" style="justify-content: center;">
+                  <canvas id="canvas" style="max-width: 80px; max-height: 80px;"></canvas>
+                  <div id="qrerror"></div>
+                </div>
+              </div>
+            </div>
+            <div class="text-muted text-center" style="font-size: 0.7em;">推荐直接扫描二维码添加</div>
+            <div id="self-id" class="text-center" style="font-size: 0.7em; color: rgb(192, 192, 192);"></div>
+          </div>  
+        </div>
+
+        <p id="enter-pair-mode-prompt" class="text-center">
+          开启配对模式<br>与移动端进行连接
+        </p>
+
+        <div id="launch-target-area" style="margin-top: 30px; flex: 1 0 auto;">
+          <div class="d-flex justify-content-between">
+            <div class="font-weight-bold">共同启动</div>
+            <div id="add-launch-target-btn" class="btn btn-light py-0" style="transform: translateX(-100%);">+</div>
+          </div>
+          <div id="launch-target-div" class="my-2" style="padding-right: 48px; padding-left: 16px;"></div>
+          <div id="add-launch-target-prompt" class="text-center" style="font-size: 0.8em; color: rgb(192, 192, 192); transform: translateX(-1em);">添加程序路径<br>下次同时启动PLD和LOL</div>
+        </div>
+        <div class="pl-3">
+          <img id="github-icon" class="mr-1 hover-enlarge" data-toggle="tooltip" data-placement="top" title="Github主页" src="../img/github.svg">
+          <img id="support-icon" class="mr-1 hover-enlarge" data-toggle="tooltip" data-placement="top" title="支持作者" src="../img/heart.png">
+          <img id="help-icon" class="hover-enlarge" data-toggle="tooltip" data-placement="top" title="使用指南" src="../img/help.png">
+        </div>
+        
+        <div class="modal" id="add-launch-target-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title font-weight-bold">创建共同启动任务</h5>
+                <button class="close" data-dismiss="modal">
+                  <span>&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="friendly-name-input">任务名称：</label><br>
+                  <input type="text" id="friendly-name-input">
+                </div>
+                <div class="form-group">
+                  <label>选择程序路径：</label>
+                  <p id="modal-path-para" class="bg-dark text-white px-2 text-break" style="border-radius: 5px;"></p>
+                  <button class="btn btn-primary" id="browse-btn">浏览</button>
+                </div>
+                <div><small id="modal-input-feedback" style="color: red;"></small></div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" id="add-launch-target-save-btn">保存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="right-panel" class="col-6">
+
+        <div class="container">
+          <div class="mt-5 mb-3 mx-0 row justify-content-center">
+            <img src="../img/signal.svg" style="max-width: 30%; max-height: 30%;">
+          </div>  
+        </div>
+
+        <div class="text-center mx-0 mb-4 font-weight-bold">正在接收来自移动端的指令
+          <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="打开配对模式链接移动端，在移动端页面中记录闪现时间，并指示本程序发送到局内聊天。" style="transform: translate(-2px, -2px);">
+        </div>
+
+        <div class="text-muted" style="font-size: smaller; transform: translateX(2.4em); width: fit-content;">允许以下移动端向本机发出指令：</div>
+
+        <div id="add-paired-pc-prompt" class="text-center mt-4" style="font-size: smaller; color: rgb(192, 192, 192);">
+          暂时还没有允许的移动端
+        </div>
+        <div id="paired-div"></div>
+
+
+      </div>
+      
+    </div>
+  </div>
+
+  <div id="notification-area" class="w-100" style="position: absolute; top: 0px;"></div>
+
+  <script>
+    window.jQuery = window.$ = require('jquery');
+  </script>
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script src="https://indienost.gitee.io/paste-like-doinb/server-offer.js"></script>
+  <script src="../js/renderer.js"></script>
+  
+</body >
 </html>

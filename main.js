@@ -11,13 +11,13 @@ const { execFile } = require('child_process');
 app.commandLine.appendSwitch('ignore-certificate-errors');
 app.commandLine.appendSwitch('disable-http-cache');
   //DRAFT check menu
-// Menu.setApplicationMenu(null);
+Menu.setApplicationMenu(null);
 
 const userDataPath = app.getPath('userData');
 var socket;
 var socketServerAddress = '';
 var clip = '';
-var win = null;
+var win;
 var pcClientId = getOrGeneratePcClientId();
 var willquitListenerExistence = false;
 var isTyping = false;
@@ -75,37 +75,29 @@ function getOrGeneratePcClientId() {
 }
 
 function createLoadingPageWindow() {
-  //DRAFT check menu
-  // Menu.setApplicationMenu(null);
   win = new BrowserWindow({
     width: 640,
     height: 480,
-    webPreferences: { nodeIntegration: true }
-  })
+    webPreferences: { nodeIntegration: true },
+  });
   win.on('closed', () => {
     win = null;
+  });
+  win.webContents.session.resolveProxy(process.env.plddevsa || socketServerAddress)
+  .then(str => {
+    let parts = str.split(' ');
+    if (parts[0] === 'PROXY') {
+      let resolvedProxyAddress = parts[1];
+      let resolvedProxyhref = 'http://' + resolvedProxyAddress;
+      https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
+    }
   })
-  //DRAFT clearCache()
-  // win.webContents.session.clearCache()
-  Promise.resolve(1)
-  .then(() => {
-    win.webContents.session.resolveProxy(process.env.plddevsa || socketServerAddress)
-    .then(str => {
-      let parts = str.split(' ');
-      if (parts[0] === 'PROXY') {
-        let resolvedProxyAddress = parts[1];
-        let resolvedProxyhref = 'http://' + resolvedProxyAddress;
-        https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
-      }
-    })
-    .catch(err => {
-      //DRAFT better resolveProxy error handling
-      console.error('resolveProxy error:', err.message);
-    })
-    .finally(() => {
-      win.webContents.loadFile('assets/html/loading-page.html');
-    })
+  .catch(err => {
+    console.error('resolveProxy error:', err.message);
   })
+  .finally(() => {
+    win.webContents.loadFile('assets/html/loading-page.html');
+  });
 }
 
 function typeit() {
@@ -276,31 +268,26 @@ function getGameTime() {
 }
 
 function winReload() {
-  //DRAFT clearCache()
-  // win.webContents.session.clearCache()
-  Promise.resolve(1)
-  .then(() => {
-    win.webContents.session.resolveProxy(process.env.plddevsa || socketServerAddress)
-    .then(str => {
-      let parts = str.split(' ');
-      if (parts[0] === 'PROXY') {
-        let resolvedProxyAddress = parts[1];
-        let resolvedProxyhref = 'http://' + resolvedProxyAddress;
-        https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
-        socket.close();
-      }
-      else {
-        https.globalAgent = new https.Agent({});
-        socket.close();
-      }
-    })
-    .catch(err => {
-      console.error('resolveProxy error:', err.message);
-    })
-    .finally(() => {
-      win.webContents.loadFile('assets/html/loading-page.html');
-    })
+  win.webContents.session.resolveProxy(process.env.plddevsa || socketServerAddress)
+  .then(str => {
+    let parts = str.split(' ');
+    if (parts[0] === 'PROXY') {
+      let resolvedProxyAddress = parts[1];
+      let resolvedProxyhref = 'http://' + resolvedProxyAddress;
+      https.globalAgent = new HttpsProxyAgent(resolvedProxyhref);
+      socket.close();
+    }
+    else {
+      https.globalAgent = new https.Agent({});
+      socket.close();
+    }
   })
+  .catch(err => {
+    console.error('resolveProxy error:', err.message);
+  })
+  .finally(() => {
+    win.webContents.loadFile('assets/html/loading-page.html');
+  });
 }
 
 function getLevelArrayIndexFromSkillSlot(skillSlot) {
