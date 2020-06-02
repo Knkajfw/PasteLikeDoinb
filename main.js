@@ -10,7 +10,6 @@ const { execFile } = require('child_process');
 
 app.commandLine.appendSwitch('ignore-certificate-errors');
 app.commandLine.appendSwitch('disable-http-cache');
-  //DRAFT check menu
 Menu.setApplicationMenu(null);
 
 const userDataPath = app.getPath('userData');
@@ -251,8 +250,7 @@ function trimSummonerSpells() {
 function getGameTime() {
   const gtimereq = net.request('https://127.0.0.1:2999/liveclientdata/gamestats');
   gtimereq.on('error', (error) => {
-    //DRAFT restroe log error
-    // console.error('getGameTimeReqErr', error.message);
+    console.error('getGameTimeReqErr', error.message);
   })
   gtimereq.on('response', (response) => {
     response.on('data', (chunk) => {
@@ -479,7 +477,6 @@ function requestServerAddress() {
     logErrorAndCreateErrWin(error);
   })
   serverAddressRequest.on('response', (res) => {
-    //DRAFT res!=200 means no data? 
     res.on('data', (chunk) => {
       socketServerAddress = process.env.plddevsa || chunk.toString();
       createLoadingPageWindow();
@@ -523,8 +520,7 @@ function launchAll(launchTarget) {
   }
 }
 
-//DRAFT recovery launchExtra
 (function launchExtra() {
   getLaunchTarget();
-  // launchAll(launchTarget);
+  launchAll(launchTarget);
 })();
