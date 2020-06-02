@@ -274,8 +274,12 @@ ipcRenderer.on('file-path', (e, filePath) => {
   modalPathPara.textContent = filePath;
 })
 
-document.querySelector('#github-icon').addEventListener('click', shell.openExternal.bind(shell, 'https://github.com/Knkajfw/PasteLikeDoinb'));
-document.querySelector('#support-icon').addEventListener('click', shell.openExternal.bind(shell, 'https://github.com/Knkajfw/PasteLikeDoinb#%E8%B5%9E%E5%8A%A9'));
+const repoPage = serverOffer.repoPage;
+const donationPage = serverOffer.donationPage;
+const guidePage = serverOffer.guidePage;
+document.querySelector('#github-icon').addEventListener('click', shell.openExternal.bind(shell, repoPage));
+document.querySelector('#support-icon').addEventListener('click', shell.openExternal.bind(shell, donationPage));
+document.querySelector('#help-icon').addEventListener('click', shell.openExternal.bind(shell, guidePage));
 
 function showNotifications() {
   const notifications = serverOffer.notifications;
