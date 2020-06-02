@@ -382,7 +382,6 @@ ipcMain.on('socketServerInfo', () => {
   })
 
   socket.on('pair-s2p', (mbTopair, mbDeviceName) => {
-    //DRAFT fs catch
     if (fs.existsSync(approvedMobilesJsonFilePath)) {
       var approvedMobiles = JSON.parse(fs.readFileSync(approvedMobilesJsonFilePath, 'utf-8'));
       if (!approvedMobiles.list.includes(mbTopair)) {
