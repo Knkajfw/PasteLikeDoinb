@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="view-port" content="width=400px, initial-scale=1, shrink-to-fit:no">
   <link rel="stylesheet" href="../css/bootstrap.min.css">
-  <title>PasteLikeDoinb</title>  
+  <title>PLD</title>  
 </head>
 
 <body>
-  
+
   <div class="container-fluid">
     <div class="row">
 
@@ -43,6 +43,7 @@
               </div>
             </div>
             <div class="text-muted text-center" style="font-size: 0.7em;">推荐直接扫描二维码添加</div>
+            <div id="self-id" class="text-center" style="font-size: 0.7em; color: rgb(192, 192, 192);"></div>
           </div>  
         </div>
 
@@ -58,21 +59,23 @@
           <div id="launch-target-div" class="my-2" style="padding-right: 48px; padding-left: 16px;"></div>
           <div id="add-launch-target-prompt" class="text-center" style="font-size: 0.8em; color: rgb(192, 192, 192); transform: translateX(-1em);">添加程序路径<br>下次同时启动PLD和LOL</div>
         </div>
-        <p id="self-id" style="font-size: smaller; color: rgb(192, 192, 192);"></p>
-
+        <div class="mt-5 pl-3">
+          <img id="github-icon" class="mr-1 hover-enlarge" data-toggle="tooltip" data-placement="top" title="Github主页" src="../img/github.svg">
+          <img id="support-icon" class="hover-enlarge" data-toggle="tooltip" data-placement="top" title="支持作者" src="../img/heart.png">
+        </div>
         
         <div class="modal" id="add-launch-target-modal">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">创建共同启动任务</h5>
+                <h5 class="modal-title font-weight-bold">创建共同启动任务</h5>
                 <button class="close" data-dismiss="modal">
                   <span>&times;</span>
                 </button>
               </div>
               <div class="modal-body">
                 <div class="form-group">
-                  <label for="friendly-name-input">任务名称：</label>
+                  <label for="friendly-name-input">任务名称：</label><br>
                   <input type="text" id="friendly-name-input">
                 </div>
                 <div class="form-group">
@@ -92,7 +95,6 @@
 
       <div id="right-panel" class="col-6">
 
-        
         <div class="container">
           <div class="mt-5 mb-3 mx-0 row justify-content-center">
             <img src="../img/signal.svg" style="max-width: 30%; max-height: 30%;">
@@ -105,10 +107,10 @@
 
         <div class="text-muted" style="font-size: smaller; transform: translateX(2.4em); width: fit-content;">允许以下移动端向本机发出指令：</div>
 
-        <div id="paired-div"></div>
-        <div id="add-paired-pc-prompt" class="text-center" style="font-size: smaller; color: rgb(192, 192, 192);">
+        <div id="add-paired-pc-prompt" class="text-center mt-4" style="font-size: smaller; color: rgb(192, 192, 192);">
           暂时还没有允许的移动端
         </div>
+        <div id="paired-div"></div>
 
 
       </div>
@@ -212,6 +214,16 @@
 
   .cursor-pointer {
     cursor: pointer;
+  }
+
+  .hover-enlarge {
+    width: 16px;
+    height: 16px;
+    transition: width 0.2s, height 0.2s;
+  }
+  .hover-enlarge:hover {
+    width: 20px;
+    height: 20px;
   }
 </style>
 </html>

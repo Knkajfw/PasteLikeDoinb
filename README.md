@@ -109,16 +109,14 @@ See this [page](https://github.com/octalmage/robotjs/wiki/Electron)
 `npm start`
 
 ## 赞助
-有帮到你的话，给我的晚饭加个鸡腿吧~！
-- [微信支付](https://i.loli.net/2020/03/23/FrDkPLMWT6GEQcm.png)
-- [支付宝](https://i.loli.net/2020/03/21/9vq5wsBTU6lNXZr.jpg)
+#### 有帮到你的话，给我的晚饭加个鸡腿吧~！
+<img src="https://i.loli.net/2020/06/02/oIRQBOg54a1cp2v.png">
 
-感谢以下同学的赞助支持：
-
-<a href='https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727'><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'> NGA论坛@我跟你描述一个灵魂</a>
-<p><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'> h*y</p>
-<p><img src='https://i.loli.net/2020/04/25/ojbDdfagcM6BxtP.jpg' alt='UserIcon'> 渣男</p>
-<p><img src='https://i.loli.net/2020/04/25/k6JwxS8UmHV3ifh.jpg' alt='UserIcon'> <img src='https://i.loli.net/2020/04/25/PWB8UfI4YRoyd2J.png'></p>
-<p><img src='https://i.loli.net/2020/04/25/CTXRoYUwyu62bke.jpg' alt='UserIcon'> 驼驼安</p>
-<p><img src='https://i.loli.net/2020/05/01/2taO87Vgc1srFjE.png' alt='UserIcon'> 陈二狗</p>
-<p><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'> k*)</p>
+#### 感谢以下用户的赞助支持：
+<a title="NGA论坛@我跟你描述一个灵魂" href="https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727"><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'></a>
+<img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon' title="h*y">
+<img src='https://i.loli.net/2020/04/25/ojbDdfagcM6BxtP.jpg' alt='UserIcon' title="渣男" style="border-radius: 10px">
+<img src='https://i.loli.net/2020/04/25/k6JwxS8UmHV3ifh.jpg' alt='UserIcon' title="&#x1f621" style="border-radius: 10px">
+<img src='https://i.loli.net/2020/04/25/CTXRoYUwyu62bke.jpg' alt='UserIcon' title="驼驼安" style="border-radius: 10px">
+<img src='https://i.loli.net/2020/05/01/2taO87Vgc1srFjE.png' alt='UserIcon' title="陈二狗" style="border-radius: 10px">
+<img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon' title="k*)">

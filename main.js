@@ -11,7 +11,7 @@ const { execFile } = require('child_process');
 app.commandLine.appendSwitch('ignore-certificate-errors');
 app.commandLine.appendSwitch('disable-http-cache');
   //DRAFT check menu
-Menu.setApplicationMenu(null);
+// Menu.setApplicationMenu(null);
 
 const userDataPath = app.getPath('userData');
 var socket;
@@ -47,8 +47,6 @@ var currentGameMode = '';
 var opponentToGetLevelIndex = 0;
 var skillSlotToGetLevel = '';
 var pairedMobilesList = [];
-//DRAFT delete test com name
-// const computerName = 'SSSDDDDDGGGGGGX';
 const computerName = process.env.COMPUTERNAME.substring(0, 14);
 var launchTarget = {};
 

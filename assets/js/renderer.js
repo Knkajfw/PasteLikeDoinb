@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, shell } = require('electron');
 const qrcode = require('qrcode');
 const pldVersion = 110;
 
@@ -148,7 +148,7 @@ ipcRenderer.on('already-set-as-undiscoverable', () => {
 
 ipcRenderer.on('update-self-id', (e, pcClientId, computerName) => {
   const selfIdDiv = document.querySelector('#self-id');
-  selfIdDiv.textContent = `${computerName}`;
+  selfIdDiv.innerHTML = `本机名: ${computerName}`;
 })
 
 ipcRenderer.on('launch-target', (e, launchTargetJson) => {
@@ -274,10 +274,8 @@ ipcRenderer.on('file-path', (e, filePath) => {
   modalPathPara.textContent = filePath;
 })
 
-// const reloadBtn = document.querySelector('#reload-btn');
-// reloadBtn.addEventListener('click', sendReload);
-// const openDevBtn = document.querySelector('#open-devtools-btn');
-// openDevBtn.addEventListener('click', sendOpenDevTools);
+document.querySelector('#github-icon').addEventListener('click', shell.openExternal.bind(shell, 'https://github.com/Knkajfw/PasteLikeDoinb'));
+document.querySelector('#support-icon').addEventListener('click', shell.openExternal.bind(shell, 'https://github.com/Knkajfw/PasteLikeDoinb#%E8%B5%9E%E5%8A%A9'));
 
 function showNotifications() {
   const notifications = serverOffer.notifications;
@@ -314,3 +312,5 @@ function showNotifications() {
 }
 
 showNotifications();
+
+$('[data-toggle="tooltip"]').tooltip();
