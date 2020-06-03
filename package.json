@@ -1,21 +1,21 @@
 {
   "name": "pastelikedoinb",
-  "version": "1.3.4",
+  "version": "2.0.0",
   "description": "An app that generates and auto-type LOL flash tracking messages",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "set plddevsa=https://pld-dev.herokuapp.com&&electron .",
+    "dev": "set plddevsa=https://pld-dev.herokuapp.com&electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "IndieNoSt",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^7.1.8",
-    "electron-rebuild": "^1.8.8"
+    "electron": "^7.1.8"
   },
   "dependencies": {
     "https-proxy-agent": "^5.0.0",
+    "jquery": "^3.5.1",
     "minimist": ">=0.2.1",
     "nanoid": "^3.1.3",
     "qrcode": "^1.4.4",

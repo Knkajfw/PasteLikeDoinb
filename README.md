@@ -5,12 +5,11 @@
 Record your opponents' Flash CD and share it with an auto-generated game chat msg("mid1230 sup1504") in one click.
 
 # 下载 Download
-请移步[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)下载zip压缩包。  
-百度网盘下载：
-链接: https://pan.baidu.com/s/1H1emcvegE_C53iIO7jxa0A 提取码: 9ikr
+请移步[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)下载安装包。  
+[国内镜像](https://plddownload-1300643516.file.myqcloud.com/update/pastelikedoinb_webinstaller_2.0.0.exe)
 
-Head over to [Release Page](https://github.com/Knkajfw/PasteLikeDoinb/releases) to download the Windows client.  
-Baidu NetDisk: https://pan.baidu.com/s/1H1emcvegE_C53iIO7jxa0A Code: 9ikr
+Head over to [Release Page](https://github.com/Knkajfw/PasteLikeDoinb/releases) to download the installer.  
+[CN Mirror](https://plddownload-1300643516.file.myqcloud.com/update/pastelikedoinb_webinstaller_2.0.0.exe)
 
 # 截图 Screenshots
 #### 游戏内截图 In-game
@@ -109,16 +108,14 @@ See this [page](https://github.com/octalmage/robotjs/wiki/Electron)
 `npm start`
 
 ## 赞助
-有帮到你的话，给我的晚饭加个鸡腿吧~！
-- [微信支付](https://i.loli.net/2020/03/23/FrDkPLMWT6GEQcm.png)
-- [支付宝](https://i.loli.net/2020/03/21/9vq5wsBTU6lNXZr.jpg)
+#### 开发不易，确实有帮到你的话，请一定用小半个皮肤的价格支持一下！感谢感谢！
+<img src="https://i.loli.net/2020/06/02/oIRQBOg54a1cp2v.png">
 
-感谢以下同学的赞助支持：
-
-<a href='https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727'><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'> NGA论坛@我跟你描述一个灵魂</a>
-<p><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'> h*y</p>
-<p><img src='https://i.loli.net/2020/04/25/ojbDdfagcM6BxtP.jpg' alt='UserIcon'> 渣男</p>
-<p><img src='https://i.loli.net/2020/04/25/k6JwxS8UmHV3ifh.jpg' alt='UserIcon'> <img src='https://i.loli.net/2020/04/25/PWB8UfI4YRoyd2J.png'></p>
-<p><img src='https://i.loli.net/2020/04/25/CTXRoYUwyu62bke.jpg' alt='UserIcon'> 驼驼安</p>
-<p><img src='https://i.loli.net/2020/05/01/2taO87Vgc1srFjE.png' alt='UserIcon'> 陈二狗</p>
-<p><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'> k*)</p>
+#### 感谢以下用户的赞助支持：
+<a title="NGA论坛@我跟你描述一个灵魂" href="https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727"><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'></a>
+<img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon' title="h*y">
+<img src='https://i.loli.net/2020/04/25/ojbDdfagcM6BxtP.jpg' alt='UserIcon' title="渣男" style="border-radius: 10px">
+<img src='https://i.loli.net/2020/04/25/k6JwxS8UmHV3ifh.jpg' alt='UserIcon' title="&#x1f621" style="border-radius: 10px">
+<img src='https://i.loli.net/2020/04/25/CTXRoYUwyu62bke.jpg' alt='UserIcon' title="驼驼安" style="border-radius: 10px">
+<img src='https://i.loli.net/2020/05/01/2taO87Vgc1srFjE.png' alt='UserIcon' title="陈二狗" style="border-radius: 10px">
+<img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon' title="k*)">

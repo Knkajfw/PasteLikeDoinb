@@ -1,10 +1,7 @@
 const { ipcRenderer, shell } = require('electron');
-const pldVersion = 441231;
 var statusBlock = document.getElementById('status-block');
 var iconLink = document.getElementById('icon-link');
-var infobar = document.getElementById('top-info-bar');
-var infobar2 = document.getElementById('top-info-bar-2');
-var topInfoBarLink1 = document.getElementById('top-info-bar-link1');
+const reloadBtn = document.querySelector('#reload-btn');
 
 function openIconLinkExternally(event) {
   event.preventDefault();
@@ -20,7 +17,7 @@ function replaceIconLinkWithCannotConnectHelp() {
   iconLink.addEventListener('click', openCannotConnectHelpExternally);
 }
 
-function reload(){
+function sendReload(){
   ipcRenderer.send('reload');
 }
 
@@ -37,18 +34,8 @@ ipcRenderer.on('loadStatus_MobileLinkReceived', () => {
 })
 
 iconLink.addEventListener('click', openIconLinkExternally);
+reloadBtn.addEventListener('click', sendReload);
+
 setTimeout(replaceIconLinkWithCannotConnectHelp, 15000);
-infobar.innerHTML = info;
 
-if (info2TargetVersion >= pldVersion) {
-  infobar2.innerHTML = info2;
-}
-
-if (topInfoBarLink1) {
-  topInfoBarLink1.addEventListener('click', (e)=>{e.preventDefault();shell.openExternal(infoLink)});
-}
-
-if (socketServerAddress) {
-  ipcRenderer.send('socketServerInfo', socketServerAddress);
-  statusBlock.innerText = "已取得服务器地址，连接中";
-}
+ipcRenderer.send('socketServerInfo');

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="view-port" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href='../css/bootstrap.min.css'>
+  <title>PLD</title>
+</head>
+<body>
+  <div class="d-flex mt-5">
+    <img src="../img/error.png" class="mx-auto" style="width: 128px; height: 128px;">
+  </div>
+  <h5 class="text-muted font-weight-bold mt-5 text-center">无法获取到服务器地址，请检查网络连接</h5>
+  <div class="d-flex mt-5">
+    <div id="retry-server-addr-btn" class="btn btn-dark mx-auto">重启应用</div>
+  </div>
+
+</body>
+<script>
+  const { ipcRenderer } = require('electron');
+  const retryBtn = document.querySelector('#retry-server-addr-btn');
+  retryBtn.addEventListener('click', sendRelaunchApp);
+  function sendRelaunchApp() {
+    ipcRenderer.send('relaunch');
+  }
+</script>
+</html>

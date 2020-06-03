@@ -4,55 +4,227 @@
   <meta charset="UTF-8">
   <meta name="view-port" content="width=400px, initial-scale=1, shrink-to-fit:no">
   <link rel="stylesheet" href="../css/bootstrap.min.css">
-  <title>记闪现PasteLikeDoinb</title>
+  <title>PLD</title>  
 </head>
-<body style="font-family: 微软雅黑;">
+<style>
+  .paired-list-img {
+    height: 1em;
+    width: 1em;
+    flex: 0 0 auto;
+    transform: translateY(0.3em);
+  }
+  .paired-list-name-area {
+    flex: 1 0 auto;
+  }
+  .launch-target-list-img {
+    height: 1em;
+    width: 1em;
+  }
+  .launch-target-list-img-console {
+    transform: translateY(-0.15em);
+  }
+  #paired-div {
+    padding: 0 8%;
+    color: var(--gray);
+    margin-top: 3vh;
+  }
+  .switch {
+    position: relative;
+    top: 0.25em;
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+    margin: 0;
+}
 
-  <div id='top-info-bar' class="container-fluid bg-dark text-white text-center" style="font-size: 0.8rem;"></div>
-  <div id='top-info-bar-2' class="container-fluid text-white text-center" style="font-size: 0.8rem; background-color: #3FA5FF;"></div>
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
 
-  <button type="button" id="door-reload-button" class="btn btn-outline-danger" onclick="doorReload()" style="position: absolute; top: 40px; left: 20px; width: 24px; height: 24px; padding: 0px;">
-    <img src="../img/reload.png" style="width: 15px; height: 15px; position: relative; top: -2px; left: 1px;">
-  </button>
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
 
-  <button type="button" id="open-devtools-button" class="btn btn-outline-dark" onclick="sendOpenDevTools()" style="position: absolute; top: 40px; left: 48px; width: 24px; height: 24px; padding: 0px;">
-    <img src="../img/console.png" style="width: 15px; height: 15px; position: relative; top: -2px; left: 1px;">
-  </button>
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
 
-  <div class="mt-5 mb-3 mx-0 row justify-content-center">
-    <img src="../img/signal.svg" style="max-width: 30%; max-height: 30%;">
-  </div>
-  <div class="text-center mx-0 mb-4 text-muted">正在接收来自移动端的指令
-    <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="用手机打开下方网址，在页面中记录闪现时间，点击发送便可以指示本程序发送到游戏聊天中。打开后就可以最小化本程序啦。" style="transform: translate(-2px, -2px);">
-  </div>
+  input:checked + .slider {
+    background-color: var(--primary);
+  }
 
-  <div class="row mx-0 justify-content-center">
-    <span class="text-muted" style="font-size: small; padding-right: 160px;">移动端地址</span>
-    <div id="copy-link-div" style="margin: 0px; padding: 0px;">
-      <a id="copy-link" href="#" style="font-size: small;">复制链接</a>
+  input:checked + .slider:before {
+    transform: translateX(16px);
+  }
+
+  .slider.round {
+    border-radius: 12px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  #enter-pair-mode-prompt {
+    font-size: smaller;
+    color: rgb(192, 192, 192);
+    transform: translateX(-1em);
+    transition: height 0.3s;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .hover-enlarge {
+    width: 16px;
+    height: 16px;
+    transition: width 0.2s, height 0.2s;
+  }
+  .hover-enlarge:hover {
+    width: 20px;
+    height: 20px;
+  }
+</style>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <div id="left-panel" class="col-6 d-flex flex-column" style="padding-left: 60px; padding-right: 36px; overflow: hidden; min-height: 400px;">
+
+        <div class="d-flex" style="margin-top: 80px;">
+          <div class="d-flex justify-content-between" style="flex: 1 1 auto;">
+            <span style="font-weight: bold;">配对模式</span>
+            <label class="switch" style="transform: translateY(-0.1em);">
+              <input type="checkbox" id="pair-mode-toggle">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div style="flex: 0 0 35px; height: 32px;">
+            <img id="discoverable-toggle-spinner" class="d-none" src="../img/Spinner-0.5s-64px.gif" alt=".." style="width: 32px; height: 32px; transform: translateY(-0.2em);">
+            <span id="discoverable-toggle-warning" class="d-none">&#x26A0</span>
+          </div>  
+        </div>
+
+        <div id="refer-info-collapse" class="collapse">
+          <div class="card card-body text-muted bg-light" style="margin-right: 40px; margin-left: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 8px;">
+            <div class="container">
+              <div class="row">
+                <div id="refer-info-div" class="col-6 px-0">
+                  <div style="font-size: smaller; margin-top: 15px;">验证码：</div>
+                  <kbd id="verification-code"></kbd>
+                </div>
+                <div class="col-6 px-0 d-flex" style="justify-content: center;">
+                  <canvas id="canvas" style="max-width: 80px; max-height: 80px;"></canvas>
+                  <div id="qrerror"></div>
+                </div>
+              </div>
+            </div>
+            <div class="text-muted text-center" style="font-size: 0.7em;">推荐直接扫描二维码添加</div>
+            <div id="self-id" class="text-center" style="font-size: 0.7em; color: rgb(192, 192, 192);"></div>
+          </div>  
+        </div>
+
+        <p id="enter-pair-mode-prompt" class="text-center">
+          开启配对模式<br>与移动端进行连接
+        </p>
+
+        <div id="launch-target-area" style="margin-top: 30px; flex: 1 0 auto;">
+          <div class="d-flex justify-content-between">
+            <div class="font-weight-bold">共同启动</div>
+            <div id="add-launch-target-btn" class="btn btn-light py-0" style="transform: translateX(-100%);">+</div>
+          </div>
+          <div id="launch-target-div" class="my-2" style="padding-right: 48px; padding-left: 16px;"></div>
+          <div id="add-launch-target-prompt" class="text-center" style="font-size: 0.8em; color: rgb(192, 192, 192); transform: translateX(-1em);">添加程序路径<br>下次同时启动PLD和LOL</div>
+        </div>
+        <div class="pl-3">
+          <img id="github-icon" class="mr-1 hover-enlarge" data-toggle="tooltip" data-placement="top" title="Github主页" src="../img/github.svg">
+          <img id="support-icon" class="mr-1 hover-enlarge" data-toggle="tooltip" data-placement="top" title="支持作者" src="../img/heart.png">
+          <img id="help-icon" class="hover-enlarge" data-toggle="tooltip" data-placement="top" title="使用指南" src="../img/help.png">
+        </div>
+        
+        <div class="modal" id="add-launch-target-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title font-weight-bold">创建共同启动任务</h5>
+                <button class="close" data-dismiss="modal">
+                  <span>&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="friendly-name-input">任务名称：</label><br>
+                  <input type="text" id="friendly-name-input">
+                </div>
+                <div class="form-group">
+                  <label>选择程序路径：</label>
+                  <p id="modal-path-para" class="bg-dark text-white px-2 text-break" style="border-radius: 5px;"></p>
+                  <button class="btn btn-primary" id="browse-btn">浏览</button>
+                </div>
+                <div><small id="modal-input-feedback" style="color: red;"></small></div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" id="add-launch-target-save-btn">保存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="right-panel" class="col-6">
+
+        <div class="container">
+          <div class="mt-5 mb-3 mx-0 row justify-content-center">
+            <img src="../img/signal.svg" style="max-width: 30%; max-height: 30%;">
+          </div>  
+        </div>
+
+        <div class="text-center mx-0 mb-4 font-weight-bold">正在接收来自移动端的指令
+          <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="打开配对模式链接移动端，在移动端页面中记录闪现时间，并指示本程序发送到局内聊天。" style="transform: translate(-2px, -2px);">
+        </div>
+
+        <div class="text-muted" style="font-size: smaller; transform: translateX(2.4em); width: fit-content;">允许以下移动端向本机发出指令：</div>
+
+        <div id="add-paired-pc-prompt" class="text-center mt-4" style="font-size: smaller; color: rgb(192, 192, 192);">
+          暂时还没有允许的移动端
+        </div>
+        <div id="paired-div"></div>
+
+
+      </div>
+      
     </div>
   </div>
 
-  <div class="row mx-0 justify-content-center">
-    <div class="mb-2 col-auto">
-      <span id="link-span" class="font-weight-light bg-dark text-white rounded px-1 py-1" style="font-size: small;"></span>
-    </div>  
-  </div>
+  <div id="notification-area" class="w-100" style="position: absolute; top: 0px;"></div>
 
-  <div class="row mx-0 justify-content-center">
-    <canvas id="canvas" style="max-width: 140px; max-height: 140px;"></canvas>
-  </div>
-
-  <div class="row mx-0 mb-0 justify-content-center">
-    <p style="font-size: 10px;" class="text-muted">二维码即为上方链接</p>
-    <img src="../img/question.svg" alt="?" data-toggle="tooltip" data-placement="bottom" title="建议使用谷歌/火狐/Safari打开链接" style="transform: translate(2px, -8px);">
-  </div>
-
-  <div class="mx-5">
-    <div id="qrerror"></div>
-  </div>
-
+  <script>
+    window.jQuery = window.$ = require('jquery');
+  </script>
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script src="https://indienost.gitee.io/paste-like-doinb/server-offer.js"></script>
+  <script src="../js/renderer.js"></script>
+  
 </body >
-<script src="http://indienost.gitee.io/paste-like-doinb/serverinfo.js"></script>
-<script src="../../renderer.js"></script>
 </html>
