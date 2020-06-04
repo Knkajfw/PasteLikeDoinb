@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const { nanoid } = require('nanoid');
 const { execFile } = require('child_process');
+const { autoUpdater } = require('electron-updater');
 
 app.commandLine.appendSwitch('ignore-certificate-errors');
 app.commandLine.appendSwitch('disable-http-cache');
@@ -525,3 +526,5 @@ function launchAll(launchTarget) {
   getLaunchTarget();
   launchAll(launchTarget);
 })();
+
+autoUpdater.checkForUpdatesAndNotify();
