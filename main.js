@@ -57,19 +57,20 @@ function updatePairedMobilesListInRAM() {
   }
 }
 function getOrGeneratePcClientId() {
-  let filePath = path.join(userDataPath, 'pcClientId');
+  const filePath = path.join(userDataPath, 'pcClientId');
   if (fs.existsSync(filePath)) {
-    let pcClientId = fs.readFileSync(filePath, 'utf-8');
-    return pcClientId;
-  }
-  else {
-    let pattern = /[a-zA-Z]/;
+    return fs.readFileSync(filePath, 'utf-8');
+  } else {
+    if (!fs.existsSync(userDataPath)) {
+      fs.mkdirSync(userDataPath, err => { throw err });
+    }
+    const pattern = /[a-zA-Z]/;
     let pcClientId;
     do {
       pcClientId = nanoid(10);
     } while (!pcClientId.charAt(0).match(pattern));
     fs.writeFileSync(filePath, pcClientId, 'utf-8');
-    return pcClientId;
+    return pcClientId;  
   }  
 }
 
