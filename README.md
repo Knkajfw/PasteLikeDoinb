@@ -5,11 +5,10 @@
 Record your opponents' Flash CD and share it with an auto-generated game chat msg("mid1230 sup1504") in one click.
 
 # 下载 Download
-请移步[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)下载安装包。  
-[国内镜像](https://plddownload-1300643516.file.myqcloud.com/update/pastelikedoinb_webinstaller_2.0.0.exe)
+请移步[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)下载程序。  
+百度网盘 链接:https://pan.baidu.com/s/1H1emcvegE_C53iIO7jxa0A 提取码:9ikr
 
-Head over to [Release Page](https://github.com/Knkajfw/PasteLikeDoinb/releases) to download the installer.  
-[CN Mirror](https://plddownload-1300643516.file.myqcloud.com/update/pastelikedoinb_webinstaller_2.0.0.exe)
+Head over to [Release Page](https://github.com/Knkajfw/PasteLikeDoinb/releases) to download the compiled binary.  
 
 # 截图 Screenshots
 #### 游戏内截图 In-game
