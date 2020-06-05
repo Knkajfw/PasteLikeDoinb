@@ -24,15 +24,14 @@ Record here when you see an opponent uses his summoner spell and instruct the PC
 
 # 特性 Features
 CN
-- 手动记录并实时查看对手的召唤师技能CD
-- 一键生成CD沟通信息并发送至局内聊天
-- 一键同步对手的技能组，无需手动设置
+- 通过操作一个**移动端**记录并实时查看对手的召唤师技能CD
+- 一键生成CD沟通信息并通过**PC端**发送至局内聊天
+- 一键同步对手的技能组至移动端，无需手动设置
 - 根据英雄实时等级计算精确的TP CD
 - 任意调整已记录技能的剩余CD，可以处理“一分半前交的闪”
 - 全局记录延迟，手慢也可以准确记录
-- 同时启动LOL、PLD和其他任意程序
-- 沟通消息排序，可以按照到期时间，也可以按照分路位置
-- 设置闪现全部放在D槽/F槽，更符合个人习惯
+- 沟通消息的内部排序，可以按照即将到期的在前，也可以按照上野中下辅的分路顺序
+- 设置exe路径就可以同时启动LOL(和其他的LOL第三方工具)
 
 EN
 - Manually mark opponents' summonner spell usage and monitor remaining CD time on your phone.
