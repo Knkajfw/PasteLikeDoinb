@@ -128,10 +128,11 @@ See this [page](https://github.com/octalmage/robotjs/wiki/Electron)
 <img src="https://i.loli.net/2020/06/02/oIRQBOg54a1cp2v.png">
 
 #### 感谢以下用户的赞助支持：
-<a title="NGA论坛@我跟你描述一个灵魂" href="https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727"><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'></a>
-<img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon' title="h*y">
-<img src='https://i.loli.net/2020/04/25/ojbDdfagcM6BxtP.jpg' alt='UserIcon' title="渣男" style="border-radius: 10px">
-<img src='https://i.loli.net/2020/04/25/k6JwxS8UmHV3ifh.jpg' alt='UserIcon' title="&#x1f621" style="border-radius: 10px">
-<img src='https://i.loli.net/2020/04/25/CTXRoYUwyu62bke.jpg' alt='UserIcon' title="驼驼安" style="border-radius: 10px">
+<img src='https://i.loli.net/2020/06/05/QUE9OXwIJrizVTp.jpg' alt='UserIcon' title='糖糖糖' style="border-radius: 10px">
 <img src='https://i.loli.net/2020/05/01/2taO87Vgc1srFjE.png' alt='UserIcon' title="陈二狗" style="border-radius: 10px">
 <img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon' title="k*)">
+<img src='https://i.loli.net/2020/04/25/CTXRoYUwyu62bke.jpg' alt='UserIcon' title="驼驼安" style="border-radius: 10px">
+<img src='https://i.loli.net/2020/04/25/k6JwxS8UmHV3ifh.jpg' alt='UserIcon' title="&#x1f621" style="border-radius: 10px">
+<img src='https://i.loli.net/2020/04/25/ojbDdfagcM6BxtP.jpg' alt='UserIcon' title="渣男" style="border-radius: 10px">
+<img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon' title="h*y">
+<a title="NGA论坛@我跟你描述一个灵魂" href="https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727"><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'></a>
