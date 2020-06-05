@@ -128,6 +128,7 @@ See this [page](https://github.com/octalmage/robotjs/wiki/Electron)
 <img src="https://i.loli.net/2020/06/02/oIRQBOg54a1cp2v.png">
 
 #### 感谢以下用户的赞助支持：
+
 <img src='https://i.loli.net/2020/06/05/QUE9OXwIJrizVTp.jpg' alt='UserIcon' title='糖糖糖' style="border-radius: 10px">
 <img src='https://i.loli.net/2020/05/01/2taO87Vgc1srFjE.png' alt='UserIcon' title="陈二狗" style="border-radius: 10px">
 <img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon' title="k*)">
