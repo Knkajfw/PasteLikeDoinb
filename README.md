@@ -128,6 +128,7 @@ See this [page](https://github.com/octalmage/robotjs/wiki/Electron)
 <img src="https://i.loli.net/2020/06/02/oIRQBOg54a1cp2v.png">
 
 #### 感谢以下用户的赞助支持：
+<div>
 <img src='https://i.loli.net/2020/06/05/QUE9OXwIJrizVTp.jpg' alt='UserIcon' title='糖糖糖' style="border-radius: 10px">
 <img src='https://i.loli.net/2020/05/01/2taO87Vgc1srFjE.png' alt='UserIcon' title="陈二狗" style="border-radius: 10px">
 <img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon' title="k*)">
@@ -136,3 +137,4 @@ See this [page](https://github.com/octalmage/robotjs/wiki/Electron)
 <img src='https://i.loli.net/2020/04/25/ojbDdfagcM6BxtP.jpg' alt='UserIcon' title="渣男" style="border-radius: 10px">
 <img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon' title="h*y">
 <a title="NGA论坛@我跟你描述一个灵魂" href="https://bbs.nga.cn/nuke.php?func=ucp&uid=38983727"><img src='https://i.loli.net/2020/03/24/f1H78RurPmvS4zT.jpg' alt='UserIcon'></a>
+</div>
