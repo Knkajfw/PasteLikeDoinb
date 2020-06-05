@@ -4,13 +4,6 @@
 记录对手的闪现时间，并一键发送Doinb风格的沟通信息到游戏聊天（类似“mid1230 sup1504”）。  
 Record your opponents' Summoner Spell CD and communicate with your teammates with an auto-generated game chat msg.
 
-# 下载 Download
-请移步[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)下载安装包。  
-[国内镜像](https://plddownload-1300643516.file.myqcloud.com/update/pastelikedoinb_webinstaller_2.0.1.exe)
-
-Head over to [Release Page](https://github.com/Knkajfw/PasteLikeDoinb/releases) to download the installer.  
-[CN Mirror](https://plddownload-1300643516.file.myqcloud.com/update/pastelikedoinb_webinstaller_2.0.1.exe)
-
 # 截图 Screenshots
 #### 游戏内 In-game
 
@@ -29,11 +22,41 @@ Record here when you see an opponent uses his summoner spell and instruct the PC
 <img src="https://i.loli.net/2020/06/04/Vvx5UYCIWDOXkLr.jpg" style="margin-right: 20px">
 <img src="https://i.loli.net/2020/06/04/YFCOEyt8hwWcH5n.jpg">
 
-详细的使用说明[在这](https://jingyan.baidu.com/article/f79b7cb3b90f6cd044023ef9.html)
+# 特性 Features
+CN
+- 手动记录并实时查看对手的召唤师技能CD
+- 一键生成CD沟通信息并发送至局内聊天
+- 一键同步对手的技能组，无需手动设置
+- 根据英雄实时等级计算精确的TP CD
+- 任意调整已记录技能的剩余CD，可以处理“一分半前交的闪”
+- 全局记录延迟，手慢也可以准确记录
+- 同时启动LOL和其他自定义的程序
+- 沟通消息排序，可以按照到期时间，也可以按照分路位置
+- 设置闪现全部放在D槽/F槽，更符合个人习惯
+
+EN
+- Manually mark opponents' summonner spell usage and monitor remaining CD time on your phone.
+- Generate CD communicating message and send it to game chat in one click.
+- Sync skill opponent's skill setting in a sec. No need to edit one-by-one.
+- Compute accurate TP CD according to real-time champion level
+- Adujst the remaing CD of any recorded skill. Can handle "he used flash 1.5 min ago"
+- Global record delay. Useful if you, most oftenly, cannot record a skill usage immediately after seeing it.
+- Launch together PLD and LOL (and any .exe specified by you).
+- Communication message segment sorting: by skill ready time vs. by lane position
+- Configure a default slot(D/F) for flash and have more consistent experience.
+
+# 开始使用 Start to Use
+请移步[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)下载安装包。  
+[国内镜像](https://plddownload-1300643516.file.myqcloud.com/update/pastelikedoinb_webinstaller_2.0.1.exe)
+
+Head over to [Release Page](https://github.com/Knkajfw/PasteLikeDoinb/releases) to download the installer.  
+[CN Mirror](https://plddownload-1300643516.file.myqcloud.com/update/pastelikedoinb_webinstaller_2.0.1.exe)
+
+快速上手请参考[这篇文章](https://jingyan.baidu.com/article/f79b7cb3b90f6cd044023ef9.html)
 
 # 声明 Declaration
 ### 1.关于账号安全 Account Safety
-#### *如果你是中国的英雄联盟玩家*
+#### *如果你是中国的英雄联盟玩家* Play LOL in China?
 本程序在拳头的Dev Portal已完成注册，并已获得Riot官方人员确认并不违规。下方有注册和工作人员答复的截图。
 当然，英雄联盟国服是由腾讯代理的，我们还需要参考腾讯的态度。
 
