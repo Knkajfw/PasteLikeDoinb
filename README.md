@@ -15,7 +15,7 @@ Run with LOL on the same PC. It receives commands from the web console and will 
 
 ![PC端截图](https://i.loli.net/2020/06/04/TwtQDdScfHNPvMC.png)
 
-#### 移动端控制台 Mobile Console
+#### 移动端网页 Mobile Page
 在此处记录对手的技能CD，查看cd情况，指示PC端发送消息。  
 Record here when you see an opponent uses his summoner spell and instruct the PC client to send an in-game message.
 
@@ -25,7 +25,7 @@ Record here when you see an opponent uses his summoner spell and instruct the PC
 CN
 - 通过操作一个**移动端**记录并实时查看对手的召唤师技能CD
 - 一键生成CD沟通信息并通过**PC端**发送至局内聊天
-- 一键同步对手的技能组至移动端，无需手动设置
+- 一键同步对手的技能组和游戏时间至移动端，无需手动设置
 - 根据英雄实时等级计算精确的TP CD
 - 任意调整已记录技能的剩余CD，可以处理“一分半前交的闪”
 - 全局记录延迟，手慢也可以准确记录
