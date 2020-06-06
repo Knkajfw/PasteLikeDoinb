@@ -19,8 +19,7 @@ Run with LOL on the same PC. It receives commands from the web console and will 
 在此处记录对手的技能CD，查看cd情况，指示PC端发送消息。  
 Record here when you see an opponent uses his summoner spell and instruct the PC client to send an in-game message.
 
-<img src="https://i.loli.net/2020/06/04/Vvx5UYCIWDOXkLr.jpg" style="margin-right: 20px">
-<img src="https://i.loli.net/2020/06/04/YFCOEyt8hwWcH5n.jpg">
+<img src="https://i.loli.net/2020/06/06/39CztG12yLFq8Im.jpg" style="margin-right: 20px">    <img src="https://i.loli.net/2020/06/04/YFCOEyt8hwWcH5n.jpg">
 
 # 特性 Features
 CN
