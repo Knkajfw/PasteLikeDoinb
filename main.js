@@ -160,7 +160,7 @@ function requestPlayerList(mobileClientId) {
         getOpponentObjectArray(mobileClientId);  
       }
       else {
-        socket.emit('fetcherrp2s',pcClientId, 'Sync only works for 5v5 game.')
+        socket.emit('fetcherrp2s', mobileClientId, 'Sync only works for 5v5 game.')
       }
     })
   })
