@@ -32,6 +32,7 @@ CN
 - 沟通消息的内部排序，可以按照即将到期的在前，也可以按照上野中下辅的分路顺序
 - 设置exe路径就可以同时启动LOL(和其他的LOL第三方工具)
 
+
 EN
 - Manually mark opponents' summonner spell usage and monitor remaining CD time on your phone.
 - Generate CD communicating message and send it to game chat in one click.
@@ -42,6 +43,8 @@ EN
 - Launch together PLD and LOL (and any .exe specified by you).
 - Communication message segment sorting: by skill ready time vs. by lane position
 - Configure a default slot(D/F) for flash and have more consistent experience.
+
+[更新历史](https://pld.indienost.com/changelog-zh.html)
 
 # 开始使用 Start to Use
 请移步[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)下载安装包。  
