@@ -23,7 +23,7 @@ Record here when you see an opponent uses his summoner spell and instruct the PC
 
 # 特性 Features
 CN
-- 通过操作一个**移动端**记录并实时查看对手的召唤师技能CD
+- 通过操作一个**移动端网页**记录并查看对手的召唤师技能CD
 - 一键生成CD沟通信息并通过**PC端**发送至局内聊天
 - 一键同步对手的技能组和游戏时间至移动端，无需手动设置
 - 根据英雄实时等级计算精确的TP CD
@@ -47,11 +47,11 @@ EN
 [更新历史](https://pld.indienost.com/changelog-zh.html)
 
 # 开始使用 Start to Use
-请移步[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)下载安装包。  
-[国内镜像](https://plddownload-1300643516.file.myqcloud.com/update/pastelikedoinb_webinstaller_2.0.1.exe)
+[Release页面](https://github.com/Knkajfw/PasteLikeDoinb/releases)有各版本的安装包。  
+[直接下载最新](https://plddownload-1300643516.file.myqcloud.com/update/pastelikedoinb_webinstaller_2.0.1.exe)
 
-Head over to [Release Page](https://github.com/Knkajfw/PasteLikeDoinb/releases) to download the installer.  
-[CN Mirror](https://plddownload-1300643516.file.myqcloud.com/update/pastelikedoinb_webinstaller_2.0.1.exe)
+[Release Page](https://github.com/Knkajfw/PasteLikeDoinb/releases) lists installer for all versions.  
+[Latest](https://plddownload-1300643516.file.myqcloud.com/update/pastelikedoinb_webinstaller_2.0.1.exe)
 
 快速上手请参考[这篇文章](https://jingyan.baidu.com/article/f79b7cb3b90f6cd044023ef9.html)
 
