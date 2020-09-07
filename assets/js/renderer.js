@@ -1,6 +1,6 @@
 const { ipcRenderer, shell } = require('electron');
 const qrcode = require('qrcode');
-const pldVersion = 144;
+const pldVersion = 145;
 
 var canvas = document.getElementById('canvas');
 var referLink = '';
