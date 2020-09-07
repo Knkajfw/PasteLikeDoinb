@@ -125,7 +125,7 @@ See this [page](https://github.com/octalmage/robotjs/wiki/Electron)
 `npm start`
 
 ## 赞助
-#### 开发不易，确实有帮到你的话，请一定用小半个皮肤的价格支持一下！感谢感谢！
+#### 开发不易，确实有帮到你的话，打赏支持走一波呗！感谢感谢！
 <img src="https://i.loli.net/2020/06/02/oIRQBOg54a1cp2v.png">
 
 #### 感谢以下用户的赞助支持：
