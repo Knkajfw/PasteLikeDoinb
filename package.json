@@ -1,6 +1,6 @@
 {
   "name": "pastelikedoinb",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "An app that generates and auto-type LOL flash tracking messages",
   "main": "main.js",
   "scripts": {
