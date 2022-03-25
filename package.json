@@ -11,7 +11,7 @@
   "author": "IndieNoSt",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^7.1.8"
+    "electron": "^13.6.6"
   },
   "dependencies": {
     "electron-updater": "^4.3.1",
